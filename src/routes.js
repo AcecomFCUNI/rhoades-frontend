@@ -1,9 +1,10 @@
 import { Home, Error401, Error404 } from 'views';
-import { ErrorLayout } from './layouts';
+import { ErrorLayout, PublicLayout } from './layouts';
 
 export default [
   {
     path: '/',
+    layout: PublicLayout,
     views: [
       {
         path: '/',

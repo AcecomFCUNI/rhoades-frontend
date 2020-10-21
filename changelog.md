@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.1
+
+### Added
+
+- Home page was created.
+
+### Reminder
+
+- Add logic to the input field.
+
 ## 1.0.0
 
 - This project was bootstrapped with [`Create React App`](https://create-react-app.dev/docs/getting-started/).

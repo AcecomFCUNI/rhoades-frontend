@@ -29,15 +29,11 @@ const App = () => {
                 key={path}
                 exact
                 path={path}
-                render={() =>
-                  Layout ? (
-                    <Layout>
-                      <Component />
-                    </Layout>
-                  ) : (
+                render={() => (
+                  <Layout>
                     <Component />
-                  )
-                }
+                  </Layout>
+                )}
               />
             ))
           )}

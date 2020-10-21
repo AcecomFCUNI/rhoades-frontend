@@ -4,15 +4,15 @@ const white = '#FFFFFF';
 const black = '#000000';
 
 export const custom = {
-  brown: {
-    dark: '#B77A37',
-    main: '#d59834',
-    light: '#e5a832',
+  primary: {
+    dark: '#331212',
+    main: '#401817',
+    light: '#850E06',
   },
-  gray: {
-    main: '#2B2E30',
-    dark: '#131515',
-    light: '#44484B',
+  secondary: {
+    main: '#ECDAAA',
+    dark: '#d1c19a',
+    light: '#ffefc9',
   },
   white: '#F2F2F2',
 };
@@ -22,16 +22,16 @@ export default {
   white,
   custom,
   primary: {
-    contrastText: custom.brown.main,
-    dark: custom.gray.dark,
-    main: custom.gray.main,
-    light: custom.gray.light,
+    contrastText: custom.primary.main,
+    dark: custom.primary.dark,
+    main: custom.primary.main,
+    light: custom.primary.light,
   },
   secondary: {
     contrastText: white,
-    dark: custom.brown.dark,
-    main: custom.brown.main,
-    light: custom.brown.light,
+    dark: custom.secondary.dark,
+    main: custom.secondary.main,
+    light: custom.secondary.light,
   },
   error: {
     contrastText: white,
@@ -45,15 +45,15 @@ export default {
     light: colors.lightGreen[400],
   },
   text: {
-    primary: custom.gray.main,
-    secondary: custom.gray.main,
+    primary: black,
+    secondary: black,
     link: colors.blue[600],
   },
   link: colors.blue[800],
-  icon: custom.gray.main,
+  icon: custom.primary.main,
   background: {
     default: custom.white,
     paper: white,
   },
-  divider: custom.gray.light,
+  divider: custom.primary.light,
 };

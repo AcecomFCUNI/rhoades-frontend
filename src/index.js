@@ -38,7 +38,7 @@ const rrfProps = {
 // adding fonts from GoogleFonts
 WebFont.load({
   google: {
-    families: ['Quicksand:500,700', 'sans-serif', 'Lexend Deca:400'],
+    families: ['Raleway:100,200,300,400,500,600', 'Nunito:200,300,400,600,700'],
   },
 });
 
