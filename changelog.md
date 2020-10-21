@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.2
+
+### Added
+
+- Validate credentials page was created
+
+### Reminder
+
+- Add logic in order to validate the credentials (DNI/codeUNI with password) and register or login to the system.
+- Add images to respective sites.
+
 ## 1.0.1
 
 ### Added

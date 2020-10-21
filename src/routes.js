@@ -1,4 +1,4 @@
-import { Home, Error401, Error404 } from 'views';
+import { Home, ValidateCredentials, Error401, Error404 } from 'views';
 import { ErrorLayout, PublicLayout } from './layouts';
 
 export default [
@@ -9,6 +9,10 @@ export default [
       {
         path: '/',
         component: Home,
+      },
+      {
+        path: '/validate-credentials',
+        component: ValidateCredentials,
       },
     ],
   },

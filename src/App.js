@@ -1,20 +1,22 @@
 import React from 'react';
+
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isLoaded } from 'react-redux-firebase';
-import { Switch, Route, Redirect } from 'react-router-dom';
 
+import { Spinner } from 'components';
 import routes from 'routes';
 
 // set load spinning if auth or profile is starting
 const AuthIsLoaded = ({ children }) => {
   const auth = useSelector((state) => state.firebase.auth);
-  if (!isLoaded(auth)) return <div>Loading</div>;
+  if (!isLoaded(auth)) return <Spinner />;
   return children;
 };
 
 const ProfileIsLoaded = ({ children }) => {
   const profile = useSelector((state) => state.firebase.profile);
-  if (!isLoaded(profile)) return <div>Loading</div>;
+  if (!isLoaded(profile)) return <Spinner />;
   return children;
 };
 

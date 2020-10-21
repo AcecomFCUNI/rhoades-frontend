@@ -6,7 +6,6 @@ import logoAcecom from 'assets/images/logo_acecom.png';
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    width: '100vw',
     padding: '30px 200px',
     display: 'flex',
     justifyContent: 'space-between',
