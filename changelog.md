@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.3b
+
+### Hotfix
+
+- Title was corrected.
+- Favicon was added.
+
 ## 1.0.3a
 
 ### Hotfix

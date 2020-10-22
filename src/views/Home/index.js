@@ -60,7 +60,7 @@ const Home = () => {
           <div className={classes.textSection}>
             {/* TODO: set the title and subtitle */}
             <Typography variant="h1" className={classes.mainTitle}>
-              Lorem Ipsum is simply
+              Elecciones UNI 2020
             </Typography>
             <Typography variant="h2" className={classes.secondaryTitle}>
               Verifica si te encuentras en el padrón electoral para poder

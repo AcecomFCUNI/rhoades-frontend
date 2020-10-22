@@ -51,7 +51,7 @@ const Footer = () => {
           />
         </a>
         <Typography variant="subtitle1" className={classes.textAcecom}>
-          Aplicación desarrollada por{' '}
+          Powered by{' '}
           <a
             href="https://acecom-web.netlify.app/"
             target="_blank"
@@ -62,7 +62,7 @@ const Footer = () => {
           </a>
         </Typography>
       </div>
-      <div className={classes.sectionExtra}>something else</div>
+      <div className={classes.sectionExtra}></div>
     </footer>
   );
 };

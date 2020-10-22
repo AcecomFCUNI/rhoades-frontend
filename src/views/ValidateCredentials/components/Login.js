@@ -61,9 +61,7 @@ const Login = () => {
 
   return (
     <Grid container className={classes.mainContent}>
-      <Grid item xs>
-        An image
-      </Grid>
+      <Grid item xs></Grid>
       <Grid item xs>
         <div>
           <Typography variant="h1" className={classes.mainTitle}>
