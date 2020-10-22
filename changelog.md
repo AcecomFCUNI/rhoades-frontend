@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.3c
+
+### Hotfix
+
+- Names of the dashboard menu was corrected.
+
 ## 1.0.3b
 
 ### Hotfix

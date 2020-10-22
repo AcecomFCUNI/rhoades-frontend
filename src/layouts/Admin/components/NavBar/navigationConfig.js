@@ -13,13 +13,13 @@ export default [
         icon: WorkRoundedIcon,
         children: [
           {
-            title: 'Tercio facultad',
+            title: 'Tercio de facultad',
             href: '/admin/lists/faculty-third',
             icon: PageviewRoundedIcon,
           },
           {
-            title: 'Tercio Universidad',
-            href: '/admin/lists/university-third/assembly',
+            title: 'Tercio universitario',
+            href: '/admin/lists/university-third',
             icon: SendRoundedIcon,
             children: [
               {
@@ -29,7 +29,7 @@ export default [
               },
               {
                 title: 'Consejo universitario',
-                href: '/admin/lists/university-third/council',
+                href: '/admin/lists/university-third/aaaa',
                 icon: PageviewRoundedIcon,
               },
             ],

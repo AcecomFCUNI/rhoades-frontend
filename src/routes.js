@@ -80,7 +80,7 @@ export default [
         component: () => <div>Tercio de facultad</div>,
       },
       {
-        path: '/admin/lists/university-third/council',
+        path: '/admin/lists/university-third/aaaa',
         // component: UploadFileNid,
         component: () => <div>Consejo universitario</div>,
       },

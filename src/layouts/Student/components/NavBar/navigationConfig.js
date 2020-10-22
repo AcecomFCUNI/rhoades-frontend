@@ -13,22 +13,22 @@ export default [
         icon: WorkRoundedIcon,
         children: [
           {
-            title: 'Tercio Facultad',
+            title: 'Tercio de facultad',
             href: '/student/enroll-list/faculty-third',
             icon: PageviewRoundedIcon,
           },
           {
-            title: 'Tercio Universidad',
+            title: 'Tercio universitario',
             href: '/student/enroll-list/university-third',
             icon: SendRoundedIcon,
             children: [
               {
-                title: 'Consejo Universitario',
+                title: 'Consejo universitario',
                 href: '/student/enroll-list/university-third/council',
                 icon: PageviewRoundedIcon,
               },
               {
-                title: 'Asamblea Universitaria',
+                title: 'Asamblea universitaria',
                 href: '/student/enroll-list/university-third/assembly',
                 icon: PageviewRoundedIcon,
               },
