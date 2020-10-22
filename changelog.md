@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.3a
+
+### Hotfix
+
+- Store set in mode prod.
+- Added the file for redirects (netlify).
+
 ## 1.0.3
 
 ### Added

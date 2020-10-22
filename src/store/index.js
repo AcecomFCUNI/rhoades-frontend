@@ -3,7 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import rootReducer from 'ducks';
 import rootSaga from 'sagas';
 
-const MODE = 'DEV' || process.env.REACT_APP_MODE;
+const MODE = 'PROD' || process.env.REACT_APP_MODE;
 
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
