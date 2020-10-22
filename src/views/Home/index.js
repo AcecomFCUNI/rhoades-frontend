@@ -68,13 +68,16 @@ const Home = () => {
             </Typography>
           </div>
           <div className={classes.searchEmailInputWrapper}>
+            {/* TODO: trim and lowercase the text */}
             <CustomInput
               icon={<SearchIcon />}
               spellCheck="false"
               autoFocus
               type="text"
               placeholder={
-                switchDNIToCode ? 'Ingresa tu código UNI' : 'Ingresa tu DNI'
+                switchDNIToCode
+                  ? 'Ingresa tu código UNI'
+                  : 'Ingresa tu DNI, CE u otro documento'
               }
               inputProps={{ 'aria-label': 'verify email' }}
             />

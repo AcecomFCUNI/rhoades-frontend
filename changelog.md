@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.3
+
+### Added
+
+- Basic boilerplate for each type of user.
+
+### Reminder
+
+- Add logic for login to each type of user.
+- Complete the views.
+
 ## 1.0.2
 
 ### Added

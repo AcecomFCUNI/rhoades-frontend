@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Typography, makeStyles } from '@material-ui/core';
 
-import logoAcecom from 'assets/images/logo_acecom.png';
+import logoAcecom from 'assets/images/logos/logo_acecom.png';
 
 const useStyles = makeStyles((theme) => ({
   footer: {

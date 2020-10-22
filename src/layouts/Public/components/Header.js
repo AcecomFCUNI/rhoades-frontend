@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core';
-import logoUni from 'assets/images/logo_uni.png';
+import logoUni from 'assets/images//logos/logo_uni.png';
 
 const useStyles = makeStyles((theme) => ({
   headerWrapper: (props) => ({

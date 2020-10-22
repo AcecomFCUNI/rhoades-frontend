@@ -7,7 +7,7 @@ export const custom = {
   primary: {
     dark: '#331212',
     main: '#401817',
-    light: '#850E06',
+    light: '#5A2120',
   },
   secondary: {
     main: '#ECDAAA',

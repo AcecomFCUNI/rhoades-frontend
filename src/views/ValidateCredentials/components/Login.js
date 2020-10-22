@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Button, Typography, makeStyles, Grid } from '@material-ui/core';
@@ -45,13 +45,18 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles();
   const history = useHistory();
+  const [typeOfUser, setTypeOfUser] = useState('');
 
   const returnToHome = () => {
     history.push('/');
   };
 
   const handleLogin = () => {
-    console.log('logged');
+    if (typeOfUser === 'student')
+      history.push('/student/enroll-list/faculty-third');
+    else if (typeOfUser === 'teacher')
+      history.push('/teacher/enroll-list-or-candidate/decan');
+    else if (typeOfUser === 'admin') history.push('/admin/lists/faculty-third');
   };
 
   return (
@@ -73,8 +78,10 @@ const Login = () => {
           </Typography>
         </div>
         <div className={classes.passwordInputWrapper}>
+          {/* TODO: trim and lowercase the text */}
           <CustomInput
             icon={<LockRoundedIcon />}
+            onChange={(e) => setTypeOfUser(e.target.value)}
             spellCheck="false"
             autoFocus
             type="password"

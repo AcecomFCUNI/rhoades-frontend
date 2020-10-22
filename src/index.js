@@ -43,16 +43,14 @@ WebFont.load({
 });
 
 ReactDOM.render(
-  <React.StrictMode>
-    <StoreProvider store={store}>
-      <ReactReduxFirebaseProvider {...rrfProps}>
-        <ThemeProvider theme={theme}>
-          <Router>
-            <App />
-          </Router>
-        </ThemeProvider>
-      </ReactReduxFirebaseProvider>
-    </StoreProvider>
-  </React.StrictMode>,
+  <StoreProvider store={store}>
+    <ReactReduxFirebaseProvider {...rrfProps}>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <App />
+        </Router>
+      </ThemeProvider>
+    </ReactReduxFirebaseProvider>
+  </StoreProvider>,
   document.getElementById('root')
 );
