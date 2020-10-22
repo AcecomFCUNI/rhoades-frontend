@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   authenticationSvg: {
-    width: 450,
+    width: 400,
     [theme.breakpoints.down('md')]: {
       width: 350,
     },

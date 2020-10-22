@@ -24,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   image: {
-    maxWidth: 700,
-    width: 700,
+    maxWidth: 500,
+    width: 500,
     [theme.breakpoints.down('md')]: {
-      width: 500,
+      width: 400,
     },
     [theme.breakpoints.down('xs')]: {
       width: 300,
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   returnHomeButton: {
     color: theme.palette.white,
     fontWeight: 'bold',
-    marginTop: 70,
+    marginTop: 35,
   },
 }));
 

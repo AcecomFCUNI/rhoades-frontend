@@ -6,7 +6,8 @@ const footerHeight = 60;
 
 const useStyles = makeStyles(() => ({
   root: {
-    height: '100%',
+    height: `100vh`,
+    minHeight: 700,
   },
 }));
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.6a
+
+### Updated
+
+### Hotfix
+
+- Overflow in home and notFound page were fixed.
+
 ## 1.0.6
 
 ### Added
