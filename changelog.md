@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.5
+
+### Updated
+
+- The validate credentials page now is responsive.
+
 ## 1.0.4
 
 ### Updated

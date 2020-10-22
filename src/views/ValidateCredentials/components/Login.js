@@ -1,48 +1,73 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { Button, Typography, makeStyles, Grid } from '@material-ui/core';
+import {
+  Button,
+  Typography,
+  makeStyles,
+  Grid,
+  Hidden,
+} from '@material-ui/core';
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
+import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
 import LockRoundedIcon from '@material-ui/icons/LockRounded';
 
 import { CustomInput } from 'components';
+import authenticationSvg from 'assets/images/undraw/login-authentication.svg';
 
 const useStyles = makeStyles((theme) => ({
   mainWrapper: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
     height: '100%',
   },
   mainContent: {
-    padding: '0 60px',
+    maxWidth: 1600,
+    width: '80%',
+    [theme.breakpoints.down('sm')]: {
+      width: '85%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '90%',
+    },
+  },
+  authenticationSvg: {
+    width: 450,
+    [theme.breakpoints.down('md')]: {
+      width: 350,
+    },
   },
   mainTitle: {
     fontSize: '4em',
     [theme.breakpoints.down('md')]: {
-      fontSize: '2.8em',
+      fontSize: '3.2em',
     },
     [theme.breakpoints.down('sm')]: {
-      fontSize: '2.5em',
+      fontSize: '2.8em',
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '2em',
     },
   },
   secondaryTitle: {
-    fontSize: '2em',
+    fontSize: '1.4em',
     marginTop: '1rem',
     [theme.breakpoints.down('md')]: {
-      fontSize: '1.5em',
+      fontSize: '1.3em',
     },
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '1.1em',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '1em',
     },
   },
   subtitle: {
-    fontSize: '1.2em',
+    fontSize: '1.15em',
     marginTop: '1rem',
     [theme.breakpoints.down('md')]: {
-      fontSize: '1em',
+      fontSize: '0.9em',
     },
     [theme.breakpoints.down('sm')]: {
-      fontSize: '0.8em',
+      fontSize: '0.85em',
     },
   },
   passwordInputWrapper: {
@@ -55,13 +80,20 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '1em',
     width: '10em',
   },
+  loginButtonXs: {
+    color: theme.palette.white,
+  },
   buttonsSection: {
     display: 'flex',
     justifyContent: 'space-between',
+    [theme.breakpoints.down('xs')]: {
+      display: 'block',
+    },
   },
-  returnHomeButton: {},
-  registerButton: {
-    color: theme.palette.white,
+  returnHomeButton: {
+    [theme.breakpoints.down('xs')]: {
+      marginTop: 10,
+    },
   },
 }));
 
@@ -85,13 +117,19 @@ const Login = () => {
   return (
     <div className={classes.mainWrapper}>
       <Grid container className={classes.mainContent}>
-        <Grid item xs={12} md={6}>
-          some
-        </Grid>
+        <Hidden smDown>
+          <Grid item md={6} container justify="center" alignItems="center">
+            <img
+              alt="authenticating-password"
+              src={authenticationSvg}
+              className={classes.authenticationSvg}
+            />
+          </Grid>
+        </Hidden>
         <Grid item xs={12} md={6}>
           <div>
             <Typography variant="h1" className={classes.mainTitle}>
-              ¡Bienvenido, (name)!
+              Sr(a). (name)
             </Typography>
             <Typography variant="h2" className={classes.secondaryTitle}>
               Te encuentras inscrito como personero para el presente proceso
@@ -112,28 +150,57 @@ const Login = () => {
               placeholder={'Ingresa tu contraseña'}
               inputProps={{ 'aria-label': 'input password' }}
             />
-            <Button
-              size="large"
-              variant="contained"
-              color="primary"
-              className={classes.loginButton}
-              onClick={handleLogin}
-            >
-              Ingresar
-            </Button>
           </div>
-          <div className={classes.buttonsSection}>
-            <Button
-              className={classes.returnHomeButton}
-              startIcon={<ArrowBackIosRoundedIcon />}
-              size="large"
-              variant="outlined"
-              color="primary"
-              onClick={returnToHome}
-            >
-              Regresar al inicio
-            </Button>
-          </div>
+          <Hidden xsDown>
+            <div className={classes.buttonsSection}>
+              <Button
+                className={classes.returnHomeButton}
+                startIcon={<ArrowBackIosRoundedIcon />}
+                size="large"
+                variant="outlined"
+                color="primary"
+                onClick={returnToHome}
+              >
+                Regresar al inicio
+              </Button>
+              <Button
+                size="large"
+                endIcon={<ArrowForwardIosRoundedIcon />}
+                variant="contained"
+                color="primary"
+                className={classes.loginButton}
+                onClick={handleLogin}
+              >
+                Ingresar
+              </Button>
+            </div>
+          </Hidden>
+          <Hidden smUp>
+            <div className={classes.buttonsSection}>
+              <Button
+                fullWidth
+                size="large"
+                endIcon={<ArrowForwardIosRoundedIcon />}
+                variant="contained"
+                color="primary"
+                className={classes.loginButtonXs}
+                onClick={handleLogin}
+              >
+                Ingresar
+              </Button>
+              <Button
+                fullWidth
+                className={classes.returnHomeButton}
+                startIcon={<ArrowBackIosRoundedIcon />}
+                size="large"
+                variant="outlined"
+                color="primary"
+                onClick={returnToHome}
+              >
+                Regresar al inicio
+              </Button>
+            </div>
+          </Hidden>
         </Grid>
       </Grid>
     </div>
