@@ -6,6 +6,7 @@ import {
   Button,
   FormControlLabel,
   makeStyles,
+  Hidden,
 } from '@material-ui/core';
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -18,35 +19,67 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    paddingBottom: 150,
-    paddingTop: 150,
+    height: '100%',
   },
   mainContent: {
     maxWidth: 800,
+    width: 800,
+    [theme.breakpoints.down('sm')]: {
+      width: '80vw',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '90vw',
+    },
   },
-  textSection: {},
+  // textSection: {},
   mainTitle: {
     fontSize: '4em',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '3.2em',
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '2.8em',
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '2em',
+    },
   },
   secondaryTitle: {
-    fontSize: '1.5em',
+    fontSize: '1.4em',
     marginTop: '1rem',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '1.2em',
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '1em',
+    },
   },
   searchEmailInputWrapper: {
     display: 'flex',
-    margin: '2.5em 0 1.5em 0',
+    marginTop: '2.5em',
   },
   searchButton: {
     color: theme.palette.white,
     fontWeight: 'bold',
     marginLeft: '1em',
-    width: '10em',
+    // width: '10em',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+      // marginTop: '1.5em',
+    },
+  },
+  searchButtonMdWrapper: {
+    marginTop: '1.5em',
+  },
+  searchByCodeSwitch: {
+    marginTop: '1.5em',
   },
 }));
 
 const Home = () => {
   const classes = useStyles();
   const history = useHistory();
+
   const [switchDNIToCode, setSwitchDNIToCode] = useState(false);
 
   const handleSwitchDNIToCode = () => setSwitchDNIToCode(!switchDNIToCode);
@@ -81,17 +114,34 @@ const Home = () => {
               }
               inputProps={{ 'aria-label': 'verify email' }}
             />
-            <Button
-              size="large"
-              variant="contained"
-              color="primary"
-              className={classes.searchButton}
-              onClick={validateCredentials}
-            >
-              Buscar
-            </Button>
+            <Hidden xsDown>
+              <Button
+                size="large"
+                variant="contained"
+                color="primary"
+                className={classes.searchButton}
+                onClick={validateCredentials}
+              >
+                Buscar
+              </Button>
+            </Hidden>
           </div>
-          <div>
+
+          <Hidden smUp>
+            <div className={classes.searchButtonMdWrapper}>
+              <Button
+                fullWidth
+                size="large"
+                variant="contained"
+                color="primary"
+                className={classes.searchButton}
+                onClick={validateCredentials}
+              >
+                Buscar
+              </Button>
+            </div>
+          </Hidden>
+          <div className={classes.searchByCodeSwitch}>
             <FormControlLabel
               control={
                 <CustomSwitch

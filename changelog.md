@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4
+
+### Updated
+
+- The home page now is responsive.
+
 ## 1.0.3c
 
 ### Hotfix

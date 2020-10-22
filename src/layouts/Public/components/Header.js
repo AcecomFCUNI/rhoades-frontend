@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   }),
   logoWrapper: {
-    marginLeft: 115,
+    marginLeft: '5vw',
   },
 }));
 

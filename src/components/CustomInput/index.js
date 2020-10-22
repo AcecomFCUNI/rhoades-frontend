@@ -1,6 +1,13 @@
 import React from 'react';
 
-import { Paper, IconButton, InputBase, makeStyles } from '@material-ui/core';
+import {
+  Paper,
+  IconButton,
+  InputBase,
+  useMediaQuery,
+  useTheme,
+  makeStyles,
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   inputPaper: {
@@ -15,12 +22,23 @@ const useStyles = makeStyles((theme) => ({
   input: {
     marginLeft: theme.spacing(1),
     flex: 1,
-    fontSize: '2em',
+    fontSize: '1.9em',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '1.5em',
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.4em',
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '0.95em',
+    },
   },
 }));
 
 const CustomInput = (props) => {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Paper component="form" className={classes.inputPaper} elevation={0}>
@@ -34,7 +52,7 @@ const CustomInput = (props) => {
       </IconButton>
       {/* TODO: validate the DNI, just 8 characters */}
       {/* TODO: validate the codeUNI, just 9 characters */}
-      <InputBase {...props} className={classes.input} />
+      <InputBase className={classes.input} {...props} />
     </Paper>
   );
 };

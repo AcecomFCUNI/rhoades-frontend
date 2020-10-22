@@ -5,27 +5,34 @@ import { Typography, makeStyles } from '@material-ui/core';
 import logoAcecom from 'assets/images/logos/logo_acecom.png';
 
 const useStyles = makeStyles((theme) => ({
-  footer: {
-    padding: '30px 200px',
+  footer: (props) => ({
+    backgroundColor: theme.palette.custom.white,
+    minHeight: props.height,
+    position: 'fixed',
+    width: '100%',
+    bottom: 0,
     display: 'flex',
-    justifyContent: 'space-between',
-  },
+    justifyContent: 'center',
+  }),
   sectionAcecom: {
     display: 'flex',
     alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '14px',
+    },
   },
   logoAcecom: {
-    width: 40,
+    width: '1.8em',
   },
   textAcecom: {
-    fontSize: 20,
+    fontSize: '1.1em',
     fontFamily: 'Nunito',
     fontWeight: 400,
-    marginLeft: 20,
+    marginLeft: '1.25em',
   },
   sectionExtra: {
     width: 200,
-    height: 100,
+    // height: 100,
   },
   urlAcecom: {
     color: theme.palette.black,
@@ -33,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Footer = () => {
-  const classes = useStyles();
+const Footer = ({ height }) => {
+  const classes = useStyles({ height });
 
   return (
     <footer className={classes.footer}>
@@ -62,7 +69,7 @@ const Footer = () => {
           </a>
         </Typography>
       </div>
-      <div className={classes.sectionExtra}></div>
+      {/* <div className={classes.sectionExtra}></div> */}
     </footer>
   );
 };
