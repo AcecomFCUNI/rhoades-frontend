@@ -1,13 +1,6 @@
 import React from 'react';
 
-import {
-  Paper,
-  IconButton,
-  InputBase,
-  useMediaQuery,
-  useTheme,
-  makeStyles,
-} from '@material-ui/core';
+import { Paper, IconButton, InputBase, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   inputPaper: {
@@ -37,8 +30,6 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomInput = (props) => {
   const classes = useStyles();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Paper component="form" className={classes.inputPaper} elevation={0}>

@@ -5,8 +5,8 @@ import {
   Typography,
   Button,
   FormControlLabel,
-  makeStyles,
   Hidden,
+  makeStyles,
 } from '@material-ui/core';
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -60,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
   },
   searchButton: {
     color: theme.palette.white,
-    fontWeight: 'bold',
     marginLeft: '1em',
     // width: '10em',
     [theme.breakpoints.down('sm')]: {
@@ -69,10 +68,18 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   searchButtonMdWrapper: {
-    marginTop: '1.5em',
+    marginTop: 20,
   },
   searchByCodeSwitch: {
-    marginTop: '1.5em',
+    marginTop: 20,
+  },
+  switchesSection: {
+    marginTop: 20,
+  },
+  switchCondition: {
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: 20,
+    },
   },
 }));
 
@@ -82,10 +89,19 @@ const Home = () => {
 
   const [switchDNIToCode, setSwitchDNIToCode] = useState(false);
 
+  // false: student, true: teacher
+  const [switchCondition, setSwitchCondition] = React.useState(false);
+
   const handleSwitchDNIToCode = () => setSwitchDNIToCode(!switchDNIToCode);
+
+  const handleSwitchCondition = () => {
+    setSwitchCondition(!switchCondition);
+  };
+
   const validateCredentials = () => {
     history.push('/validate-credentials');
   };
+
   return (
     <React.Fragment>
       <main className={classes.mainWrapper}>
@@ -141,8 +157,9 @@ const Home = () => {
               </Button>
             </div>
           </Hidden>
-          <div className={classes.searchByCodeSwitch}>
+          <div className={classes.switchesSection}>
             <FormControlLabel
+              className={classes.switchDNIToCode}
               control={
                 <CustomSwitch
                   checked={switchDNIToCode}
@@ -152,6 +169,18 @@ const Home = () => {
                 />
               }
               label="Buscar por código UNI"
+            />
+            <FormControlLabel
+              className={classes.switchCondition}
+              control={
+                <CustomSwitch
+                  checked={switchCondition}
+                  onChange={handleSwitchCondition}
+                  inputProps={{ 'aria-label': 'switcher-condition' }}
+                  name="switch-condition"
+                />
+              }
+              label="Soy docente"
             />
           </div>
         </div>

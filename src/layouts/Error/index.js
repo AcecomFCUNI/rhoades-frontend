@@ -1,5 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
+import Footer from 'layouts/Public/components/Footer';
+
+const footerHeight = 60;
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -10,7 +13,12 @@ const useStyles = makeStyles(() => ({
 const Error = ({ children }) => {
   const classes = useStyles();
 
-  return <main className={classes.root}>{children}</main>;
+  return (
+    <React.Fragment>
+      <main className={classes.root}>{children}</main>
+      <Footer height={footerHeight} />
+    </React.Fragment>
+  );
 };
 
 export default Error;

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.6
+
+### Added
+
+- New switch to change the condition of the user between `teacher` and `student`.
+- Illustrations were added from [`unDraw`](https://undraw.co/illustrations).
+- The not found (404) page was stylized and is responsive now.
+
+### Updated
+
+- The register and not authorized on list pages now are responsive
+
 ## 1.0.5
 
 ### Updated

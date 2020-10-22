@@ -5,7 +5,7 @@ import Register from './components/Register';
 import Unauthorized from './components/Unauthorized';
 
 const ValidateCredentials = () => {
-  const [status, setStatus] = useState('login');
+  const [status] = useState('login');
 
   // TODO: check if the credentials are valid and if
   // will register or login

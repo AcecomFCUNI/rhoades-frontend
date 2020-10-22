@@ -1,14 +1,17 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+
+import { GeneralError } from 'components';
+import NotFoundSvg from 'assets/images/undraw/not_found.svg';
 
 const Error404 = () => {
-  const history = useHistory();
-
   return (
-    <React.Fragment>
-      <p>404 - Not Found</p>
-      <button onClick={() => history.push('/')}>Volver al inicio</button>
-    </React.Fragment>
+    <GeneralError
+      title="Lo sentimos, no pudimos encontrar la página
+    "
+      subtitle="404 - Not Found"
+      altImage="not_found_svg"
+      srcImage={NotFoundSvg}
+    />
   );
 };
 

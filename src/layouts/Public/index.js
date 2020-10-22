@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   children: {
     backgroundColor: theme.palette.white,
     height: `calc(100vh - ${headerHeight}px)`,
-    minHeight: 500,
+    minHeight: 600,
     paddingBottom: footerHeight,
   },
 }));
