@@ -1,14 +1,17 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+
+import { GeneralError } from 'components';
+import UnauthorizedSvg from 'assets/images/undraw/unathorized.svg';
 
 const Error401 = () => {
-  const history = useHistory();
-
   return (
-    <React.Fragment>
-      <p>401 - Unauthorized</p>
-      <button onClick={() => history.push('/')}>Volver al inicio</button>
-    </React.Fragment>
+    <GeneralError
+      title="Para acceder primero ingrese su documento de identificación
+  "
+      subtitle="401 - Unauthorized"
+      altImage="unauthorized_svg"
+      srcImage={UnauthorizedSvg}
+    />
   );
 };
 

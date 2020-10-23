@@ -59,10 +59,9 @@ const Login = () => {
       mainTitle="
     Sr(a). (name)"
       secondaryTitles={[
-        'Te encuentras inscrito como personero para el presente proceso electoral',
+        'Usted se encuentra inscrito como personero para el presente proceso electoral',
       ]}
-      subtitle="Ingresa tu contraseña para acceder al sistema.
-    "
+      subtitles={['Por favor, ingrese su contraseña para acceder al sistema.']}
       altImage="login_authentication_svg"
       srcImage={loginAuthenticationSvg}
     >
@@ -73,7 +72,7 @@ const Login = () => {
           spellCheck="false"
           autoFocus
           type="password"
-          placeholder={'Ingresa tu contraseña'}
+          placeholder={'Ingrese su contraseña'}
           inputProps={{ 'aria-label': 'input password' }}
         />
       </div>

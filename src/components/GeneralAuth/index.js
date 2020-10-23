@@ -47,9 +47,12 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '1em',
     },
   },
+  subtitleSection: {
+    marginTop: '1rem',
+  },
   subtitle: {
     fontSize: '1.15em',
-    marginTop: '1rem',
+    marginTop: '0.5rem',
     [theme.breakpoints.down('md')]: {
       fontSize: '0.9em',
     },
@@ -65,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 const GeneralAuth = ({
   mainTitle,
   secondaryTitles,
-  subtitle,
+  subtitles,
   altImage,
   srcImage,
   children,
@@ -93,16 +96,24 @@ const GeneralAuth = ({
 
               {secondaryTitles.map((secTitle, index) => (
                 <Typography
-                  key={index}
+                  key={`${secTitle}-${index}`}
                   variant="h2"
                   className={classes.secondaryTitle}
                 >
                   {secTitle}
                 </Typography>
               ))}
-              <Typography variant="subtitle1" className={classes.subtitle}>
-                {subtitle}
-              </Typography>
+              <div className={classes.subtitleSection}>
+                {subtitles.map((subtitle, index) => (
+                  <Typography
+                    key={`${subtitle}-${index}`}
+                    variant="subtitle1"
+                    className={classes.subtitle}
+                  >
+                    {subtitle}
+                  </Typography>
+                ))}
+              </div>
             </div>
             {children}
           </div>

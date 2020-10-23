@@ -7,6 +7,7 @@ import LockRoundedIcon from '@material-ui/icons/LockRounded';
 
 import { GeneralAuth } from 'components';
 import registerAuthenticationSvg from 'assets/images/undraw/register_authentication.svg';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   buttonsSection: {
@@ -31,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
 const Register = () => {
   const classes = useStyles();
   const history = useHistory();
+  const {
+    searchParams: { documentType, code },
+    data: { names, lastName, secondLastName },
+  } = useSelector((state) => state.user);
 
   const returnToHome = () => {
     history.push('/');
@@ -38,14 +43,17 @@ const Register = () => {
 
   return (
     <GeneralAuth
-      mainTitle="
-¡Enhorabuena!"
+      mainTitle={`
+        Sr. ${lastName}`}
       secondaryTitles={[
         'Usted se encuentra inscrito en el padrón electoral.',
         'Para poder generar su contraseña, haga click en "Generar contraseña".',
       ]}
-      subtitle="Le enviaremos su contraseña a su correo institucional.
-"
+      subtitles={[
+        `${documentType ? 'Código UNI' : 'DNI, CE u otros'}: ${code}`,
+        `Usuario: ${names} ${lastName} ${secondLastName}`,
+        'Le enviaremos su contraseña a su correo institucional.',
+      ]}
       altImage="register_authentication_svg"
       srcImage={registerAuthenticationSvg}
     >

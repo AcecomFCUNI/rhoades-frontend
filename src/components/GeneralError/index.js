@@ -2,6 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, makeStyles, Typography } from '@material-ui/core';
 
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
+
 const useStyles = makeStyles((theme) => ({
   mainWrapper: {
     height: '100%',
@@ -11,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   title: {
-    fontSize: '3em',
+    fontSize: '2.3em',
     textAlign: 'center',
     [theme.breakpoints.down('md')]: {
       fontSize: '2em',
@@ -21,13 +23,15 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('xs')]: {
       fontSize: '1.5em',
+      margin: '0 16px',
     },
   },
   image: {
-    maxWidth: 500,
-    width: 500,
+    margin: '30px 0',
+    maxWidth: 400,
+    width: 400,
     [theme.breakpoints.down('md')]: {
-      width: 400,
+      width: 350,
     },
     [theme.breakpoints.down('xs')]: {
       width: 300,
@@ -36,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
   returnHomeButton: {
     color: theme.palette.white,
     fontWeight: 'bold',
-    marginTop: 35,
   },
 }));
 
@@ -56,6 +59,7 @@ const GeneralError = ({ title, subtitle, altImage, srcImage }) => {
       <Typography variant="subtitle1">{subtitle}</Typography>
       <img alt={altImage} src={srcImage} className={classes.image} />
       <Button
+        startIcon={<HomeRoundedIcon />}
         size="large"
         variant="contained"
         color="primary"

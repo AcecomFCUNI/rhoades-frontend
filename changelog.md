@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.0
+
+### Added
+
+- Now we are connected to the [`backend`](https://acecom-rhoades.herokuapp.com/)
+- Find user by code and condition duck and saga were created.
+- Request tools with [`axios`] were created.
+- Now the home page input field validates the `code`, `documentType` and `condition` that you enter with the database.
+
+### Updated
+
+- The unauthorized (401) page was stylized and is responsive now.
+
 ## 1.0.8
 
 ### Added

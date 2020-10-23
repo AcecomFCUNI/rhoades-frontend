@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -12,8 +12,9 @@ import {
 
 import SearchIcon from '@material-ui/icons/Search';
 
-import { CustomSwitch, CustomInput } from 'components';
+import { CustomSwitch, CustomInput, Spinner } from 'components';
 import { showAlertSnackbar } from 'ducks';
+import { requestFindUserByConditionAndCode } from 'ducks/findUserByConditionAndCode';
 
 const useStyles = makeStyles((theme) => ({
   mainWrapper: {
@@ -90,11 +91,25 @@ const Home = () => {
 
   // false: DNI or CE, true: UNIcode
   const [switchDniToUniCode, setSwitchDniToUniCode] = useState(false);
-
   // false: student, true: teacher
   const [switchCondition, setSwitchCondition] = useState(false);
   const [uniCodeInput, setUniCodeInput] = useState('');
   const [dniInput, setDniInput] = useState('');
+
+  const { loading } = useSelector((state) => state.user);
+
+  const getSearchButton = (isFullWidth) => (
+    <Button
+      fullWidth={isFullWidth}
+      size="large"
+      variant="contained"
+      color="primary"
+      className={classes.searchButton}
+      onClick={handleValidateCredentials}
+    >
+      Buscar
+    </Button>
+  );
 
   const handleSwitchDniToUniCode = () =>
     setSwitchDniToUniCode(!switchDniToUniCode);
@@ -103,32 +118,47 @@ const Home = () => {
     setSwitchCondition(!switchCondition);
   };
 
+  const handleRequestValidateToApi = () => {
+    const searchParams = {
+      condition: switchCondition ? 'teacher' : 'student',
+      documentType: switchDniToUniCode ? 1 : 0,
+      code: switchDniToUniCode ? uniCodeInput : dniInput,
+    };
+    dispatch(requestFindUserByConditionAndCode(searchParams, history));
+    handleResetSearchValues();
+  };
+
+  const handleResetSearchValues = () => {
+    setSwitchCondition(false);
+    setSwitchDniToUniCode(false);
+    setUniCodeInput('');
+    setDniInput('');
+  };
+
   const handleValidateCredentials = () => {
     if (switchDniToUniCode) {
       const uniCodeRegex = /^[0-9]{8}[A-Z]$/;
-
       const match = uniCodeRegex.test(uniCodeInput);
-      if (match) {
+
+      if (match) handleRequestValidateToApi();
+      else
         dispatch(
-          showAlertSnackbar('success', 'Usuario encontrado satisfactoriamente')
-        );
-        history.push('/validate-credentials');
-      } else
-        dispatch(
-          showAlertSnackbar('error', 'Por favor, ingrese un código válido')
+          showAlertSnackbar(
+            'error',
+            'Por favor, ingrese un código válido. Ej: 87654321A'
+          )
         );
     } else {
       const dniRegex = /^[0-9]{8}$/;
       const match = dniRegex.test(dniInput);
 
-      if (match) {
+      if (match) handleRequestValidateToApi();
+      else
         dispatch(
-          showAlertSnackbar('success', 'Usuario encontrado satisfactoriamente')
-        );
-        history.push('/validate-credentials');
-      } else
-        dispatch(
-          showAlertSnackbar('error', 'Por favor, ingrese un documento válido')
+          showAlertSnackbar(
+            'error',
+            'Por favor, ingrese un documento válido. Ej: 87654321'
+          )
         );
     }
   };
@@ -152,94 +182,73 @@ const Home = () => {
     else setDniInput(dni);
   };
 
-  return (
-    <React.Fragment>
-      <main className={classes.mainWrapper}>
-        <div className={classes.mainContent}>
-          <div className={classes.textSection}>
-            <Typography variant="h1" className={classes.mainTitle}>
-              Elecciones UNI 2020
-            </Typography>
-            <Typography variant="h2" className={classes.secondaryTitle}>
-              Verifica si te encuentras en el padrón electoral para poder
-              registrarte como personero
-            </Typography>
-          </div>
-          <div className={classes.searchEmailInputWrapper}>
-            <CustomInput
-              icon={<SearchIcon />}
-              spellCheck="false"
-              autoFocus
-              maxLength="9"
-              type="text"
-              placeholder={
-                switchDniToUniCode
-                  ? 'Ingresa tu código UNI'
-                  : 'Ingresa tu DNI, CE u otro documento'
-              }
-              inputProps={{ 'aria-label': 'verify email' }}
-              onChange={
-                switchDniToUniCode ? handleValidateUniCode : handleValidateDni
-              }
-              value={switchDniToUniCode ? uniCodeInput : dniInput}
-            />
-            <Hidden xsDown>
-              <Button
-                size="large"
-                variant="contained"
-                color="primary"
-                className={classes.searchButton}
-                onClick={handleValidateCredentials}
-              >
-                Buscar
-              </Button>
-            </Hidden>
-          </div>
-
-          <Hidden smUp>
-            <div className={classes.searchButtonMdWrapper}>
-              <Button
-                fullWidth
-                size="large"
-                variant="contained"
-                color="primary"
-                className={classes.searchButton}
-                onClick={handleValidateCredentials}
-              >
-                Buscar
-              </Button>
-            </div>
-          </Hidden>
-          <div className={classes.switchesSection}>
-            <FormControlLabel
-              className={classes.switchDniToUniCode}
-              control={
-                <CustomSwitch
-                  checked={switchDniToUniCode}
-                  onChange={handleSwitchDniToUniCode}
-                  inputProps={{ 'aria-label': 'switcher-dni-code' }}
-                  name="switch-dni-code"
-                />
-              }
-              label="Buscar por código UNI"
-            />
-            <FormControlLabel
-              className={classes.switchCondition}
-              control={
-                <CustomSwitch
-                  checked={switchCondition}
-                  onChange={handleSwitchCondition}
-                  inputProps={{ 'aria-label': 'switcher-condition' }}
-                  name="switch-condition"
-                />
-              }
-              label="Soy docente"
-            />
-          </div>
+  return loading ? (
+    <Spinner />
+  ) : (
+    <main className={classes.mainWrapper}>
+      <div className={classes.mainContent}>
+        <div className={classes.textSection}>
+          <Typography variant="h1" className={classes.mainTitle}>
+            Elecciones UNI 2020
+          </Typography>
+          <Typography variant="h2" className={classes.secondaryTitle}>
+            Verifica si te encuentras en el padrón electoral para poder
+            registrarte como personero
+          </Typography>
         </div>
-        {/* {codeUNIRegex.test('20184159B') ? 'si es valido' : 'no es valido'} */}
-      </main>
-    </React.Fragment>
+        <div className={classes.searchEmailInputWrapper}>
+          <CustomInput
+            icon={<SearchIcon />}
+            spellCheck="false"
+            autoFocus
+            maxLength="9"
+            type="text"
+            placeholder={
+              switchDniToUniCode
+                ? 'Ingresa tu código UNI'
+                : 'Ingresa tu DNI, CE u otro documento'
+            }
+            inputProps={{ 'aria-label': 'verify email' }}
+            onChange={
+              switchDniToUniCode ? handleValidateUniCode : handleValidateDni
+            }
+            value={switchDniToUniCode ? uniCodeInput : dniInput}
+          />
+          <Hidden xsDown>{getSearchButton(false)}</Hidden>
+        </div>
+        <Hidden smUp>
+          <div className={classes.searchButtonMdWrapper}>
+            {getSearchButton(true)}
+          </div>
+        </Hidden>
+        <div className={classes.switchesSection}>
+          <FormControlLabel
+            className={classes.switchDniToUniCode}
+            control={
+              <CustomSwitch
+                checked={switchDniToUniCode}
+                onChange={handleSwitchDniToUniCode}
+                inputProps={{ 'aria-label': 'switcher-dni-code' }}
+                name="switch-dni-code"
+              />
+            }
+            label="Buscar por código UNI"
+          />
+          <FormControlLabel
+            className={classes.switchCondition}
+            control={
+              <CustomSwitch
+                checked={switchCondition}
+                onChange={handleSwitchCondition}
+                inputProps={{ 'aria-label': 'switcher-condition' }}
+                name="switch-condition"
+              />
+            }
+            label="Soy docente"
+          />
+        </div>
+      </div>
+    </main>
   );
 };
 

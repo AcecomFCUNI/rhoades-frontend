@@ -42,7 +42,7 @@ const Unauthorized = () => {
       secondaryTitles={[
         'Usted no se encuentra inscrito en el padrón electoral',
       ]}
-      subtitle="Si crees que es un error, por favor no dude contactarnos a:"
+      subtitle={['Si crees que es un error, por favor no dude contactarnos a:']}
       altImage="not_authorized_in_register_svg"
       srcImage={notAuthorizedInRegister}
     >

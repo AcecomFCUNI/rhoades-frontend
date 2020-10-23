@@ -1,7 +1,9 @@
-import { all } from 'redux-saga/effects';
+import { all, fork } from 'redux-saga/effects';
+
+import findUserByConditionAndCode from './findUserByConditionAndCode';
 
 function* rootSaga() {
-  yield all([]);
+  yield all([fork(findUserByConditionAndCode)]);
 }
 
 export default rootSaga;
