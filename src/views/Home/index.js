@@ -61,10 +61,8 @@ const useStyles = makeStyles((theme) => ({
   searchButton: {
     color: theme.palette.white,
     marginLeft: '1em',
-    // width: '10em',
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
-      // marginTop: '1.5em',
     },
   },
   searchButtonMdWrapper: {
@@ -87,19 +85,56 @@ const Home = () => {
   const classes = useStyles();
   const history = useHistory();
 
-  const [switchDNIToCode, setSwitchDNIToCode] = useState(false);
+  // false: DNI or CE, true: UNIcode
+  const [switchDniToUniCode, setSwitchDniToUniCode] = useState(false);
 
   // false: student, true: teacher
-  const [switchCondition, setSwitchCondition] = React.useState(false);
+  const [switchCondition, setSwitchCondition] = useState(false);
+  const [uniCodeInput, setUniCodeInput] = useState('');
+  const [dniInput, setDniInput] = useState('');
 
-  const handleSwitchDNIToCode = () => setSwitchDNIToCode(!switchDNIToCode);
+  const handleSwitchDniToUniCode = () =>
+    setSwitchDniToUniCode(!switchDniToUniCode);
 
   const handleSwitchCondition = () => {
     setSwitchCondition(!switchCondition);
   };
 
-  const validateCredentials = () => {
-    history.push('/validate-credentials');
+  const handleValidateCredentials = () => {
+    if (switchDniToUniCode) {
+      const uniCodeRegex = /^[0-9]{8}[A-Z]$/;
+
+      const match = uniCodeRegex.test(uniCodeInput);
+      if (match) {
+        history.push('/validate-credentials');
+      } else alert('Por favor, ingrese un código válido');
+    } else {
+      const dniRegex = /^[0-9]{8}$/;
+      const match = dniRegex.test(dniInput);
+
+      if (match) {
+        history.push('/validate-credentials');
+      } else alert('Por favor, ingrese un documento válido');
+    }
+  };
+
+  const handleValidateUniCode = (event) => {
+    const charactersLimit = 9;
+    const uniCode = event.target.value;
+    const uniCodeUpperCase = uniCode.toUpperCase();
+
+    if (uniCodeUpperCase.length > charactersLimit)
+      setUniCodeInput(uniCodeUpperCase.slice(0, charactersLimit));
+    else setUniCodeInput(uniCodeUpperCase);
+  };
+
+  const handleValidateDni = (event) => {
+    const charactersLimit = 8;
+    const dni = event.target.value;
+
+    if (dni.length > charactersLimit)
+      setDniInput(dni.slice(0, charactersLimit));
+    else setDniInput(dni);
   };
 
   return (
@@ -107,7 +142,6 @@ const Home = () => {
       <main className={classes.mainWrapper}>
         <div className={classes.mainContent}>
           <div className={classes.textSection}>
-            {/* TODO: set the title and subtitle */}
             <Typography variant="h1" className={classes.mainTitle}>
               Elecciones UNI 2020
             </Typography>
@@ -122,13 +156,18 @@ const Home = () => {
               icon={<SearchIcon />}
               spellCheck="false"
               autoFocus
+              maxLength="9"
               type="text"
               placeholder={
-                switchDNIToCode
+                switchDniToUniCode
                   ? 'Ingresa tu código UNI'
                   : 'Ingresa tu DNI, CE u otro documento'
               }
               inputProps={{ 'aria-label': 'verify email' }}
+              onChange={
+                switchDniToUniCode ? handleValidateUniCode : handleValidateDni
+              }
+              value={switchDniToUniCode ? uniCodeInput : dniInput}
             />
             <Hidden xsDown>
               <Button
@@ -136,7 +175,7 @@ const Home = () => {
                 variant="contained"
                 color="primary"
                 className={classes.searchButton}
-                onClick={validateCredentials}
+                onClick={handleValidateCredentials}
               >
                 Buscar
               </Button>
@@ -151,7 +190,7 @@ const Home = () => {
                 variant="contained"
                 color="primary"
                 className={classes.searchButton}
-                onClick={validateCredentials}
+                onClick={handleValidateCredentials}
               >
                 Buscar
               </Button>
@@ -159,11 +198,11 @@ const Home = () => {
           </Hidden>
           <div className={classes.switchesSection}>
             <FormControlLabel
-              className={classes.switchDNIToCode}
+              className={classes.switchDniToUniCode}
               control={
                 <CustomSwitch
-                  checked={switchDNIToCode}
-                  onChange={handleSwitchDNIToCode}
+                  checked={switchDniToUniCode}
+                  onChange={handleSwitchDniToUniCode}
                   inputProps={{ 'aria-label': 'switcher-dni-code' }}
                   name="switch-dni-code"
                 />
@@ -184,6 +223,7 @@ const Home = () => {
             />
           </div>
         </div>
+        {/* {codeUNIRegex.test('20184159B') ? 'si es valido' : 'no es valido'} */}
       </main>
     </React.Fragment>
   );

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.7
+
+### Updated
+
+- Now the input field from home page validate DNI, CE and UNI code in order to search it then in the database.
+
 ## 1.0.6a
 
 ### Updated
