@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.8
+
+### Added
+
+- Alert snackbar component has been created in order to display a message in case of `success` or `error`.
+
+### Updated
+
+- Now when the home page validates the input then displays the alert snackbar.
+
 ## 1.0.7
 
 ### Updated

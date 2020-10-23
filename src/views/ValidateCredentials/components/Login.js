@@ -67,7 +67,6 @@ const Login = () => {
       srcImage={loginAuthenticationSvg}
     >
       <div className={classes.passwordInputWrapper}>
-        {/* TODO: trim and lowercase the text */}
         <CustomInput
           icon={<LockRoundedIcon />}
           onChange={(e) => setTypeOfUser(e.target.value)}

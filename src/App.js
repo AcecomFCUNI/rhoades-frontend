@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { isLoaded } from 'react-redux-firebase';
 
-import { Spinner } from 'components';
+import { AlertSnackbar, Spinner } from 'components';
 import routes from 'routes';
 
 // set load spinning if auth or profile is starting
@@ -22,27 +22,30 @@ const ProfileIsLoaded = ({ children }) => {
 
 const App = () => {
   return (
-    <AuthIsLoaded>
-      <ProfileIsLoaded>
-        <Switch>
-          {routes.map(({ layout: Layout, views }) =>
-            views.map(({ path, component: Component }) => (
-              <Route
-                key={path}
-                exact
-                path={path}
-                render={() => (
-                  <Layout>
-                    <Component />
-                  </Layout>
-                )}
-              />
-            ))
-          )}
-          <Route component={() => <Redirect to="/error/404" />} />
-        </Switch>
-      </ProfileIsLoaded>
-    </AuthIsLoaded>
+    <React.Fragment>
+      <AlertSnackbar />
+      <AuthIsLoaded>
+        <ProfileIsLoaded>
+          <Switch>
+            {routes.map(({ layout: Layout, views }) =>
+              views.map(({ path, component: Component }) => (
+                <Route
+                  key={path}
+                  exact
+                  path={path}
+                  render={() => (
+                    <Layout>
+                      <Component />
+                    </Layout>
+                  )}
+                />
+              ))
+            )}
+            <Route component={() => <Redirect to="/error/404" />} />
+          </Switch>
+        </ProfileIsLoaded>
+      </AuthIsLoaded>
+    </React.Fragment>
   );
 };
 

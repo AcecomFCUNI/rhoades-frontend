@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
 import {
   Typography,
   Button,
@@ -12,6 +13,7 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 
 import { CustomSwitch, CustomInput } from 'components';
+import { showAlertSnackbar } from 'ducks';
 
 const useStyles = makeStyles((theme) => ({
   mainWrapper: {
@@ -84,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   // false: DNI or CE, true: UNIcode
   const [switchDniToUniCode, setSwitchDniToUniCode] = useState(false);
@@ -106,15 +109,27 @@ const Home = () => {
 
       const match = uniCodeRegex.test(uniCodeInput);
       if (match) {
+        dispatch(
+          showAlertSnackbar('success', 'Usuario encontrado satisfactoriamente')
+        );
         history.push('/validate-credentials');
-      } else alert('Por favor, ingrese un código válido');
+      } else
+        dispatch(
+          showAlertSnackbar('error', 'Por favor, ingrese un código válido')
+        );
     } else {
       const dniRegex = /^[0-9]{8}$/;
       const match = dniRegex.test(dniInput);
 
       if (match) {
+        dispatch(
+          showAlertSnackbar('success', 'Usuario encontrado satisfactoriamente')
+        );
         history.push('/validate-credentials');
-      } else alert('Por favor, ingrese un documento válido');
+      } else
+        dispatch(
+          showAlertSnackbar('error', 'Por favor, ingrese un documento válido')
+        );
     }
   };
 
@@ -151,7 +166,6 @@ const Home = () => {
             </Typography>
           </div>
           <div className={classes.searchEmailInputWrapper}>
-            {/* TODO: trim and lowercase the text */}
             <CustomInput
               icon={<SearchIcon />}
               spellCheck="false"

@@ -41,8 +41,6 @@ const CustomInput = (props) => {
       >
         {props.icon}
       </IconButton>
-      {/* TODO: validate the DNI, just 8 characters */}
-      {/* TODO: validate the codeUNI, just 9 characters */}
       <InputBase className={classes.input} {...props} />
     </Paper>
   );
