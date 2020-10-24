@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 const useStyles = makeStyles((theme) => ({
   passwordInputWrapper: {
     display: 'flex',
-    margin: '2em 0 2em 0',
+    margin: '1.4em 0',
   },
   loginButton: {
     color: theme.palette.white,

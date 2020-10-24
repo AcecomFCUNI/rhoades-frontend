@@ -26,22 +26,22 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   mainTitle: {
-    fontSize: '4em',
+    fontSize: '2.6em',
     [theme.breakpoints.down('md')]: {
-      fontSize: '3.2em',
+      fontSize: '2.5em',
     },
     [theme.breakpoints.down('sm')]: {
-      fontSize: '2.8em',
+      fontSize: '2.4em',
     },
     [theme.breakpoints.down('xs')]: {
       fontSize: '2em',
     },
   },
   secondaryTitle: {
-    fontSize: '1.4em',
-    marginTop: '1rem',
+    fontSize: '1.3em',
+    marginTop: '0.6rem',
     [theme.breakpoints.down('md')]: {
-      fontSize: '1.3em',
+      fontSize: '1.2em',
     },
     [theme.breakpoints.down('xs')]: {
       fontSize: '1em',
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   subtitle: {
     fontSize: '1.15em',
-    marginTop: '0.5rem',
+    marginTop: '0.05rem',
     [theme.breakpoints.down('md')]: {
       fontSize: '0.9em',
     },

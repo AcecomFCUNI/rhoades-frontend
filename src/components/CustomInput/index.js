@@ -15,12 +15,12 @@ const useStyles = makeStyles((theme) => ({
   input: {
     marginLeft: theme.spacing(1),
     flex: 1,
-    fontSize: '1.9em',
+    fontSize: '1.4em',
     [theme.breakpoints.down('md')]: {
-      fontSize: '1.5em',
+      fontSize: '1.3em',
     },
     [theme.breakpoints.down('sm')]: {
-      fontSize: '1.4em',
+      fontSize: '1.2em',
     },
     [theme.breakpoints.down('xs')]: {
       fontSize: '0.95em',

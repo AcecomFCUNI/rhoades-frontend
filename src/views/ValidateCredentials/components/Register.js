@@ -52,7 +52,7 @@ const Register = () => {
       subtitles={[
         `Usuario: ${names} ${lastName} ${secondLastName}`,
         `${documentType ? 'Código UNI' : 'DNI, CE u otros'}: ${code}`,
-        'Le enviaremos su contraseña a su correo institucional.',
+        'Le enviaremos su contraseña a su correo institucional (o a su correo opcional).',
       ]}
       altImage="register_authentication_svg"
       srcImage={registerAuthenticationSvg}

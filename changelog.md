@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.3
+
+### Updated
+
+- The font sizes from the home and validate credentials page were updated.
+
 ## 1.1.2
 
 ### Updated
