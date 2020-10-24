@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import Login from './components/Login';
-import Register from './components/Register';
 import { Error401 } from 'views';
+import Login from './components/Login';
+import Register from './components/Register';
+
+import { showAlertSnackbar, storeUserFoundOnCookies } from 'ducks';
 import {
   getCookie,
   getObjectFromString,
   USER_SUCCESSFULLY_LOADED,
   USER_KEY,
 } from 'tools';
-import { showAlertSnackbar, storeUserFoundOnCookies } from 'ducks';
 
 const ValidateCredentials = () => {
   // const [status] = useState('register');
@@ -37,7 +38,7 @@ const ValidateCredentials = () => {
   }, [data, dispatch]);
 
   // if data is null return error401, if not just return register
-  return !data ? <Error401 /> : <Register />;
+  return !data ? <Error401 /> : !!data.password ? <Login /> : <Register />;
 
   // TODO: check if the credentials are valid and if
   // will register or login

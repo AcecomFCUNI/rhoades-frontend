@@ -1,10 +1,16 @@
 # Changelog
 
+## 1.1.2
+
+### Updated
+
+- Now the validate credentials page redirects if you don't have a password created in the database.
+
 ## 1.1.1
 
 ### Updated
 
-- [`firebase`](), [`react-redux-firebase`]() and [`redux-firestore`] deps were removed from the project.
+- [`firebase`](https://www.npmjs.com/package/firebase), [`react-redux-firebase`](https://www.npmjs.com/package/react-redux-firebase) and [`redux-firestore`](https://www.npmjs.com/package/redux-firestore) deps were removed from the project.
 - Now the user data found by UNI code, DNI or CE is persistant using cookies.
 
 ## 1.1.0

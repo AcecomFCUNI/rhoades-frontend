@@ -8,6 +8,7 @@ import LockRoundedIcon from '@material-ui/icons/LockRounded';
 
 import { CustomInput, GeneralAuth } from 'components';
 import loginAuthenticationSvg from 'assets/images/undraw/login_authentication.svg';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   passwordInputWrapper: {
@@ -41,6 +42,10 @@ const Login = () => {
   const classes = useStyles();
   const history = useHistory();
   const [typeOfUser, setTypeOfUser] = useState('');
+  const {
+    searchParams: { code, documentType },
+    data: { names, lastName, secondLastName },
+  } = useSelector((state) => state.user);
 
   const returnToHome = () => {
     history.push('/');
@@ -56,12 +61,15 @@ const Login = () => {
 
   return (
     <GeneralAuth
-      mainTitle="
-    Sr(a). (name)"
+      mainTitle={`Sr(a). ${lastName}`}
       secondaryTitles={[
-        'Usted se encuentra inscrito como personero para el presente proceso electoral',
+        'Usted se encuentra inscrito como personero para el presente proceso electoral.',
       ]}
-      subtitles={['Por favor, ingrese su contraseña para acceder al sistema.']}
+      subtitles={[
+        `Usuario: ${names} ${lastName} ${secondLastName}`,
+        `${documentType ? 'Código UNI' : 'DNI, CE u otros'}: ${code}`,
+        'Por favor, ingrese su contraseña para acceder al sistema.',
+      ]}
       altImage="login_authentication_svg"
       srcImage={loginAuthenticationSvg}
     >

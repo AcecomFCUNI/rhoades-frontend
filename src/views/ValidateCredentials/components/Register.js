@@ -44,7 +44,7 @@ const Register = () => {
   return (
     <GeneralAuth
       mainTitle={`
-        Sr. ${lastName}`}
+        Sr(a). ${lastName}`}
       secondaryTitles={[
         'Usted se encuentra inscrito en el padrón electoral.',
         'Para poder generar su contraseña, haga click en "Generar contraseña".',
