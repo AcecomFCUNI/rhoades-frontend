@@ -19,7 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 
 // import avatarMale from 'assets/images/male2.svg';
-import { useFirebase } from 'react-redux-firebase';
+// import { useFirebase } from 'react-redux-firebase';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,10 +41,10 @@ const useStyles = makeStyles((theme) => ({
 const TopBar = ({ onOpenNavBarMobile, className, ...rest }) => {
   const classes = useStyles();
   const history = useHistory();
-  const { names, lastNames } = useSelector((state) => state.firebase.profile);
+  // const { names, lastNames } = useSelector((state) => state.firebase.profile);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const firebase = useFirebase();
+  // const firebase = useFirebase();
 
   const handleLogout = () => {
     // firebase

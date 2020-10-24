@@ -1,19 +1,19 @@
 import { combineReducers } from 'redux';
-import { firebaseReducer } from 'react-redux-firebase';
-import { firestoreReducer } from 'redux-firestore';
+// import { firebaseReducer } from 'react-redux-firebase';
+// import { firestoreReducer } from 'redux-firestore';
 import alertSnackbarReducer from './alertSnackbar';
-import findUserByConditionAndCodeReducer from './findUserByConditionAndCode';
+import userReducer from './user';
 
 // my ducks
 
 const rootReducer = combineReducers({
-  firebase: firebaseReducer,
-  firestore: firestoreReducer,
-  user: findUserByConditionAndCodeReducer,
+  // firebase: firebaseReducer,
+  // firestore: firestoreReducer,
+  user: userReducer,
   alertSnackbar: alertSnackbarReducer,
 });
 
 export default rootReducer;
 
 export * from './alertSnackbar';
-export * from './findUserByConditionAndCode';
+export * from './user';

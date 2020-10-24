@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1
+
+### Updated
+
+- [`firebase`](), [`react-redux-firebase`]() and [`redux-firestore`] deps were removed from the project.
+- Now the user data found by UNI code, DNI or CE is persistant using cookies.
+
 ## 1.1.0
 
 ### Added

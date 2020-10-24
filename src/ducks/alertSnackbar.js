@@ -1,9 +1,5 @@
-// const SHOW_ALERT_SNACKBAR = 'rhoades/alertSnackbar/SHOW_ALERT_SNACKBAR';
-// const HIDE_ALERT_SNACKBAR = 'rhoades/alertSnackbar/HIDE_ALERT_SNACKBAR';
-export const ALERT_SNACKBAR = {
-  SHOW: 'rhoades/alertSnackbar/SHOW_ALERT_SNACKBAR',
-  HIDE: 'rhoades/alertSnackbar/HIDE_ALERT_SNACKBAR',
-};
+const SHOW_ALERT_SNACKBAR = 'rhoades/alertSnackbar/SHOW_ALERT_SNACKBAR';
+const HIDE_ALERT_SNACKBAR = 'rhoades/alertSnackbar/HIDE_ALERT_SNACKBAR';
 
 // default options of the alert snackbar
 const defaultOptions = {
@@ -20,15 +16,14 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case ALERT_SNACKBAR.SHOW:
+    case SHOW_ALERT_SNACKBAR:
       return {
         ...state,
         open: true,
         severity: action.payload.severity,
         message: action.payload.message,
-        options: action.payload.options,
       };
-    case ALERT_SNACKBAR.HIDE:
+    case HIDE_ALERT_SNACKBAR:
       return {
         ...state,
         open: false,
@@ -38,15 +33,11 @@ export default function reducer(state = initialState, action) {
   }
 }
 
-export const showAlertSnackbar = (
-  severity,
-  message,
-  options = defaultOptions
-) => ({
-  type: ALERT_SNACKBAR.SHOW,
-  payload: { severity, message, options },
+export const showAlertSnackbar = (messageParams) => ({
+  type: SHOW_ALERT_SNACKBAR,
+  payload: { ...messageParams },
 });
 
 export const hideAlertSnackbar = () => ({
-  type: ALERT_SNACKBAR.HIDE,
+  type: HIDE_ALERT_SNACKBAR,
 });

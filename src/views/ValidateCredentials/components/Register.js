@@ -33,7 +33,7 @@ const Register = () => {
   const classes = useStyles();
   const history = useHistory();
   const {
-    searchParams: { documentType, code },
+    searchParams: { code, documentType },
     data: { names, lastName, secondLastName },
   } = useSelector((state) => state.user);
 
@@ -50,8 +50,8 @@ const Register = () => {
         'Para poder generar su contraseña, haga click en "Generar contraseña".',
       ]}
       subtitles={[
-        `${documentType ? 'Código UNI' : 'DNI, CE u otros'}: ${code}`,
         `Usuario: ${names} ${lastName} ${secondLastName}`,
+        `${documentType ? 'Código UNI' : 'DNI, CE u otros'}: ${code}`,
         'Le enviaremos su contraseña a su correo institucional.',
       ]}
       altImage="register_authentication_svg"

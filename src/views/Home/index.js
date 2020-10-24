@@ -13,8 +13,8 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 
 import { CustomSwitch, CustomInput, Spinner } from 'components';
-import { showAlertSnackbar } from 'ducks';
-import { requestFindUserByConditionAndCode } from 'ducks/findUserByConditionAndCode';
+import { showAlertSnackbar, findUserByConditionAndCodeRequest } from 'ducks';
+import { ENTER_VALID_DNI_CODE, ENTER_VALID_UNI_CODE } from 'tools';
 
 const useStyles = makeStyles((theme) => ({
   mainWrapper: {
@@ -124,7 +124,7 @@ const Home = () => {
       documentType: switchDniToUniCode ? 1 : 0,
       code: switchDniToUniCode ? uniCodeInput : dniInput,
     };
-    dispatch(requestFindUserByConditionAndCode(searchParams, history));
+    dispatch(findUserByConditionAndCodeRequest(searchParams, history));
     handleResetSearchValues();
   };
 
@@ -141,25 +141,13 @@ const Home = () => {
       const match = uniCodeRegex.test(uniCodeInput);
 
       if (match) handleRequestValidateToApi();
-      else
-        dispatch(
-          showAlertSnackbar(
-            'error',
-            'Por favor, ingrese un código válido. Ej: 87654321A'
-          )
-        );
+      else dispatch(showAlertSnackbar(ENTER_VALID_UNI_CODE));
     } else {
       const dniRegex = /^[0-9]{8}$/;
       const match = dniRegex.test(dniInput);
 
       if (match) handleRequestValidateToApi();
-      else
-        dispatch(
-          showAlertSnackbar(
-            'error',
-            'Por favor, ingrese un documento válido. Ej: 87654321'
-          )
-        );
+      else dispatch(showAlertSnackbar(ENTER_VALID_DNI_CODE));
     }
   };
 
