@@ -83,9 +83,11 @@ const Register = () => {
     const params = {
       id,
       condition,
+      documentType,
+      code,
     };
 
-    dispatch(sendPasswordToEmailFromUserRequest(params));
+    dispatch(sendPasswordToEmailFromUserRequest(params, history));
   };
 
   return (
@@ -93,7 +95,6 @@ const Register = () => {
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
-
       <GeneralAuth
         mainTitle={`
         Sr(a). ${lastName}`}

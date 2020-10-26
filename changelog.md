@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.1
+
+### Updated
+
+- Now the requests depends of `NODE_ENV` in order to use `development` or `production` API.
+- When you click on generate password, the view changes to the login page (while is loading a backdrop is displayed).
+
 ## 1.2.0a
 
 ### Hotfix
