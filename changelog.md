@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1a
+
+### Hotfix
+
+- The `API_URL` in production mode was fixed.
+
 ## 1.2.1
 
 ### Updated
