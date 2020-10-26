@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0a
+
+### Hotfix
+
+- Store set in mode prod.
+
 ## 1.2.0
 
 ### Added
