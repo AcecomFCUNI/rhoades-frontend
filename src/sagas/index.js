@@ -1,9 +1,15 @@
 import { all, fork } from 'redux-saga/effects';
 
-import { findUserByConditionAndCodeSaga } from './user';
+import {
+  findUserByConditionAndCodeSaga,
+  sendPasswordToEmailFromUserSaga,
+} from './user';
 
 function* rootSaga() {
-  yield all([fork(findUserByConditionAndCodeSaga)]);
+  yield all([
+    fork(findUserByConditionAndCodeSaga),
+    fork(sendPasswordToEmailFromUserSaga),
+  ]);
 }
 
 export default rootSaga;

@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.2.0
+
+### Added
+
+- The generate password button from validate credentials (register) page now works and send an email to the user with their password.
+
+### Updated
+
+- The user data that we get from API now is encrypted and decrypted from frontend.
+- The routes from backend was updated.
+- The encrypted user dada is saved in cookies.
+
+### Reminder
+
+- Redirect or change the view when the user clicks on generate password button.
+
 ## 1.1.3
 
 ### Updated

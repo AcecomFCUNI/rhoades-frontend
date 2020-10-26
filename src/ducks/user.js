@@ -7,9 +7,15 @@ export const FIND_USER_BY_CONDITION_AND_CODE_ERROR =
 
 export const STORE_FOUND_USER_ON_COOKIES =
   'rhoades/user/STORE_FOUND_USER_ON_COOKIES';
-
 // export const REMOVE_FOUND_USER_FROM_COOKIES =
 //   'rhoades/user/REMOVE_FOUND_USER_FROM_COOKIES';
+
+export const SEND_PASSWORD_TO_EMAIL_FROM_USER_REQUEST =
+  'rhoades/user/SEND_PASSWORD_TO_EMAIL_FROM_USER_REQUEST';
+export const SEND_PASSWORD_TO_EMAIL_FROM_USER_SUCCESS =
+  'rhoades/user/SEND_PASSWORD_TO_EMAIL_FROM_USER_SUCCESS';
+export const SEND_PASSWORD_TO_EMAIL_FROM_USER_ERROR =
+  'rhoades/user/SEND_PASSWORD_TO_EMAIL_FROM_USER_ERROR';
 
 const initialState = {
   searchParams: null,
@@ -50,6 +56,17 @@ export default function reducer(state = initialState, action) {
         searchParams: action.payload.user.searchParams,
         data: action.payload.user.data,
       };
+    case SEND_PASSWORD_TO_EMAIL_FROM_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SEND_PASSWORD_TO_EMAIL_FROM_USER_SUCCESS:
+    case SEND_PASSWORD_TO_EMAIL_FROM_USER_ERROR:
+      return {
+        ...state,
+        loading: false,
+      };
     // case REMOVE_FOUND_USER_FROM_COOKIES:
     default:
       return state;
@@ -74,6 +91,19 @@ export const findUserByConditionAndCodeError = (message) => ({
 export const storeUserFoundOnCookies = (user) => ({
   type: STORE_FOUND_USER_ON_COOKIES,
   payload: { user },
+});
+
+export const sendPasswordToEmailFromUserRequest = (params) => ({
+  type: SEND_PASSWORD_TO_EMAIL_FROM_USER_REQUEST,
+  payload: { params },
+});
+
+export const sendPasswordToEmailFromUserSuccess = () => ({
+  type: SEND_PASSWORD_TO_EMAIL_FROM_USER_SUCCESS,
+});
+
+export const sendPasswordToEmailFromUserError = () => ({
+  type: SEND_PASSWORD_TO_EMAIL_FROM_USER_ERROR,
 });
 
 // export const removeUserFromCookies = () => ({

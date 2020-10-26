@@ -1,5 +1,6 @@
 import axios from 'axios';
-const baseURL = process.env.REACT_APP_API_URL;
+import { API_URL } from 'keys';
+const baseURL = API_URL;
 
 const axiosInstance = (headers) => {
   let instance = axios.create({
@@ -31,4 +32,13 @@ const Post = async (route, json = {}, headers = {}) => {
   }
 };
 
-export { Get, Post };
+const Patch = async (route, json = {}, headers = {}) => {
+  try {
+    const { data } = await axiosInstance(headers).patch(route, json);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { Get, Post, Patch };

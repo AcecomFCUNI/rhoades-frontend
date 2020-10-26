@@ -3,35 +3,48 @@ import { takeLatest, put, call } from 'redux-saga/effects';
 import {
   findUserByConditionAndCodeSuccess,
   findUserByConditionAndCodeError,
+  sendPasswordToEmailFromUserSuccess,
+  sendPasswordToEmailFromUserError,
   showAlertSnackbar,
   FIND_USER_BY_CONDITION_AND_CODE_REQUEST,
+  SEND_PASSWORD_TO_EMAIL_FROM_USER_REQUEST,
 } from 'ducks';
 import {
   Get,
+  Patch,
+  decryptJsonFromString,
   createCookie,
   getStringFromObject,
+  createNewAlertSnackbarMessage,
   USER_KEY,
   USER_SUCCESSFULLY_FOUND,
-  createNewAlertSnackbarMessage,
+  PASSWORD_SENT_TO_EMAIL_SUCCESSFULLY,
+  PASSWORD_SENT_TO_EMAIL_ERROR,
 } from 'tools';
+import { KEY_JSON } from 'keys';
 
 function* findUserByConditionAndCode({ payload: { params, history } }) {
   try {
-    const {
-      message: { result },
-    } = yield call(
+    const { message: encryptedMessage } = yield call(
       Get,
-      `/${params.code}?condition=${params.condition}&documentType=${params.documentType}`
+      `/user/verify/${params.code}?condition=${params.condition}&documentType=${params.documentType}`
     );
+
+    // decrypt the message
+    const decryptedJson = decryptJsonFromString(encryptedMessage, KEY_JSON);
+
+    const cookieUserData = {
+      searchParams: params,
+      data: encryptedMessage,
+    };
     createCookie(
       USER_KEY,
-      getStringFromObject({
-        searchParams: params,
-        data: result,
-      }),
+      getStringFromObject(cookieUserData),
       '/validate-credentials'
     );
-    yield put(findUserByConditionAndCodeSuccess(result));
+    // createCookie(USER_KEY, getStringFromObject(cookieUserData), '/validate-credentials');
+
+    yield put(findUserByConditionAndCodeSuccess(decryptedJson));
     yield put(showAlertSnackbar(USER_SUCCESSFULLY_FOUND));
     history.push('/validate-credentials');
   } catch (error) {
@@ -43,9 +56,44 @@ function* findUserByConditionAndCode({ payload: { params, history } }) {
   }
 }
 
+function* sendPasswordToEmailFromUser({
+  payload: {
+    params: { id, condition },
+  },
+}) {
+  try {
+    const { error } = yield call(Patch, `/user/notify?condition=${condition}`, {
+      args: {
+        id,
+      },
+    });
+
+    if (!error) {
+      yield put(sendPasswordToEmailFromUserSuccess());
+      yield put(showAlertSnackbar(PASSWORD_SENT_TO_EMAIL_SUCCESSFULLY));
+    } else {
+      yield put(sendPasswordToEmailFromUserError());
+      yield put(showAlertSnackbar(PASSWORD_SENT_TO_EMAIL_ERROR));
+    }
+  } catch (error) {
+    const { message } = error.response.data;
+    yield put(sendPasswordToEmailFromUserError());
+    yield put(
+      showAlertSnackbar(createNewAlertSnackbarMessage('error', message))
+    );
+  }
+}
+
 export function* findUserByConditionAndCodeSaga() {
   yield takeLatest(
     FIND_USER_BY_CONDITION_AND_CODE_REQUEST,
     findUserByConditionAndCode
+  );
+}
+
+export function* sendPasswordToEmailFromUserSaga() {
+  yield takeLatest(
+    SEND_PASSWORD_TO_EMAIL_FROM_USER_REQUEST,
+    sendPasswordToEmailFromUser
   );
 }

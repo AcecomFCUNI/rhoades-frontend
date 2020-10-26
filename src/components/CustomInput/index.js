@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
   },
   input: {
+    fontFamily: 'Nunito',
     marginLeft: theme.spacing(1),
     flex: 1,
     fontSize: '1.4em',

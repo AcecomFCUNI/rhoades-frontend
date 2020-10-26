@@ -5,13 +5,16 @@ import { Error401 } from 'views';
 import Login from './components/Login';
 import Register from './components/Register';
 
-import { showAlertSnackbar, storeUserFoundOnCookies } from 'ducks';
+import { showAlertSnackbar } from 'ducks/alertSnackbar';
+import { storeUserFoundOnCookies } from 'ducks/user';
 import {
   getCookie,
+  decryptJsonFromString,
   getObjectFromString,
-  USER_SUCCESSFULLY_LOADED,
   USER_KEY,
+  USER_SUCCESSFULLY_LOADED,
 } from 'tools';
+import { KEY_JSON } from 'keys';
 
 const ValidateCredentials = () => {
   // const [status] = useState('register');
@@ -19,29 +22,32 @@ const ValidateCredentials = () => {
   const { data } = useSelector((state) => state.user);
 
   useEffect(() => {
-    const dataFromCookies = getObjectFromString(getCookie(USER_KEY));
+    const currentUser = getCookie(USER_KEY);
 
     // if data is null set the info from cookies
     if (!data) {
-      if (!dataFromCookies) {
+      if (!currentUser) {
         const noValues = {
           searchParams: null,
           data: null,
         };
-
         dispatch(storeUserFoundOnCookies(noValues));
       } else {
-        dispatch(storeUserFoundOnCookies(dataFromCookies));
+        const currentUserJson = getObjectFromString(currentUser);
+        dispatch(
+          storeUserFoundOnCookies({
+            searchParams: currentUserJson.searchParams,
+            data: decryptJsonFromString(currentUserJson.data, KEY_JSON),
+          })
+        );
         dispatch(showAlertSnackbar(USER_SUCCESSFULLY_LOADED));
       }
     }
   }, [data, dispatch]);
 
-  // if data is null return error401, if not just return register
+  // if data is null return error401, if not check
+  // if data.password exists -> Login | if not -> Register
   return !data ? <Error401 /> : !!data.password ? <Login /> : <Register />;
-
-  // TODO: check if the credentials are valid and if
-  // will register or login
 };
 
 export default ValidateCredentials;
