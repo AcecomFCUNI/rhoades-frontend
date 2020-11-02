@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFirebase, useFirestore } from 'react-redux-firebase';
 
-import { Button, makeStyles, Hidden } from '@material-ui/core';
+import { Button, Hidden, IconButton, makeStyles } from '@material-ui/core';
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
 import LockRoundedIcon from '@material-ui/icons/LockRounded';
+import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
+import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded';
 
-import { CustomInput, GeneralAuth } from 'components';
+import { CustomInput, CustomTooltip, GeneralAuth } from 'components';
+import { USERS_NAME_COLLECTION } from 'keys';
+import { showAlertSnackbar } from 'ducks';
+import { LOGIN_SUCCESSFULLY, LOGIN_WITH_WRONG_PASSWORD } from 'tools';
+
 import loginAuthenticationSvg from 'assets/images/undraw/login_authentication.svg';
-import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   passwordInputWrapper: {
@@ -16,13 +23,9 @@ const useStyles = makeStyles((theme) => ({
     margin: '1.4em 0',
   },
   loginButton: {
-    color: theme.palette.white,
     fontWeight: 'bold',
     marginLeft: '1em',
     width: '10em',
-  },
-  loginButtonXs: {
-    color: theme.palette.white,
   },
   buttonsSection: {
     display: 'flex',
@@ -41,23 +44,34 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles();
   const history = useHistory();
-  const [typeOfUser, setTypeOfUser] = useState('');
+  const firebase = useFirebase();
+  const firestore = useFirestore();
+  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
   const {
     searchParams: { code, documentType },
-    data: { names, lastName, secondLastName },
+    data: { id, mail, names, lastName, secondLastName },
   } = useSelector((state) => state.user);
 
-  const returnToHome = () => {
-    history.push('/');
-  };
+  const returnToHome = () => history.push('/');
 
-  const handleLogin = () => {
-    if (typeOfUser === 'student')
-      history.push('/student/enroll-list/faculty-third');
-    else if (typeOfUser === 'teacher')
-      history.push('/teacher/enroll-list-or-candidate/decan');
-    else if (typeOfUser === 'admin') history.push('/admin/lists/faculty-third');
-  };
+  const handleShowPassword = () => setShowPassword(!showPassword);
+
+  const handleLogin = () =>
+    firebase
+      .login({ email: mail, password: passwordInput })
+      .then(() => {
+        firestore
+          .collection(USERS_NAME_COLLECTION)
+          .doc(id)
+          .get()
+          .then((doc) => {
+            dispatch(showAlertSnackbar(LOGIN_SUCCESSFULLY));
+            history.push(`/${doc.data().type.trim()}`);
+          });
+      })
+      .catch(() => dispatch(showAlertSnackbar(LOGIN_WITH_WRONG_PASSWORD)));
 
   return (
     <GeneralAuth
@@ -75,11 +89,36 @@ const Login = () => {
     >
       <div className={classes.passwordInputWrapper}>
         <CustomInput
-          icon={<LockRoundedIcon />}
-          onChange={(e) => setTypeOfUser(e.target.value)}
+          beforeicon={
+            <IconButton disabled aria-label="password-icon">
+              <LockRoundedIcon />
+            </IconButton>
+          }
+          aftericon={
+            <CustomTooltip
+              placement="left"
+              title={
+                !showPassword ? 'Mostrar contraseña' : 'Ocultar contraseña'
+              }
+            >
+              <IconButton
+                className={classes.icon}
+                aria-label="show-hide-icon"
+                onClick={handleShowPassword}
+              >
+                {showPassword ? (
+                  <VisibilityRoundedIcon />
+                ) : (
+                  <VisibilityOffRoundedIcon />
+                )}
+              </IconButton>
+            </CustomTooltip>
+          }
+          onChange={(e) => setPasswordInput(e.target.value)}
+          value={passwordInput}
           spellCheck="false"
           autoFocus
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           placeholder={'Ingrese su contraseña'}
           inputProps={{ 'aria-label': 'input password' }}
         />

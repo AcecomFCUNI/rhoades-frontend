@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   makeStyles,
   AppBar,
@@ -14,12 +14,18 @@ import {
   Typography,
   Breadcrumbs,
   Link,
+  Button,
 } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import clsx from 'clsx';
 
-// import avatarMale from 'assets/images/male2.svg';
-// import { useFirebase } from 'react-redux-firebase';
+import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
+
+import clsx from 'clsx';
+import { showAlertSnackbar } from 'ducks';
+
+import { useFirebase } from 'react-redux-firebase';
+
+import { LOGOUT_WITH_ERROR } from 'tools';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,66 +47,36 @@ const useStyles = makeStyles((theme) => ({
 const TopBar = ({ onOpenNavBarMobile, className, ...rest }) => {
   const classes = useStyles();
   const history = useHistory();
-  // const { names, lastNames } = useSelector((state) => state.firebase.profile);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  // const firebase = useFirebase();
+  const dispatch = useDispatch();
+  const firebase = useFirebase();
 
-  const handleLogout = () => {
-    // firebase
-    //   .logout()
-    //   .then(() => {
-    //     history.push('/auth/signin');
-    //   })
-    //   .catch((err) => alert(err.message));
-    history.push('/');
-  };
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleLogout = () =>
+    firebase
+      .logout()
+      .then(() => {
+        history.push('/');
+      })
+      .catch(() => dispatch(showAlertSnackbar(LOGOUT_WITH_ERROR)));
 
   return (
     <AppBar {...rest} className={clsx(classes.root, className)}>
       <Toolbar>
         <Hidden lgUp>
-          <IconButton
-            size="small"
-            color="primary"
-            edge="start"
-            onClick={onOpenNavBarMobile}
-          >
-            <MenuIcon />
+          <IconButton size="small" edge="start" onClick={onOpenNavBarMobile}>
+            <MenuRoundedIcon />
           </IconButton>
         </Hidden>
         <div className={classes.flexGrow} />
-        <Avatar
-          onClick={handleMenu}
-          // src={avatarMale}
-          className={classes.avatar}
-        />
-        <Menu
-          id="menu-appbar"
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={open}
-          onClose={handleClose}
-        >
-          {/* <MenuItem onClick={handleClose}>Profile</MenuItem> */}
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        </Menu>
+        <Hidden mdUp>
+          <IconButton onClick={handleLogout}>
+            <ExitToAppRoundedIcon />
+          </IconButton>
+        </Hidden>
+        <Hidden smDown>
+          <Button variant="contained" color="primary" onClick={handleLogout}>
+            Salir
+          </Button>
+        </Hidden>
       </Toolbar>
     </AppBar>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Button,
@@ -8,13 +9,13 @@ import {
   CircularProgress,
   makeStyles,
 } from '@material-ui/core';
+
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 import LockRoundedIcon from '@material-ui/icons/LockRounded';
 
 import { GeneralAuth } from 'components';
-import registerAuthenticationSvg from 'assets/images/undraw/register_authentication.svg';
-import { useDispatch, useSelector } from 'react-redux';
 import { sendPasswordToEmailFromUserRequest } from 'ducks';
+import registerAuthenticationSvg from 'assets/images/undraw/register_authentication.svg';
 
 const useStyles = makeStyles((theme) => ({
   buttonsSection: {
@@ -31,9 +32,6 @@ const useStyles = makeStyles((theme) => ({
       marginTop: 20,
     },
   },
-  registerButton: {
-    color: theme.palette.white,
-  },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
@@ -45,11 +43,11 @@ const Register = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const {
-    loading,
-    searchParams: { code, documentType, condition },
-    data: { id, names, lastName, secondLastName },
-  } = useSelector((state) => state.user);
+  const { loading, searchParams, data } = useSelector((state) => state.user);
+
+  // destructuring
+  const { id, names, lastName, secondLastName } = data;
+  const { code, documentType, condition } = searchParams;
 
   const getReturnToHomeButton = () => (
     <Button
@@ -66,7 +64,6 @@ const Register = () => {
 
   const getGeneratePasswordButton = () => (
     <Button
-      className={classes.registerButton}
       endIcon={<LockRoundedIcon />}
       size="large"
       variant="contained"
@@ -81,10 +78,11 @@ const Register = () => {
 
   const handleGeneratePassword = () => {
     const params = {
-      id,
-      condition,
-      documentType,
-      code,
+      currentData: data,
+      sendData: {
+        id,
+        condition,
+      },
     };
 
     dispatch(sendPasswordToEmailFromUserRequest(params, history));

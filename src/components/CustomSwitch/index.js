@@ -38,21 +38,19 @@ const CustomSwitch = withStyles((theme) => ({
   },
   checked: {},
   focusVisible: {},
-}))(({ classes, ...props }) => {
-  return (
-    <Switch
-      focusVisibleClassName={classes.focusVisible}
-      disableRipple
-      classes={{
-        root: classes.root,
-        switchBase: classes.switchBase,
-        thumb: classes.thumb,
-        track: classes.track,
-        checked: classes.checked,
-      }}
-      {...props}
-    />
-  );
-});
+}))(({ classes, ...props }) => (
+  <Switch
+    focusVisibleClassName={classes.focusVisible}
+    disableRipple
+    classes={{
+      root: classes.root,
+      switchBase: classes.switchBase,
+      thumb: classes.thumb,
+      track: classes.track,
+      checked: classes.checked,
+    }}
+    {...props}
+  />
+));
 
 export default CustomSwitch;

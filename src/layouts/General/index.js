@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-// import { Redirect } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core';
-// import { useSelector } from 'react-redux';
-// import { isEmpty, isLoaded } from 'react-redux-firebase';
 
 import { NavBar, TopBar } from './components';
 
@@ -42,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
 
 const GeneralLayout = ({ roleLabel, navigationConfig, children }) => {
   const classes = useStyles();
+
   const [openNavBarMobile, setOpenNavBarMobile] = useState(false);
-  // const { auth, profile } = useSelector((state) => state.firebase);
 
   const handleNavBarMobileOpen = () => {
     setOpenNavBarMobile(true);
@@ -53,12 +50,6 @@ const GeneralLayout = ({ roleLabel, navigationConfig, children }) => {
     setOpenNavBarMobile(false);
   };
 
-  // if (
-  //   isLoaded(auth) &&
-  //   isLoaded(profile) &&
-  //   !isEmpty(auth) &&
-  //   !isEmpty(profile)
-  // )
   return (
     <div className={classes.root}>
       <NavBar
@@ -77,8 +68,6 @@ const GeneralLayout = ({ roleLabel, navigationConfig, children }) => {
       </div>
     </div>
   );
-
-  // return <Redirect to="/error/401" />;
 };
 
 export default GeneralLayout;

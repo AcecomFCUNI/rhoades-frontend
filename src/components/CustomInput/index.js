@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Paper, IconButton, InputBase, makeStyles } from '@material-ui/core';
+import { Paper, InputBase, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   inputPaper: {
@@ -8,9 +8,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     width: '100%',
-  },
-  icon: {
-    padding: 10,
   },
   input: {
     fontFamily: 'Nunito',
@@ -31,18 +28,13 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomInput = (props) => {
   const classes = useStyles();
+  const { aftericon = null, beforeicon = null } = props;
 
   return (
     <Paper component="form" className={classes.inputPaper} elevation={0}>
-      <IconButton
-        disabled
-        type="submit"
-        className={classes.icon}
-        aria-label="input-icon"
-      >
-        {props.icon}
-      </IconButton>
-      <InputBase className={classes.input} {...props} />
+      {beforeicon}
+      <InputBase className={classes.input} {...props} spellCheck={false} />
+      {aftericon}
     </Paper>
   );
 };

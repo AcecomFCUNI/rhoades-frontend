@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.0
+
+### Added
+
+- [`universal-cookie`](https://www.npmjs.com/package/universal-cookie) was added for storing and getting cookies from the browser.
+- New view was added in case if the user doesn't have an email associated to their info in the database.
+
+### Updated
+
+- [`firebase`](https://www.npmjs.com/package/firebase), [`react-redux-firebase`](https://www.npmjs.com/package/react-redux-firebase) and [`redux-firestore`](https://www.npmjs.com/package/redux-firestore) deps were added into the project.
+- We use [Firebase Authentication](https://firebase.google.com/docs/auth) in order to auth the user into the system.
+
 ## 1.2.1a
 
 ### Hotfix

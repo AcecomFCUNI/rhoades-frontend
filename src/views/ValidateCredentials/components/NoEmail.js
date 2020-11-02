@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Unauthorized = () => {
+const NoEmail = () => {
   const classes = useStyles();
   const history = useHistory();
   const theme = useTheme();
@@ -37,12 +37,12 @@ const Unauthorized = () => {
 
   return (
     <GeneralAuth
-      mainTitle="
-      ¡Oh, vaya!"
+      mainTitle="¡Oh, vaya!"
       secondaryTitles={[
-        'Usted no se encuentra inscrito en el padrón electoral',
+        'No se puede continuar con el registro.',
+        'Usted no posee un correo electrónico asociado a sus datos inscritos en el padrón electoral.',
       ]}
-      subtitle={['Si crees que es un error, por favor no dude contactarnos a:']}
+      subtitles={['Por favor contáctese con el centro a:']}
       altImage="not_authorized_in_register_svg"
       srcImage={notAuthorizedInRegister}
     >
@@ -55,7 +55,6 @@ const Unauthorized = () => {
       <div className={classes.buttonsSection}>
         <Button
           fullWidth={isMobile}
-          className={classes.returnHomeButton}
           startIcon={<ArrowBackIosRoundedIcon />}
           size="large"
           variant="outlined"
@@ -68,4 +67,4 @@ const Unauthorized = () => {
     </GeneralAuth>
   );
 };
-export default Unauthorized;
+export default NoEmail;

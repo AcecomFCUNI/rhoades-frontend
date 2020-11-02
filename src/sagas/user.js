@@ -12,60 +12,47 @@ import {
 import {
   Get,
   Patch,
-  decryptJsonFromString,
-  createCookie,
-  getStringFromObject,
   createNewAlertSnackbarMessage,
-  USER_KEY,
   USER_SUCCESSFULLY_FOUND,
   PASSWORD_SENT_TO_EMAIL_SUCCESSFULLY,
   PASSWORD_SENT_TO_EMAIL_ERROR,
 } from 'tools';
-import { KEY_JSON } from 'keys';
-
-function* getUserFromApi(params) {
-  const { message: encryptedMessage } = yield call(
-    Get,
-    `/user/verify/${params.code}?condition=${params.condition}&documentType=${params.documentType}`
-  );
-
-  // decrypt the message
-  const decryptedJson = decryptJsonFromString(encryptedMessage, KEY_JSON);
-
-  const cookieUserData = {
-    searchParams: params,
-    data: encryptedMessage,
-  };
-  createCookie(
-    USER_KEY,
-    getStringFromObject(cookieUserData),
-    '/validate-credentials'
-  );
-  yield put(findUserByConditionAndCodeSuccess(decryptedJson));
-}
 
 function* findUserByConditionAndCode({ payload: { params, history } }) {
   try {
-    yield getUserFromApi(params);
+    const {
+      message: { result },
+    } = yield call(
+      Get,
+      `/user/verify/${params.code}?condition=${params.condition}&documentType=${params.documentType}`
+    );
+
+    yield put(findUserByConditionAndCodeSuccess(result));
     yield put(showAlertSnackbar(USER_SUCCESSFULLY_FOUND));
     history.push('/validate-credentials');
   } catch (error) {
-    const { message } = error.response.data;
-    yield put(findUserByConditionAndCodeError(message));
+    const {
+      message: { result },
+    } = error.response.data;
+    yield put(findUserByConditionAndCodeError(result));
     yield put(
-      showAlertSnackbar(createNewAlertSnackbarMessage('error', message))
+      showAlertSnackbar(createNewAlertSnackbarMessage('error', result))
     );
   }
 }
 
-function* sendPasswordToEmailFromUser({ payload: { params } }) {
+function* sendPasswordToEmailFromUser({
+  payload: {
+    params: { currentData, sendData },
+  },
+}) {
   try {
     const { error } = yield call(
       Patch,
-      `/user/notify?condition=${params.condition}`,
+      `/user/notify?condition=${sendData.condition}`,
       {
         args: {
-          id: params.id,
+          id: sendData.id,
         },
       }
     );
@@ -73,8 +60,11 @@ function* sendPasswordToEmailFromUser({ payload: { params } }) {
     if (!error) {
       yield put(sendPasswordToEmailFromUserSuccess());
 
-      // refetch the user with the new password created
-      yield getUserFromApi(params);
+      // set the new state -> registered: true
+      // TODO: considerar si deberia agregar una pantalla de transicion para el manejo de error de enviar email
+      yield put(
+        findUserByConditionAndCodeSuccess({ ...currentData, registered: true })
+      );
       yield put(showAlertSnackbar(PASSWORD_SENT_TO_EMAIL_SUCCESSFULLY));
     } else {
       yield put(sendPasswordToEmailFromUserError());

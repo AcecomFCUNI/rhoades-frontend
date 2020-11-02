@@ -22,13 +22,13 @@ export default {
   white,
   custom,
   primary: {
-    contrastText: custom.primary.main,
+    contrastText: custom.white,
     dark: custom.primary.dark,
     main: custom.primary.main,
     light: custom.primary.light,
   },
   secondary: {
-    contrastText: white,
+    contrastText: custom.white,
     dark: custom.secondary.dark,
     main: custom.secondary.main,
     light: custom.secondary.light,

@@ -7,6 +7,7 @@ import {
   Button,
   FormControlLabel,
   Hidden,
+  IconButton,
   makeStyles,
 } from '@material-ui/core';
 
@@ -62,7 +63,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '2.5em',
   },
   searchButton: {
-    color: theme.palette.white,
     marginLeft: '1em',
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
@@ -186,10 +186,12 @@ const Home = () => {
         </div>
         <div className={classes.searchEmailInputWrapper}>
           <CustomInput
-            icon={<SearchIcon />}
-            spellCheck="false"
+            beforeicon={
+              <IconButton disabled aria-label="input-icon">
+                <SearchIcon />
+              </IconButton>
+            }
             autoFocus
-            maxLength="9"
             type="text"
             placeholder={
               switchDniToUniCode
@@ -222,6 +224,7 @@ const Home = () => {
             }
             label="Buscar por código UNI"
           />
+          {/* TODO: definir si esta bien que aun sin usar el switch de alumno/docente permita buscar la primera vista */}
           <FormControlLabel
             className={classes.switchCondition}
             control={
