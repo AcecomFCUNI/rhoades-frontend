@@ -18,8 +18,9 @@ const ValidateCredentials = () => {
   const profile = useSelector((state) => state.firebase.profile);
 
   useEffect(() => {
-    if (!!dataFromCookies) dispatch(storeUserFoundOnCookies(dataFromCookies));
-  }, [dispatch]);
+    if (!data && !!dataFromCookies)
+      dispatch(storeUserFoundOnCookies(dataFromCookies));
+  }, [dispatch, data]);
 
   return !isEmpty(profile) ? (
     <Redirect to={`/${profile.type.trim()}`} />

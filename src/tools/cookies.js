@@ -4,7 +4,7 @@ const cookies = new Cookies();
 
 export const USER_KEY = '_cusr_';
 
-export const setCookie = (key, value, path = '/') =>
+export const setCookie = (key, value, path = '/validate-credentials') =>
   cookies.set(key, value, { path, maxAge: 10 * 60 });
 
 export const getCookie = (key) => {
@@ -13,4 +13,5 @@ export const getCookie = (key) => {
   // return  cookies.get(key, { doNotParse: false });
 };
 
-export const removeCookie = (key, path = '/') => cookies.remove(key, { path });
+export const removeCookie = (key, path = '/validate-credentials') =>
+  cookies.remove(key, { path });

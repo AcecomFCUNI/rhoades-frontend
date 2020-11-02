@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.1a
+
+### Hotfix
+
+- The cookie belongs to `/validate-credentials` path.
+
 ## 1.3.1
 
 ### Updated

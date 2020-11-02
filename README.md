@@ -11,7 +11,7 @@ You need to have [`node.js`](https://nodejs.org/en/download/).
 
 ### Clone
 
-Clone this repo to your local machine using `https://github.com/AcecomFCUNI/rhoades-frontend.git`.
+Clone this repo to your local machine using `https://github.com/AcecomFCUNI/rhoades-front.git`.
 
 ## Installation
 
