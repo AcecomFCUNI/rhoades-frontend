@@ -16,6 +16,9 @@ import {
   USER_SUCCESSFULLY_FOUND,
   PASSWORD_SENT_TO_EMAIL_SUCCESSFULLY,
   PASSWORD_SENT_TO_EMAIL_ERROR,
+  getCookie,
+  setCookie,
+  USER_KEY,
 } from 'tools';
 
 function* findUserByConditionAndCode({ payload: { params, history } }) {
@@ -26,7 +29,8 @@ function* findUserByConditionAndCode({ payload: { params, history } }) {
       Get,
       `/user/verify/${params.code}?condition=${params.condition}&documentType=${params.documentType}`
     );
-
+    console.log({ searchParams: params, data: result });
+    setCookie(USER_KEY, { searchParams: params, data: result });
     yield put(findUserByConditionAndCodeSuccess(result));
     yield put(showAlertSnackbar(USER_SUCCESSFULLY_FOUND));
     history.push('/validate-credentials');
@@ -59,9 +63,13 @@ function* sendPasswordToEmailFromUser({
 
     if (!error) {
       yield put(sendPasswordToEmailFromUserSuccess());
-
-      // set the new state -> registered: true
       // TODO: considerar si deberia agregar una pantalla de transicion para el manejo de error de enviar email
+      // set the new state in store and cookies -> registered: true
+      const currentValueOfCookie = getCookie(USER_KEY);
+      setCookie(USER_KEY, {
+        ...currentValueOfCookie,
+        data: { ...currentData, registered: true },
+      });
       yield put(
         findUserByConditionAndCodeSuccess({ ...currentData, registered: true })
       );

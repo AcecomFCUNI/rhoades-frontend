@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.1
+
+### Updated
+
+- Validate credentials page redirects you if you has logged in before.
+
 ## 1.3.0
 
 ### Added
