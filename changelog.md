@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.2
+
+### Added
+
+- A production mode has been created on Netlify.
+
 ## 1.3.1a
 
 ### Hotfix

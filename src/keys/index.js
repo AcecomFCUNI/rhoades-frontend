@@ -9,7 +9,7 @@ const KEY_JSON = process.env.REACT_APP_CRYPTO_KEY_JSON;
 let API_URL = process.env.REACT_APP_PROD_API_URL;
 
 // development
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.REACT_APP_MODE !== 'production') {
   API_URL = process.env.REACT_APP_DEV_API_URL;
 }
 

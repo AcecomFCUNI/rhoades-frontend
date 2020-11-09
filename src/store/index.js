@@ -10,7 +10,7 @@ const configureStore = () => {
   let store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 
   // development
-  if (process.env.NODE_ENV !== 'production')
+  if (process.env.REACT_APP_MODE !== 'production')
     store = createStore(
       rootReducer,
       compose(
