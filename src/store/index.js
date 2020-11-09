@@ -6,11 +6,22 @@ import rootSaga from 'sagas';
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
 
-  // production
+  // production and remote development 
   let store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 
-  // development
-  if (process.env.REACT_APP_MODE !== 'production')
+  // // remote development
+  // if (process.env.REACT_APP_MODE !== 'production')
+  //   store = createStore(
+  //     rootReducer,
+  //     compose(
+  //       applyMiddleware(sagaMiddleware),
+  //       window.__REDUX_DEVTOOLS_EXTENSION__ &&
+  //         window.__REDUX_DEVTOOLS_EXTENSION__()
+  //     )
+  //   );
+  
+  // local development
+    if (process.env.NODE_ENV !== 'production')
     store = createStore(
       rootReducer,
       compose(
@@ -19,6 +30,7 @@ const configureStore = () => {
           window.__REDUX_DEVTOOLS_EXTENSION__()
       )
     );
+  
 
   sagaMiddleware.run(rootSaga);
 

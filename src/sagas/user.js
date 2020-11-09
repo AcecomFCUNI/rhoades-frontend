@@ -29,7 +29,6 @@ function* findUserByConditionAndCode({ payload: { params, history } }) {
       Get,
       `/user/verify/${params.code}?condition=${params.condition}&documentType=${params.documentType}`
     );
-    console.log({ searchParams: params, data: result });
     setCookie(USER_KEY, { searchParams: params, data: result });
     yield put(findUserByConditionAndCodeSuccess(result));
     yield put(showAlertSnackbar(USER_SUCCESSFULLY_FOUND));

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.3a
+
+### Hotfix
+
+- The development mode was fixed.
+
 ## 1.3.3
 
 ### Added
