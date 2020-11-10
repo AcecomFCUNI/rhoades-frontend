@@ -24,7 +24,7 @@ export const LOGIN_SUCCESSFULLY = {
 
 // errors
 export const ENTER_VALID_UNI_CODE = {
-  severity: success,
+  severity: error,
   message: 'Por favor, ingrese un código válido. Ej: 87654321A',
 };
 

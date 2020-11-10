@@ -1,9 +1,9 @@
-export const FIND_USER_BY_CONDITION_AND_CODE_REQUEST =
-  'rhoades/user/FIND_USER_BY_CONDITION_AND_CODE_REQUEST';
-export const FIND_USER_BY_CONDITION_AND_CODE_SUCCESS =
-  'rhoades/user/FIND_USER_BY_CONDITION_AND_CODE_SUCCESS';
-export const FIND_USER_BY_CONDITION_AND_CODE_ERROR =
-  'rhoades/user/FIND_USER_BY_CONDITION_AND_CODE_ERROR';
+export const FIND_USER_BY_CODE_REQUEST =
+  'rhoades/user/FIND_USER_BY_CODE_REQUEST';
+export const FIND_USER_BY_CODE_SUCCESS =
+  'rhoades/user/FIND_USER_BY_CODE_SUCCESS';
+export const FIND_USER_BY_CODE_ERROR =
+  'rhoades/user/FIND_USER_BY_CODE_ERROR';
 
 export const STORE_FOUND_USER_ON_COOKIES =
   'rhoades/user/STORE_FOUND_USER_ON_COOKIES';
@@ -26,7 +26,7 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case FIND_USER_BY_CONDITION_AND_CODE_REQUEST:
+    case FIND_USER_BY_CODE_REQUEST:
       return {
         ...state,
         searchParams: action.payload.params,
@@ -35,7 +35,7 @@ export default function reducer(state = initialState, action) {
         data: null,
       };
 
-    case FIND_USER_BY_CONDITION_AND_CODE_SUCCESS:
+    case FIND_USER_BY_CODE_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -43,7 +43,7 @@ export default function reducer(state = initialState, action) {
         data: action.payload.user,
       };
 
-    case FIND_USER_BY_CONDITION_AND_CODE_ERROR:
+    case FIND_USER_BY_CODE_ERROR:
       return {
         ...state,
         loading: false,
@@ -73,18 +73,18 @@ export default function reducer(state = initialState, action) {
   }
 }
 
-export const findUserByConditionAndCodeRequest = (params, history) => ({
-  type: FIND_USER_BY_CONDITION_AND_CODE_REQUEST,
+export const findUserByCodeRequest = (params, history) => ({
+  type: FIND_USER_BY_CODE_REQUEST,
   payload: { params, history },
 });
 
-export const findUserByConditionAndCodeSuccess = (user) => ({
-  type: FIND_USER_BY_CONDITION_AND_CODE_SUCCESS,
+export const findUserByCodeSuccess = (user) => ({
+  type: FIND_USER_BY_CODE_SUCCESS,
   payload: { user },
 });
 
-export const findUserByConditionAndCodeError = (message) => ({
-  type: FIND_USER_BY_CONDITION_AND_CODE_ERROR,
+export const findUserByCodeError = (message) => ({
+  type: FIND_USER_BY_CODE_ERROR,
   payload: { message },
 });
 

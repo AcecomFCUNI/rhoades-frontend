@@ -20,7 +20,7 @@ const ValidateCredentials = () => {
   useEffect(() => {
     if (!data && !!dataFromCookies)
       dispatch(storeUserFoundOnCookies(dataFromCookies));
-  }, [dispatch, data]);
+    }, [dispatch, data]);
 
   return !isEmpty(profile) ? (
     <Redirect to={`/${profile.type.trim()}`} />

@@ -1,13 +1,13 @@
 import { all, fork } from 'redux-saga/effects';
 
 import {
-  findUserByConditionAndCodeSaga,
+  findUserByCodeSaga,
   sendPasswordToEmailFromUserSaga,
 } from './user';
 
 function* rootSaga() {
   yield all([
-    fork(findUserByConditionAndCodeSaga),
+    fork(findUserByCodeSaga),
     fork(sendPasswordToEmailFromUserSaga),
   ]);
 }

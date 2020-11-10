@@ -1,13 +1,14 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 
 import {
-  findUserByConditionAndCodeSuccess,
-  findUserByConditionAndCodeError,
+  findUserByCodeSuccess,
+  findUserByCodeError,
   sendPasswordToEmailFromUserSuccess,
   sendPasswordToEmailFromUserError,
   showAlertSnackbar,
-  FIND_USER_BY_CONDITION_AND_CODE_REQUEST,
+  FIND_USER_BY_CODE_REQUEST,
   SEND_PASSWORD_TO_EMAIL_FROM_USER_REQUEST,
+  storeUserFoundOnCookies,
 } from 'ducks';
 import {
   Get,
@@ -21,23 +22,23 @@ import {
   USER_KEY,
 } from 'tools';
 
-function* findUserByConditionAndCode({ payload: { params, history } }) {
+function* findUserByCode({ payload: { params, history } }) {
   try {
     const {
       message: { result },
     } = yield call(
       Get,
-      `/user/verify/${params.code}?condition=${params.condition}&documentType=${params.documentType}`
+      `/user/verify/${params.code}?documentType=${params.documentType}`
     );
     setCookie(USER_KEY, { searchParams: params, data: result });
-    yield put(findUserByConditionAndCodeSuccess(result));
+    yield put(findUserByCodeSuccess(result));
     yield put(showAlertSnackbar(USER_SUCCESSFULLY_FOUND));
     history.push('/validate-credentials');
   } catch (error) {
     const {
-      message: { result },
+      message: {result}
     } = error.response.data;
-    yield put(findUserByConditionAndCodeError(result));
+    yield put(findUserByCodeError(result));
     yield put(
       showAlertSnackbar(createNewAlertSnackbarMessage('error', result))
     );
@@ -46,16 +47,17 @@ function* findUserByConditionAndCode({ payload: { params, history } }) {
 
 function* sendPasswordToEmailFromUser({
   payload: {
-    params: { currentData, sendData },
+    params,
   },
 }) {
   try {
+    // TODO: remove condition
     const { error } = yield call(
       Patch,
-      `/user/notify?condition=${sendData.condition}`,
+      `/user/notify?condition=student`,
       {
         args: {
-          id: sendData.id,
+          id: params.id,
         },
       }
     );
@@ -67,10 +69,11 @@ function* sendPasswordToEmailFromUser({
       const currentValueOfCookie = getCookie(USER_KEY);
       setCookie(USER_KEY, {
         ...currentValueOfCookie,
-        data: { ...currentData, registered: true },
+        data: { ...params, registered: true },
       });
       yield put(
-        findUserByConditionAndCodeSuccess({ ...currentData, registered: true })
+        storeUserFoundOnCookies({ ...currentValueOfCookie,
+          data: { ...params, registered: true }, })
       );
       yield put(showAlertSnackbar(PASSWORD_SENT_TO_EMAIL_SUCCESSFULLY));
     } else {
@@ -86,10 +89,10 @@ function* sendPasswordToEmailFromUser({
   }
 }
 
-export function* findUserByConditionAndCodeSaga() {
+export function* findUserByCodeSaga() {
   yield takeLatest(
-    FIND_USER_BY_CONDITION_AND_CODE_REQUEST,
-    findUserByConditionAndCode
+    FIND_USER_BY_CODE_REQUEST,
+    findUserByCode
   );
 }
 

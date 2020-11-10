@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.4
+
+### Updated
+
+- The switch to choose if the user was teacher or student was removed.
+- Error messages from backend (`/verify`) were updated.
+
 ## 1.3.3a
 
 ### Hotfix

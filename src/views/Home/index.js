@@ -14,7 +14,7 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 
 import { CustomSwitch, CustomInput, Spinner } from 'components';
-import { showAlertSnackbar, findUserByConditionAndCodeRequest } from 'ducks';
+import { showAlertSnackbar, findUserByCodeRequest } from 'ducks';
 import { ENTER_VALID_DNI_CODE, ENTER_VALID_UNI_CODE } from 'tools';
 
 const useStyles = makeStyles((theme) => ({
@@ -77,11 +77,6 @@ const useStyles = makeStyles((theme) => ({
   switchesSection: {
     marginTop: 20,
   },
-  switchCondition: {
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: 20,
-    },
-  },
 }));
 
 const Home = () => {
@@ -91,8 +86,6 @@ const Home = () => {
 
   // false: DNI or CE, true: UNIcode
   const [switchDniToUniCode, setSwitchDniToUniCode] = useState(false);
-  // false: student, true: teacher
-  const [switchCondition, setSwitchCondition] = useState(false);
   const [uniCodeInput, setUniCodeInput] = useState('');
   const [dniInput, setDniInput] = useState('');
 
@@ -114,22 +107,16 @@ const Home = () => {
   const handleSwitchDniToUniCode = () =>
     setSwitchDniToUniCode(!switchDniToUniCode);
 
-  const handleSwitchCondition = () => {
-    setSwitchCondition(!switchCondition);
-  };
-
   const handleRequestValidateToApi = () => {
     const searchParams = {
-      condition: switchCondition ? 'teacher' : 'student',
       documentType: switchDniToUniCode ? 1 : 0,
       code: switchDniToUniCode ? uniCodeInput : dniInput,
     };
-    dispatch(findUserByConditionAndCodeRequest(searchParams, history));
+    dispatch(findUserByCodeRequest(searchParams, history));
     handleResetSearchValues();
   };
 
   const handleResetSearchValues = () => {
-    setSwitchCondition(false);
     setSwitchDniToUniCode(false);
     setUniCodeInput('');
     setDniInput('');
@@ -223,19 +210,6 @@ const Home = () => {
               />
             }
             label="Buscar por código UNI"
-          />
-          {/* TODO: definir si esta bien que aun sin usar el switch de alumno/docente permita buscar la primera vista */}
-          <FormControlLabel
-            className={classes.switchCondition}
-            control={
-              <CustomSwitch
-                checked={switchCondition}
-                onChange={handleSwitchCondition}
-                inputProps={{ 'aria-label': 'switcher-condition' }}
-                name="switch-condition"
-              />
-            }
-            label="Soy docente"
           />
         </div>
       </div>

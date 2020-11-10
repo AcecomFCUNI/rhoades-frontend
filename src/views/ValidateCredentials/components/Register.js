@@ -46,8 +46,8 @@ const Register = () => {
   const { loading, searchParams, data } = useSelector((state) => state.user);
 
   // destructuring
-  const { id, names, lastName, secondLastName } = data;
-  const { code, documentType, condition } = searchParams;
+  const { names, lastName, secondLastName } = data;
+  const { code, documentType } = searchParams;
 
   const getReturnToHomeButton = () => (
     <Button
@@ -76,17 +76,8 @@ const Register = () => {
 
   const handleReturnToHome = () => history.push('/');
 
-  const handleGeneratePassword = () => {
-    const params = {
-      currentData: data,
-      sendData: {
-        id,
-        condition,
-      },
-    };
+  const handleGeneratePassword = () => dispatch(sendPasswordToEmailFromUserRequest(data, history));
 
-    dispatch(sendPasswordToEmailFromUserRequest(params, history));
-  };
 
   return (
     <React.Fragment>
