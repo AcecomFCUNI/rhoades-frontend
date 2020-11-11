@@ -22,7 +22,7 @@ const ValidateCredentials = () => {
       dispatch(storeUserFoundOnCookies(dataFromCookies));
     }, [dispatch, data]);
 
-  return !isEmpty(profile) ? (
+  return !isEmpty(profile) && profile.type.trim() !== 'admin' ? (
     <Redirect to={`/${profile.type.trim()}`} />
   ) : !data ? (
     <UserNotFound />

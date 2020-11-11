@@ -11,6 +11,7 @@ import {
   StudentLayout,
   TeacherLayout,
   ErrorLayout,
+  AdminLayout,
 } from 'layouts';
 import withAuthentication from 'hocs/withAuthentication';
 
@@ -34,6 +35,21 @@ const App = () => {
       <AuthIsLoaded>
         <ProfileIsLoaded>
           <Switch>
+          <Route path="/admin/:path?">
+              <AdminLayout>
+                <Switch>
+                  {routes.admin.map(({ path, component: Component }) => (
+                    <Route
+                      exact
+                      key={path}
+                      path={path}
+                      component={withAuthentication('admin', Component)}
+                    />
+                  ))}
+                  <Route component={() => <Redirect to="/error/404" />} />
+                </Switch>
+              </AdminLayout>
+            </Route>
             <Route path="/student/:path?">
               <StudentLayout>
                 <Switch>

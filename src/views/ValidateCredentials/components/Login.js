@@ -3,14 +3,11 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFirebase, useFirestore } from 'react-redux-firebase';
 
-import { Button, Hidden, IconButton, makeStyles } from '@material-ui/core';
+import { Button, Hidden, makeStyles } from '@material-ui/core';
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
-import LockRoundedIcon from '@material-ui/icons/LockRounded';
-import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
-import VisibilityOffRoundedIcon from '@material-ui/icons/VisibilityOffRounded';
 
-import { CustomInput, CustomTooltip, GeneralAuth } from 'components';
+import { CustomInputPassword, GeneralAuth } from 'components';
 import { USERS_NAME_COLLECTION } from 'keys';
 import { showAlertSnackbar } from 'ducks';
 import { LOGIN_SUCCESSFULLY, LOGIN_WITH_WRONG_PASSWORD } from 'tools';
@@ -22,17 +19,17 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     margin: '1.4em 0',
   },
-  loginButton: {
-    fontWeight: 'bold',
-    marginLeft: '1em',
-    width: '10em',
-  },
   buttonsSection: {
     display: 'flex',
     justifyContent: 'space-between',
     [theme.breakpoints.down('xs')]: {
       display: 'block',
     },
+  },
+  loginButton: {
+    fontWeight: 'bold',
+    marginLeft: '1em',
+    width: '10em',
   },
   returnHomeButton: {
     [theme.breakpoints.down('xs')]: {
@@ -47,16 +44,13 @@ const Login = () => {
   const firebase = useFirebase();
   const firestore = useFirestore();
   const dispatch = useDispatch();
-  const [showPassword, setShowPassword] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const {
     searchParams: { code, documentType },
     data: { id, mail, names, lastName, secondLastName },
   } = useSelector((state) => state.user);
-
+  
   const returnToHome = () => history.push('/');
-
-  const handleShowPassword = () => setShowPassword(!showPassword);
 
   const handleLogin = () =>
     firebase
@@ -88,38 +82,12 @@ const Login = () => {
       srcImage={loginAuthenticationSvg}
     >
       <div className={classes.passwordInputWrapper}>
-        <CustomInput
-          beforeicon={
-            <IconButton disabled aria-label="password-icon">
-              <LockRoundedIcon />
-            </IconButton>
-          }
-          aftericon={
-            <CustomTooltip
-              placement="left"
-              title={
-                !showPassword ? 'Mostrar contraseña' : 'Ocultar contraseña'
-              }
-            >
-              <IconButton
-                className={classes.icon}
-                aria-label="show-hide-icon"
-                onClick={handleShowPassword}
-              >
-                {showPassword ? (
-                  <VisibilityRoundedIcon />
-                ) : (
-                  <VisibilityOffRoundedIcon />
-                )}
-              </IconButton>
-            </CustomTooltip>
-          }
+        <CustomInputPassword
           onChange={(e) => setPasswordInput(e.target.value)}
+          submitinput={handleLogin}
           value={passwordInput}
-          spellCheck="false"
           autoFocus
-          type={showPassword ? 'text' : 'password'}
-          placeholder={'Ingrese su contraseña'}
+          placeholder='Ingrese su contraseña'
           inputProps={{ 'aria-label': 'input password' }}
         />
       </div>

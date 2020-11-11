@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Home, ValidateCredentials, Error401, Error404 } from 'views';
+import { Home, ValidateCredentials, Error401, Error404, SignInAdmin } from 'views';
 
 export default {
   public: [
@@ -12,6 +12,10 @@ export default {
       path: '/validate-credentials',
       component: ValidateCredentials,
     },
+    {
+      path: '/admin-vote',
+      component: SignInAdmin
+    }
   ],
   student: [
     {
@@ -51,6 +55,52 @@ export default {
       // component: EnrollListFacultyThird,
       component: () => <div>Decanato</div>,
     },
+    {
+      path: '/teacher/enroll-list-or-candidate/rectorate',
+      // component: EnrollListUniversityThirdCouncil,
+      component: () => <div>Rectorado</div>,
+    },
+    {
+      path: '/teacher/upload-files',
+      // component: UploadFileNid,
+      component: () => <div>Subir documentos</div>,
+    },
+  ],
+  admin: [
+    {
+      path: '/admin',
+      component: () => (
+        <Redirect to="/admin/lists/faculty-third" />
+      ),
+    },
+    {
+      path: '/admin/lists/faculty-third',
+      // component: EnrollListUniversityThirdCouncil,
+      component: () => <div>Tercio de facultad</div>,
+    },
+    {
+      path: '/admin/lists/university-third/council',
+      // component: UploadFileNid,
+      component: () => <div>Consejo universitario</div>,
+    },
+    {
+      path: '/admin/lists/university-third/assembly',
+      // component: UploadFileNid,
+      component: () => <div>Asamblea universitaria</div>,
+    },
+    {
+      path: '/admin/lists/decan',
+      // component: UploadFileNid,
+      component: () => <div>Decanato</div>,
+    },
+    {
+      path: '/admin/lists/rectorate',
+      // component: UploadFileNid,
+      component: () => <div>Rectorado</div>,
+    },
+
+
+
   ],
   error: [
     {
@@ -80,16 +130,16 @@ export default {
   //   // component: EnrollListFacultyThird,
   //   component: () => <div>Decanato</div>,
   // },
-  //     {
-  //       path: '/teacher/enroll-list-or-candidate/rectorate',
-  //       // component: EnrollListUniversityThirdCouncil,
-  //       component: () => <div>Rectorado</div>,
-  //     },
-  //     {
-  //       path: '/teacher/upload-files',
-  //       // component: UploadFileNid,
-  //       component: () => <div>Subir documentos</div>,
-  //     },
+      // {
+      //   path: '/teacher/enroll-list-or-candidate/rectorate',
+      //   // component: EnrollListUniversityThirdCouncil,
+      //   component: () => <div>Rectorado</div>,
+      // },
+      // {
+      //   path: '/teacher/upload-files',
+      //   // component: UploadFileNid,
+      //   component: () => <div>Subir documentos</div>,
+      // },
   //   ],
   // },
   // {
@@ -97,31 +147,31 @@ export default {
   //   layout: AdminLayout,
   //   isPrivate: true,
   //   views: [
-  //     {
-  //       path: '/admin/lists/faculty-third',
-  //       // component: EnrollListUniversityThirdCouncil,
-  //       component: () => <div>Tercio de facultad</div>,
-  //     },
-  //     {
-  //       path: '/admin/lists/university-third/aaaa',
-  //       // component: UploadFileNid,
-  //       component: () => <div>Consejo universitario</div>,
-  //     },
-  //     {
-  //       path: '/admin/lists/university-third/assembly',
-  //       // component: UploadFileNid,
-  //       component: () => <div>Asamblea universitaria</div>,
-  //     },
-  //     {
-  //       path: '/admin/lists/decan',
-  //       // component: UploadFileNid,
-  //       component: () => <div>Decanato</div>,
-  //     },
-  //     {
-  //       path: '/admin/lists/rectorate',
-  //       // component: UploadFileNid,
-  //       component: () => <div>Rectorado</div>,
-  //     },
+      // {
+      //   path: '/admin/lists/faculty-third',
+      //   // component: EnrollListUniversityThirdCouncil,
+      //   component: () => <div>Tercio de facultad</div>,
+      // },
+      // {
+      //   path: '/admin/lists/university-third/aaaa',
+      //   // component: UploadFileNid,
+      //   component: () => <div>Consejo universitario</div>,
+      // },
+      // {
+      //   path: '/admin/lists/university-third/assembly',
+      //   // component: UploadFileNid,
+      //   component: () => <div>Asamblea universitaria</div>,
+      // },
+      // {
+      //   path: '/admin/lists/decan',
+      //   // component: UploadFileNid,
+      //   component: () => <div>Decanato</div>,
+      // },
+      // {
+      //   path: '/admin/lists/rectorate',
+      //   // component: UploadFileNid,
+      //   component: () => <div>Rectorado</div>,
+      // },
   //   ],
   // },
   // {

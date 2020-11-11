@@ -43,6 +43,11 @@ export const LOGIN_WITH_WRONG_PASSWORD = {
   message: 'La contraseña ingresada es incorrecta',
 };
 
+export const ENTER_WRONG_CREDENTIALS = {
+  severity: error,
+  message: 'Ingrese unas credenciales válidas',
+};
+
 export const LOGOUT_WITH_ERROR = {
   severity: error,
   message: 'Ocurrió un error al intentar salir de su cuenta',

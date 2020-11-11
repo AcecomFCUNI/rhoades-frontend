@@ -66,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GeneralAuth = ({
+  reverse = false,
   mainTitle,
   secondaryTitles,
   subtitles,
@@ -78,7 +79,7 @@ const GeneralAuth = ({
   return (
     <div className={classes.mainWrapper}>
       <Grid container className={classes.mainContent}>
-        <Hidden smDown>
+      {!reverse && <Hidden smDown>
           <Grid item md={6} container justify="center" alignItems="center">
             <img
               alt={altImage}
@@ -86,7 +87,7 @@ const GeneralAuth = ({
               className={classes.authenticationSvg}
             />
           </Grid>
-        </Hidden>
+        </Hidden>}
         <Grid item container alignItems="center" xs={12} md={6}>
           <div className={classes.rightSideWrapper}>
             <div className={classes.textSection}>
@@ -118,6 +119,15 @@ const GeneralAuth = ({
             {children}
           </div>
         </Grid>
+        {reverse && <Hidden smDown>
+          <Grid item md={6} container justify="center" alignItems="center">
+            <img
+              alt={altImage}
+              src={srcImage}
+              className={classes.authenticationSvg}
+            />
+          </Grid>
+        </Hidden>}
       </Grid>
     </div>
   );

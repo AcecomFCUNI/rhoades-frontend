@@ -49,14 +49,16 @@ const TopBar = ({ onOpenNavBarMobile, className, ...rest }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const firebase = useFirebase();
+  const { type } = useSelector(state => state.firebase.profile);
 
-  const handleLogout = () =>
+  const handleLogout = () => {
     firebase
       .logout()
       .then(() => {
-        history.push('/');
+        history.push(type === 'admin' ? '/admin-vote' : '/');
       })
       .catch(() => dispatch(showAlertSnackbar(LOGOUT_WITH_ERROR)));
+  }
 
   return (
     <AppBar {...rest} className={clsx(classes.root, className)}>

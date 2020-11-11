@@ -47,7 +47,7 @@ function* findUserByCode({ payload: { params, history } }) {
 
 function* sendPasswordToEmailFromUser({
   payload: {
-    params,
+    params, 
   },
 }) {
   try {
@@ -71,6 +71,8 @@ function* sendPasswordToEmailFromUser({
         ...currentValueOfCookie,
         data: { ...params, registered: true },
       });
+      console.log({ ...currentValueOfCookie,
+        data: { ...params, registered: true }, })
       yield put(
         storeUserFoundOnCookies({ ...currentValueOfCookie,
           data: { ...params, registered: true }, })

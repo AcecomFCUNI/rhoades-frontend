@@ -28,12 +28,21 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomInput = (props) => {
   const classes = useStyles();
-  const { aftericon = null, beforeicon = null } = props;
+  const { aftericon = null, beforeicon = null, submitinput, ...restProps } = props;
 
   return (
     <Paper component="form" className={classes.inputPaper} elevation={0}>
       {beforeicon}
-      <InputBase className={classes.input} {...props} spellCheck={false} />
+      <InputBase 
+        className={classes.input} {...restProps} 
+        spellCheck={false} 
+        inputProps={{onKeyPress: (event) => {
+          if(event.key === 'Enter') {
+            event.preventDefault()
+            if(submitinput) submitinput()
+          }
+        }}}
+      />
       {aftericon}
     </Paper>
   );

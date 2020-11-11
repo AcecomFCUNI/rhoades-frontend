@@ -5,7 +5,7 @@ import SendRoundedIcon from '@material-ui/icons/SendRounded';
 
 export default [
   {
-    title: 'Dashboard',
+    title: 'Opciones',
     pages: [
       {
         title: 'Inscribir lista',

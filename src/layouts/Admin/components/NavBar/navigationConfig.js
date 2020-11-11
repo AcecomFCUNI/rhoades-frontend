@@ -5,7 +5,7 @@ import SendRoundedIcon from '@material-ui/icons/SendRounded';
 
 export default [
   {
-    title: 'Dashboard',
+    title: 'Opciones',
     pages: [
       {
         title: 'Listas',
@@ -29,7 +29,7 @@ export default [
               },
               {
                 title: 'Consejo universitario',
-                href: '/admin/lists/university-third/aaaa',
+                href: '/admin/lists/university-third/council',
                 icon: PageviewRoundedIcon,
               },
             ],

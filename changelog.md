@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.5
+
+### Added
+
+- New login page for admin was created.
+- Admin layout was created too.
+
 ## 1.3.4
 
 ### Updated

@@ -157,6 +157,9 @@ const Home = () => {
     else setDniInput(dni);
   };
 
+  const handleSubmitInput = () =>  handleValidateCredentials()
+
+
   return loading ? (
     <Spinner />
   ) : (
@@ -189,6 +192,7 @@ const Home = () => {
             onChange={
               switchDniToUniCode ? handleValidateUniCode : handleValidateDni
             }
+            submitinput={handleSubmitInput}
             value={switchDniToUniCode ? uniCodeInput : dniInput}
           />
           <Hidden xsDown>{getSearchButton(false)}</Hidden>
