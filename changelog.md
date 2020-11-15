@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.5a
+
+### Updated
+
+- The key _type_ of the user in the database was changed to _condition_.
+
 ## 1.3.5
 
 ### Added

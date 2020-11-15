@@ -62,7 +62,7 @@ const Login = () => {
           .get()
           .then((doc) => {
             dispatch(showAlertSnackbar(LOGIN_SUCCESSFULLY));
-            history.push(`/${doc.data().type.trim()}`);
+            history.push(`/${doc.data().condition}`);
           });
       })
       .catch(() => dispatch(showAlertSnackbar(LOGIN_WITH_WRONG_PASSWORD)));

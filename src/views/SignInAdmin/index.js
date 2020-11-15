@@ -68,8 +68,8 @@ const SignInAdmin = () => {
       )
       .catch(() => dispatch(showAlertSnackbar(ENTER_WRONG_CREDENTIALS)));
 
-  return (!isEmpty(profile) && profile.type.trim() === 'admin' ? 
-    <Redirect to={`/${profile.type.trim()}`} /> :
+  return (!isEmpty(profile) && profile.condition=== 'admin' ? 
+    <Redirect to={`/${profile.condition}`} /> :
     <GeneralAuth  
       mainTitle='Administrador' 
       secondaryTitles={['Administre las elecciones para el período actual']} 

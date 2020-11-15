@@ -36,7 +36,7 @@ function* findUserByCode({ payload: { params, history } }) {
     history.push('/validate-credentials');
   } catch (error) {
     const {
-      message: {result}
+      message: { result }
     } = error.response.data;
     yield put(findUserByCodeError(result));
     yield put(
@@ -54,7 +54,7 @@ function* sendPasswordToEmailFromUser({
     // TODO: remove condition
     const { error } = yield call(
       Patch,
-      `/user/notify?condition=student`,
+      '/user/notify',
       {
         args: {
           id: params.id,
@@ -71,8 +71,6 @@ function* sendPasswordToEmailFromUser({
         ...currentValueOfCookie,
         data: { ...params, registered: true },
       });
-      console.log({ ...currentValueOfCookie,
-        data: { ...params, registered: true }, })
       yield put(
         storeUserFoundOnCookies({ ...currentValueOfCookie,
           data: { ...params, registered: true }, })
@@ -83,10 +81,10 @@ function* sendPasswordToEmailFromUser({
       yield put(showAlertSnackbar(PASSWORD_SENT_TO_EMAIL_ERROR));
     }
   } catch (error) {
-    const { message } = error.response.data;
+    const { message: { result } } = error.response.data;
     yield put(sendPasswordToEmailFromUserError());
     yield put(
-      showAlertSnackbar(createNewAlertSnackbarMessage('error', message))
+      showAlertSnackbar(createNewAlertSnackbarMessage('error', result))
     );
   }
 }

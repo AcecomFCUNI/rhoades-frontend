@@ -8,12 +8,6 @@ import {
   IconButton,
   Toolbar,
   Hidden,
-  Avatar,
-  Menu,
-  MenuItem,
-  Typography,
-  Breadcrumbs,
-  Link,
   Button,
 } from '@material-ui/core';
 
@@ -49,13 +43,13 @@ const TopBar = ({ onOpenNavBarMobile, className, ...rest }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const firebase = useFirebase();
-  const { type } = useSelector(state => state.firebase.profile);
+  const { condition } = useSelector(state => state.firebase.profile);
 
   const handleLogout = () => {
     firebase
       .logout()
       .then(() => {
-        history.push(type === 'admin' ? '/admin-vote' : '/');
+        history.push(condition === 'admin' ? '/admin-vote' : '/');
       })
       .catch(() => dispatch(showAlertSnackbar(LOGOUT_WITH_ERROR)));
   }
@@ -64,13 +58,13 @@ const TopBar = ({ onOpenNavBarMobile, className, ...rest }) => {
     <AppBar {...rest} className={clsx(classes.root, className)}>
       <Toolbar>
         <Hidden lgUp>
-          <IconButton size="small" edge="start" onClick={onOpenNavBarMobile}>
+          <IconButton edge="start" onClick={onOpenNavBarMobile}>
             <MenuRoundedIcon />
           </IconButton>
         </Hidden>
         <div className={classes.flexGrow} />
         <Hidden mdUp>
-          <IconButton onClick={handleLogout}>
+          <IconButton edge="end" onClick={handleLogout}>
             <ExitToAppRoundedIcon />
           </IconButton>
         </Hidden>
