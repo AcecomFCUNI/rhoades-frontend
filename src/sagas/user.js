@@ -30,8 +30,8 @@ function* findUserByCode({ payload: { params, history } }) {
       Get,
       `/user/verify/${params.code}?documentType=${params.documentType}`
     );
-    setCookie(USER_KEY, { searchParams: params, data: result });
     yield put(findUserByCodeSuccess(result));
+    yield setCookie(USER_KEY, { searchParams: params, data: result });
     yield put(showAlertSnackbar(USER_SUCCESSFULLY_FOUND));
     history.push('/validate-credentials');
   } catch (error) {
@@ -61,20 +61,17 @@ function* sendPasswordToEmailFromUser({
         },
       }
     );
-
     if (!error) {
       yield put(sendPasswordToEmailFromUserSuccess());
       // TODO: considerar si deberia agregar una pantalla de transicion para el manejo de error de enviar email
       // set the new state in store and cookies -> registered: true
-      const currentValueOfCookie = getCookie(USER_KEY);
-      setCookie(USER_KEY, {
+      const currentValueOfCookie = yield getCookie(USER_KEY);
+      const newUserData = {
         ...currentValueOfCookie,
         data: { ...params, registered: true },
-      });
-      yield put(
-        storeUserFoundOnCookies({ ...currentValueOfCookie,
-          data: { ...params, registered: true }, })
-      );
+      }
+      yield setCookie(USER_KEY, newUserData);
+      yield put(storeUserFoundOnCookies(newUserData));
       yield put(showAlertSnackbar(PASSWORD_SENT_TO_EMAIL_SUCCESSFULLY));
     } else {
       yield put(sendPasswordToEmailFromUserError());
@@ -102,3 +99,4 @@ export function* sendPasswordToEmailFromUserSaga() {
     sendPasswordToEmailFromUser
   );
 }
+
