@@ -76,7 +76,7 @@ const Register = () => {
 
   const handleReturnToHome = () => history.push('/');
 
-  const handleGeneratePassword = () => dispatch(sendPasswordToEmailFromUserRequest(data, history));
+  const handleGeneratePassword = () => dispatch(sendPasswordToEmailFromUserRequest(data));
 
 
   return (

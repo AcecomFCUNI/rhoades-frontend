@@ -93,9 +93,9 @@ export const storeUserFoundOnCookies = (user) => ({
   payload: { user },
 });
 
-export const sendPasswordToEmailFromUserRequest = (params) => ({
+export const sendPasswordToEmailFromUserRequest = (user) => ({
   type: SEND_PASSWORD_TO_EMAIL_FROM_USER_REQUEST,
-  payload: { params },
+  payload: { user },
 });
 
 export const sendPasswordToEmailFromUserSuccess = () => ({

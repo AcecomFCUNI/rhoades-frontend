@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.5b
+
+### Hotfix
+
+- Login page was fixed.
+
 ## 1.3.5a
 
 ### Updated

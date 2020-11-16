@@ -31,6 +31,7 @@ function* findUserByCode({ payload: { params, history } }) {
       `/user/verify/${params.code}?documentType=${params.documentType}`
     );
     yield put(findUserByCodeSuccess(result));
+    console.log( { searchParams: params, data: result })
     yield setCookie(USER_KEY, { searchParams: params, data: result });
     yield put(showAlertSnackbar(USER_SUCCESSFULLY_FOUND));
     history.push('/validate-credentials');
@@ -47,7 +48,7 @@ function* findUserByCode({ payload: { params, history } }) {
 
 function* sendPasswordToEmailFromUser({
   payload: {
-    params, 
+    user
   },
 }) {
   try {
@@ -57,7 +58,7 @@ function* sendPasswordToEmailFromUser({
       '/user/notify',
       {
         args: {
-          id: params.id,
+          id: user.id,
         },
       }
     );
@@ -65,10 +66,13 @@ function* sendPasswordToEmailFromUser({
       yield put(sendPasswordToEmailFromUserSuccess());
       // TODO: considerar si deberia agregar una pantalla de transicion para el manejo de error de enviar email
       // set the new state in store and cookies -> registered: true
-      const currentValueOfCookie = yield getCookie(USER_KEY);
+      const { searchParams, data } = yield getCookie(USER_KEY);
       const newUserData = {
-        ...currentValueOfCookie,
-        data: { ...params, registered: true },
+        searchParams,
+        data: {
+          ...data,
+          registered: true
+        }
       }
       yield setCookie(USER_KEY, newUserData);
       yield put(storeUserFoundOnCookies(newUserData));
