@@ -112,7 +112,7 @@ const NavigationListItem = (props) => {
         className={clsx(classes.item, className)}
         disableGutters
       >
-        <Button className={classes.button} onClick={handleToggle} style={style}>
+        <Button className={classes.button} onClick={handleToggle} style={style} size='small'>
           {Icon && <Icon className={classes.icon} />}
           {title}
           {open ? (
@@ -132,6 +132,7 @@ const NavigationListItem = (props) => {
         disableGutters
       >
         <Button
+          size='small'
           activeClassName={classes.active}
           className={clsx(classes.buttonLeaf, `depth-${depth}`)}
           component={CustomRouterLink}

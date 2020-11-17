@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
-  Drawer,
+  SwipeableDrawer,
   Divider,
   Paper,
   Avatar,
@@ -68,6 +68,7 @@ const NavBar = ({
   navigationConfig,
   openMobile,
   onMobileClose,
+  onMobileOpen,
   className,
   ...rest
 }) => {
@@ -112,9 +113,10 @@ const NavBar = ({
   return (
     <Fragment>
       <Hidden lgUp>
-        <Drawer
+        <SwipeableDrawer
           anchor="left"
           onClose={onMobileClose}
+          onOpen={onMobileOpen}
           open={openMobile}
           variant="temporary"
         >
@@ -133,7 +135,7 @@ const NavBar = ({
           <div {...rest} className={clsx(classes.root, className)}>
             {navbarContent}
           </div>
-        </Drawer>
+        </SwipeableDrawer>
       </Hidden>
       <Hidden mdDown>
         <Paper

@@ -21,15 +21,15 @@ const configureStore = () => {
   //   );
   
   // local development
-    if (process.env.NODE_ENV !== 'production')
-    store = createStore(
-      rootReducer,
-      compose(
-        applyMiddleware(sagaMiddleware),
-        window.__REDUX_DEVTOOLS_EXTENSION__ &&
-          window.__REDUX_DEVTOOLS_EXTENSION__()
-      )
-    );
+  if (process.env.NODE_ENV !== 'production')
+  store = createStore(
+    rootReducer,
+    compose(
+      applyMiddleware(sagaMiddleware),
+      window.__REDUX_DEVTOOLS_EXTENSION__ &&
+        window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+  );
   
 
   sagaMiddleware.run(rootSaga);

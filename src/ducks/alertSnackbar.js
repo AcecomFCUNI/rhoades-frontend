@@ -5,7 +5,7 @@ const HIDE_ALERT_SNACKBAR = 'rhoades/alertSnackbar/HIDE_ALERT_SNACKBAR';
 // default options of the alert snackbar
 const defaultOptions = {
   position: { vertical: 'top', horizontal: 'right' },
-  duration: 1200,
+  duration: 1400,
 };
 
 const initialState = {

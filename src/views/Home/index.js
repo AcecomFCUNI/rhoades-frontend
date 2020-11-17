@@ -84,7 +84,7 @@ const Home = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  // false: DNI or CE, true: UNIcode
+  // false: UNIcode, true: DNI, CE
   const [switchDniToUniCode, setSwitchDniToUniCode] = useState(false);
   const [uniCodeInput, setUniCodeInput] = useState('');
   const [dniInput, setDniInput] = useState('');
@@ -109,8 +109,8 @@ const Home = () => {
 
   const handleRequestValidateToApi = () => {
     const searchParams = {
-      documentType: switchDniToUniCode ? 1 : 0,
-      code: switchDniToUniCode ? uniCodeInput : dniInput,
+      documentType: switchDniToUniCode ? 0 : 1,
+      code: switchDniToUniCode ? dniInput : uniCodeInput,
     };
     dispatch(findUserByCodeRequest(searchParams, history));
     handleResetSearchValues();
@@ -123,7 +123,7 @@ const Home = () => {
   };
 
   const handleValidateCredentials = () => {
-    if (switchDniToUniCode) {
+    if (!switchDniToUniCode) {
       const uniCodeRegex = /^[0-9]{8}[A-Z]$/;
       const match = uniCodeRegex.test(uniCodeInput);
 
@@ -184,16 +184,16 @@ const Home = () => {
             autoFocus
             type="text"
             placeholder={
-              switchDniToUniCode
+              !switchDniToUniCode
                 ? 'Ingresa tu código UNI'
                 : 'Ingresa tu DNI, CE u otro documento'
             }
             inputProps={{ 'aria-label': 'verify email' }}
             onChange={
-              switchDniToUniCode ? handleValidateUniCode : handleValidateDni
+              !switchDniToUniCode ? handleValidateUniCode : handleValidateDni
             }
             submitinput={handleSubmitInput}
-            value={switchDniToUniCode ? uniCodeInput : dniInput}
+            value={!switchDniToUniCode ? uniCodeInput : dniInput}
           />
           <Hidden xsDown>{getSearchButton(false)}</Hidden>
         </div>
@@ -213,7 +213,7 @@ const Home = () => {
                 name="switch-dni-code"
               />
             }
-            label="Buscar por código UNI"
+            label="Buscar por DNI, CE u otro"
           />
         </div>
       </div>

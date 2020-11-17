@@ -58,6 +58,7 @@ const GeneralLayout = ({ roleLabel, navigationConfig, children }) => {
         className={classes.navBar}
         onMobileClose={handleNavBarMobileClose}
         openMobile={openNavBarMobile}
+        onMobileOpen={handleNavBarMobileOpen}
       />
       <div className={classes.container}>
         <TopBar

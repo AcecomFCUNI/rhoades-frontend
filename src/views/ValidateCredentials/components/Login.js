@@ -76,7 +76,7 @@ const Login = () => {
       subtitles={[
         `Usuario: ${names} ${lastName} ${secondLastName}`,
         `${documentType ? 'Código UNI' : 'DNI, CE u otros'}: ${code}`,
-        'Por favor, ingrese su contraseña para acceder al sistema.',
+        'Por favor, ingrese la contraseña que fue enviada a su correo para acceder al sistema.',
       ]}
       altImage="login_authentication_svg"
       srcImage={loginAuthenticationSvg}
