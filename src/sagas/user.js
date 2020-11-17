@@ -74,6 +74,7 @@ function* sendPasswordToEmailFromUser({
           registered: true
         } 
       }
+      console.log(registeredState)
       // remove and update the cookie
       removeCookie(USER_KEY)
       setCookie(USER_KEY, registeredState)
