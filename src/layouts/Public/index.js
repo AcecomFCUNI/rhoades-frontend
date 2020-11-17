@@ -1,4 +1,5 @@
 import React from 'react';
+import { renderRoutes } from 'react-router-config';
 
 import { makeStyles } from '@material-ui/core';
 
@@ -18,13 +19,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PublicLayout = ({ children }) => {
+const PublicLayout = ({ route }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.appWrapper}>
       <Header height={headerHeight} />
-      <div className={classes.children}>{children}</div>
+      <div className={classes.children}>{renderRoutes(route.routes)}</div>
       <Footer height={footerHeight} />
     </div>
   );

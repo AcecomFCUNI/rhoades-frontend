@@ -7,7 +7,7 @@ const withAuthentication = (condition, Component) => () => {
   const { auth, profile } = useSelector((state) => state.firebase);
 
   if (isEmpty(auth) || (!isEmpty(profile) && profile.condition !== condition))
-    return <Redirect to="/error/401" />;
+      return <Redirect to="/error/401" />;
 
   return <Component />;
 };

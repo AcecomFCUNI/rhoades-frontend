@@ -1,5 +1,8 @@
 import React from 'react';
+import { renderRoutes } from 'react-router-config';
+
 import { makeStyles } from '@material-ui/core';
+
 import Footer from 'layouts/Public/components/Footer';
 
 const footerHeight = 60;
@@ -11,12 +14,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Error = ({ children }) => {
+const Error = ({ route }) => {
   const classes = useStyles();
 
   return (
     <React.Fragment>
-      <main className={classes.root}>{children}</main>
+      <main className={classes.root}>{renderRoutes(route.routes)}</main>
       <Footer height={footerHeight} />
     </React.Fragment>
   );
