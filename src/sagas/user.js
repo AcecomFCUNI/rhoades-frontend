@@ -20,6 +20,7 @@ import {
   getCookie,
   setCookie,
   USER_KEY,
+  removeCookie,
 } from 'tools';
 
 function* findUserByCode({ payload: { params, history } }) {
@@ -30,9 +31,8 @@ function* findUserByCode({ payload: { params, history } }) {
       Get,
       `/user/verify/${params.code}?documentType=${params.documentType}`
     );
-    yield put(findUserByCodeSuccess(result));
-    console.log( { searchParams: params, data: result })
     yield setCookie(USER_KEY, { searchParams: params, data: result });
+    yield put(findUserByCodeSuccess(result));
     yield put(showAlertSnackbar(USER_SUCCESSFULLY_FOUND));
     history.push('/validate-credentials');
   } catch (error) {
@@ -52,7 +52,6 @@ function* sendPasswordToEmailFromUser({
   },
 }) {
   try {
-    // TODO: remove condition
     const { error } = yield call(
       Patch,
       '/user/notify',
@@ -62,24 +61,25 @@ function* sendPasswordToEmailFromUser({
         },
       }
     );
-    if (!error) {
-      yield put(sendPasswordToEmailFromUserSuccess());
-      // TODO: considerar si deberia agregar una pantalla de transicion para el manejo de error de enviar email
-      // set the new state in store and cookies -> registered: true
-      const { searchParams, data } = yield getCookie(USER_KEY);
-      const newUserData = {
-        searchParams,
-        data: {
-          ...data,
-          registered: true
-        }
-      }
-      yield setCookie(USER_KEY, newUserData);
-      yield put(storeUserFoundOnCookies(newUserData));
-      yield put(showAlertSnackbar(PASSWORD_SENT_TO_EMAIL_SUCCESSFULLY));
-    } else {
+    if(error) {
       yield put(sendPasswordToEmailFromUserError());
       yield put(showAlertSnackbar(PASSWORD_SENT_TO_EMAIL_ERROR));
+    }
+    else {
+      const { searchParams } = getCookie(USER_KEY)
+      const registeredState = { 
+        searchParams, 
+        data: {
+          ...user,
+          registered: true
+        } 
+      }
+      // remove and update the cookie
+      removeCookie(USER_KEY)
+      setCookie(USER_KEY, registeredState)
+      yield put(storeUserFoundOnCookies(registeredState));
+      yield put(sendPasswordToEmailFromUserSuccess());
+      yield put(showAlertSnackbar(PASSWORD_SENT_TO_EMAIL_SUCCESSFULLY));
     }
   } catch (error) {
     const { message: { result } } = error.response.data;
