@@ -7,6 +7,12 @@ import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 const useStyles = makeStyles((theme) => ({
   mainWrapper: {
     height: '100%',
+    minHeight: 400,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mainContent: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -59,6 +65,7 @@ const GeneralError = ({ title, subtitle, altImage, srcImage }) => {
 
   return (
     <div className={classes.mainWrapper}>
+      <div className={classes.mainContent}>
         <Typography variant="h1" className={classes.title}>
           {title}
         </Typography>
@@ -74,6 +81,7 @@ const GeneralError = ({ title, subtitle, altImage, srcImage }) => {
         >
           Regresar al inicio
         </Button>
+      </div>
     </div>
   );
 };
