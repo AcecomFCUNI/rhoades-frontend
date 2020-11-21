@@ -17,7 +17,8 @@ import { Navigation } from 'components';
 // import uniLogo from 'assets/images/logos/logo_uni.png';
 import { splitNamesAndGetOne } from 'tools';
 
-import maleSvg from 'assets/images/avatars/male2.svg';
+import maleSvg from 'assets/images/avatars/male.svg';
+import femaleSvg from 'assets/images/avatars/female.svg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,7 +75,7 @@ const NavBar = ({
 }) => {
   const classes = useStyles();
   const location = useLocation();
-  const { names, lastName, UNICode } = useSelector(
+  const { names, lastName, UNICode, gender } = useSelector(
     (state) => state.firebase.profile
   );
 
@@ -88,7 +89,7 @@ const NavBar = ({
   const navbarContent = (
     <div className={classes.content}>
       <div className={classes.profile}>
-        <Avatar alt="Person" src={maleSvg} className={classes.avatar} />
+        <Avatar alt="Person" src={gender === 'M' ? maleSvg : femaleSvg} className={classes.avatar} />
         {names && lastName && (
           <Typography className={classes.name} variant="h4">
             {splitNamesAndGetOne(names)} {lastName}

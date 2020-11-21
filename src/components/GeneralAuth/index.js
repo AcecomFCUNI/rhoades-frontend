@@ -21,12 +21,18 @@ const useStyles = makeStyles((theme) => ({
   },
   authenticationSvg: {
     width: 400,
+    [theme.breakpoints.down('lg')]: {
+      width: 320,
+    },
     [theme.breakpoints.down('md')]: {
       width: 350,
     },
   },
   mainTitle: {
-    fontSize: '2.6em',
+    fontSize: '2.8em',
+    [theme.breakpoints.down('lg')]: {
+      fontSize: '2.3em',
+    },
     [theme.breakpoints.down('md')]: {
       fontSize: '2.5em',
     },
@@ -38,8 +44,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   secondaryTitle: {
-    fontSize: '1.3em',
     marginTop: '0.6rem',
+    fontSize: '1.35em',
+    [theme.breakpoints.down('lg')]: {
+      fontSize: '1.1em',
+    },
     [theme.breakpoints.down('md')]: {
       fontSize: '1.2em',
     },
@@ -51,8 +60,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '1rem',
   },
   subtitle: {
-    fontSize: '1.15em',
     marginTop: '0.05rem',
+    fontSize: '1.1em',
+    [theme.breakpoints.down('lg')]: {
+      fontSize: '0.9em',
+    },
     [theme.breakpoints.down('md')]: {
       fontSize: '0.9em',
     },

@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFirebase, useFirestore } from 'react-redux-firebase';
+import { useFirebase } from 'react-redux-firebase';
 
 import { Button, Hidden, makeStyles } from '@material-ui/core';
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
 
 import { CustomInputPassword, GeneralAuth } from 'components';
-import { USERS_NAME_COLLECTION } from 'keys';
 import { showAlertSnackbar } from 'ducks';
 import { LOGIN_SUCCESSFULLY, LOGIN_WITH_WRONG_PASSWORD } from 'tools';
 
@@ -42,12 +41,11 @@ const Login = () => {
   const classes = useStyles();
   const history = useHistory();
   const firebase = useFirebase();
-  const firestore = useFirestore();
   const dispatch = useDispatch();
   const [passwordInput, setPasswordInput] = useState('');
   const {
     searchParams: { code, documentType },
-    data: { id, mail, names, lastName, secondLastName },
+    data: { mail, names, lastName, secondLastName },
   } = useSelector((state) => state.user);
   
   const returnToHome = () => history.push('/');
@@ -55,16 +53,9 @@ const Login = () => {
   const handleLogin = () =>
     firebase
       .login({ email: mail, password: passwordInput })
-      .then(() => {
-        firestore
-          .collection(USERS_NAME_COLLECTION)
-          .doc(id)
-          .get()
-          .then((doc) => {
-            dispatch(showAlertSnackbar(LOGIN_SUCCESSFULLY));
-            history.push(`/${doc.data().condition}`);
-          });
-      })
+      .then(() => 
+        dispatch(showAlertSnackbar(LOGIN_SUCCESSFULLY))
+      )
       .catch(() => dispatch(showAlertSnackbar(LOGIN_WITH_WRONG_PASSWORD)));
 
   return (

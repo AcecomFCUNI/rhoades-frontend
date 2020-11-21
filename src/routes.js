@@ -1,8 +1,7 @@
-import { AdminLayout } from 'layouts';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Home, ValidateCredentials, Error401, Error404, SignInAdmin } from 'views';
-import { PublicLayout, TeacherLayout, StudentLayout, ErrorLayout } from 'layouts';
+import { PublicLayout, AdminLayout, ProcuratorLayout, ErrorLayout } from 'layouts';
 import withAuthentication from 'hocs/withAuthentication';
 
 export default [
@@ -36,38 +35,38 @@ export default [
         path: '/admin',
         exact: true,
         component: () => (
-          <Redirect to="/admin/lists/faculty-third" />
+          <Redirect to="/admin/lists/third-of-faculty" />
         ),
       },
       {
-        path: '/admin/lists/faculty-third',
+        path: '/admin/lists/third-of-faculty',
         exact: true,
         // component: EnrollListUniversityThirdCouncil,
-        component: withAuthentication('admin', () => <div>Tercio de facultad</div>),
+        component: withAuthentication(() => <div>Tercio de facultad</div>, 'admin'),
       },
       {
-        path: '/admin/lists/university-third/council',
+        path: '/admin/lists/university-third-council',
         exact: true,
         // component: UploadFileNid,
-        component: withAuthentication('admin', () => <div>Consejo universitario</div>),
+        component: withAuthentication(() => <div>Consejo universitario</div>, 'admin'),
       },
       {
-        path: '/admin/lists/university-third/assembly',
+        path: '/admin/lists/university-third-assembly',
         exact: true,
         // component: UploadFileNid,
-        component: withAuthentication('admin', () => <div>Asamblea universitaria</div>),
+        component: withAuthentication(() => <div>Asamblea universitaria</div>, 'admin'),
       },
       {
-        path: '/admin/lists/decan',
+        path: '/admin/lists/dean',
         exact: true,
         // component: UploadFileNid,
-        component: withAuthentication('admin', () => <div>Decanato</div>),
+        component: withAuthentication(() => <div>Decanato</div>, 'admin'),
       },
       {
-        path: '/admin/lists/rectorate',
+        path: '/admin/lists/rector',
         exact: true,
         // component: UploadFileNid,
-        component: withAuthentication('admin', () => <div>Rectorado</div>),
+        component: withAuthentication(() => <div>Rectorado</div>, 'admin'),
       },
       {
         component: () => <Redirect to="/error/404" />
@@ -75,77 +74,104 @@ export default [
     ]
   },
   {
-    path: "/teacher",
-    component: TeacherLayout,
+    path: "/procurator",
+    component: ProcuratorLayout,
     routes: [
       {
-        path: '/teacher',
+        path: '/procurator',
         exact: true,
         component: () => (
-          <Redirect to="/teacher/enroll-list-or-candidate/decan" />
+          <Redirect to="/procurator/enroll/teacher/dean" />
         ),
       },
       {
-        path: '/teacher/enroll-list-or-candidate/decan',
+        path: '/procurator/enroll/teacher/dean',
         exact: true,
-        // component: EnrollListFacultyThird,
-        component: withAuthentication('teacher', () => <div>Decanato</div>),
+        component: withAuthentication(() => <div>Decano</div>, 'procurator'),
       },
       {
-        path: '/teacher/enroll-list-or-candidate/rectorate',
+        path: '/procurator/enroll/teacher/rector',
         exact: true,
-        // component: EnrollListUniversityThirdCouncil,
-        component: withAuthentication('teacher', () => <div>Rectorado</div>),
+        component: withAuthentication(() => <div>Rector</div>, 'procurator'),
       },
       {
-        path: '/teacher/upload-files',
+        path: '/procurator/enroll/teacher/faculty-council',
         exact: true,
-        // component: UploadFileNid,
-        component: withAuthentication('teacher', () => <div>Subir documentos</div>),
+        component: withAuthentication(() => <div>Consejo de facultad</div>, 'procurator'),
       },
       {
-        component: () => <Redirect to="/error/404" />
-      }
-    ]
-  },
-  {
-    path: "/student",
-    component: StudentLayout,
-    routes: [
-      {
-        path: "/student",
+        path: '/procurator/enroll/teacher/university-assembly',
         exact: true,
-        component: () => <Redirect to="/student/enroll-list/faculty-third" />
+        component: withAuthentication(() => <div>Asamblea universitaria</div>, 'procurator'),
       },
       {
-        path: '/student/enroll-list/faculty-third',
+        path: '/procurator/enroll/teacher/university-council',
         exact: true,
-        // component: EnrollListFacultyThird,
-        component: withAuthentication('student', () => <div>Tercio de facultad</div>)
+        component: withAuthentication(() => <div>Consejo universitario</div>, 'procurator'),
       },
       {
-        path: '/student/enroll-list/university-third/council',
+        path: '/procurator/enroll/student/third-of-faculty',
         exact: true,
-        // component: EnrollListUniversityThirdCouncil,
-        component: withAuthentication('student', () => <div>Consejo universitario</div>),
+        component: withAuthentication(() => <div>Tercio de facultad</div>, 'procurator'),
       },
       {
-        path: '/student/enroll-list/university-third/assembly',
+        path: '/procurator/enroll/student/university-third-assembly',
         exact: true,
-        // component: EnrollListUniversityThirdAssembly,
-        component: withAuthentication('student', () => <div>Asamblea universitaria</div>),
+        component: withAuthentication(() => <div>Asamblea universitaria</div>, 'procurator'),
       },
       {
-        path: '/student/upload-files',
+        path: '/procurator/enroll/student/university-third-council',
         exact: true,
-        // component: UploadFileNid,
-        component: withAuthentication('student', () => <div>Subir documentos</div>),
+        component: withAuthentication(() => <div>Consejo universitario</div>, 'procurator'),
+      },
+      {
+        path: '/procurator/upload-files',
+        exact: true,
+        component: withAuthentication(() => <div>Subir documentos</div>, 'procurator'),
       },
       {
         component: () => <Redirect to="/error/404" />
       }
     ]
   },
+  // {
+  //   path: "/student",
+  //   component: StudentLayout,
+  //   routes: [
+  //     {
+  //       path: "/student",
+  //       exact: true,
+  //       component: () => <Redirect to="/student/third-of-faculty" />
+  //     },
+  //     {
+  //       path: '/student/enroll-list/faculty-third',
+  //       exact: true,
+  //       // component: EnrollListFacultyThird,
+  //       component: withAuthentication('student', () => <div>Tercio de facultad</div>)
+  //     },
+  //     {
+  //       path: '/student/enroll-list/university-third/council',
+  //       exact: true,
+  //       // component: EnrollListUniversityThirdCouncil,
+  //       component: withAuthentication('student', () => <div>Consejo universitario</div>),
+  //     },
+  //     {
+  //       path: '/student/enroll-list/university-third/assembly',
+  //       exact: true,
+  //       // component: EnrollListUniversityThirdAssembly,
+  //       component: withAuthentication('student', () => <div>Asamblea universitaria</div>),
+  //     },
+  //     {
+  //       path: '/student/upload-files',
+  //       exact: true,
+  //       // component: UploadFileNid,
+  //       component: withAuthentication('student', () => <div>Subir documentos</div>),
+  //     },
+  //     {
+  //       component: () => <Redirect to="/error/404" />
+  //     }
+  //   ]
+  // },
   {
     path: '/',
     component: PublicLayout,

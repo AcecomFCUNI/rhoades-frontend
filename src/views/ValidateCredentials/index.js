@@ -6,8 +6,8 @@ import Login from './components/Login';
 import Register from './components/Register';
 import NoEmail from './components/NoEmail';
 import UserNotFound from './components/UserNotFound';
-import { getCookie, USER_KEY } from 'tools';
-import { storeUserFoundOnCookies } from 'ducks';
+import { getCookie, USER_KEY, USER_SUCCESSFULLY_LOADED } from 'tools';
+import { showAlertSnackbar, storeUserFoundOnCookies } from 'ducks';
 import { Redirect } from 'react-router-dom';
 
 const dataFromCookies = getCookie(USER_KEY);
@@ -19,11 +19,14 @@ const ValidateCredentials = () => {
 
   useEffect(() => {
     if (!data && !!dataFromCookies)
-      dispatch(storeUserFoundOnCookies(dataFromCookies));
+      {
+        dispatch(storeUserFoundOnCookies(dataFromCookies));
+        dispatch(showAlertSnackbar(USER_SUCCESSFULLY_LOADED))
+      }
     }, [dispatch, data]);
 
   return !isEmpty(profile) && profile.condition !== 'admin' ? (
-    <Redirect to={`/${profile.condition}`} />
+    <Redirect to='/procurator' />
   ) : !data ? (
     <UserNotFound />
   ) : !!data.registered ? (

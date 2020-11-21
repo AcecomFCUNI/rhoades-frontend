@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
   // textSection: {},
   mainTitle: {
     fontSize: '3.4em',
+    [theme.breakpoints.down('lg')]: {
+      fontSize: '3em',
+    },
     [theme.breakpoints.down('md')]: {
       fontSize: '3.2em',
     },

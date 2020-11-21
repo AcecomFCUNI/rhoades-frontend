@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,6 +8,9 @@ import {
   Backdrop,
   CircularProgress,
   makeStyles,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from '@material-ui/core';
 
 import ArrowBackIosRoundedIcon from '@material-ui/icons/ArrowBackIosRounded';
@@ -36,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     color: '#fff',
   },
+  genderSelector: {
+    marginTop: 10
+  }
 }));
 
 const Register = () => {
@@ -48,6 +54,7 @@ const Register = () => {
   // destructuring
   const { names, lastName, secondLastName } = data;
   const { code, documentType } = searchParams;
+  const [gender, setGender] = useState('M')
 
   const getReturnToHomeButton = () => (
     <Button
@@ -76,8 +83,9 @@ const Register = () => {
 
   const handleReturnToHome = () => history.push('/');
 
-  const handleGeneratePassword = () => dispatch(sendPasswordToEmailFromUserRequest(data));
+  const handleGeneratePassword = () =>  dispatch(sendPasswordToEmailFromUserRequest({data, gender}))
 
+  const handleChangeGender = (event) => setGender(event.target.value)
 
   return (
     <React.Fragment>
@@ -95,10 +103,15 @@ const Register = () => {
           `Usuario: ${names} ${lastName} ${secondLastName}`,
           `${documentType ? 'Código UNI' : 'DNI, CE u otros'}: ${code}`,
           'Le enviaremos su contraseña a su correo institucional (o a su correo opcional).',
+          'Por favor seleccione su género a continuación:',
         ]}
         altImage="register_authentication_svg"
         srcImage={registerAuthenticationSvg}
       >
+        <RadioGroup aria-label="select-gender" value={gender} onChange={handleChangeGender} row className={classes.genderSelector}>
+          <FormControlLabel value="M" control={<Radio size='small' color='primary' />} label="Masculino" />
+          <FormControlLabel value="F" control={<Radio size='small' color='primary' />} label="Femenino" />
+        </RadioGroup>
         <Hidden mdDown>
           <div className={classes.buttonsSection}>
             {getReturnToHomeButton()}

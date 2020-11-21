@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: '2.3em',
     textAlign: 'center',
+    [theme.breakpoints.down('lg')]: {
+      fontSize: '2em',
+    },
     [theme.breakpoints.down('md')]: {
       fontSize: '2em',
     },
@@ -30,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
     margin: '30px 0',
     maxWidth: 400,
     width: 400,
+    [theme.breakpoints.down('lg')]: {
+      width: 300,
+    },
     [theme.breakpoints.down('md')]: {
       width: 350,
     },
@@ -53,21 +59,21 @@ const GeneralError = ({ title, subtitle, altImage, srcImage }) => {
 
   return (
     <div className={classes.mainWrapper}>
-      <Typography variant="h1" className={classes.title}>
-        {title}
-      </Typography>
-      <Typography variant="subtitle1">{subtitle}</Typography>
-      <img alt={altImage} src={srcImage} className={classes.image} />
-      <Button
-        startIcon={<HomeRoundedIcon />}
-        size="large"
-        variant="contained"
-        color="primary"
-        className={classes.returnHomeButton}
-        onClick={returnToHome}
-      >
-        Regresar al inicio
-      </Button>
+        <Typography variant="h1" className={classes.title}>
+          {title}
+        </Typography>
+        <Typography variant="subtitle1">{subtitle}</Typography>
+        <img alt={altImage} src={srcImage} className={classes.image} />
+        <Button
+          startIcon={<HomeRoundedIcon />}
+          size="large"
+          variant="contained"
+          color="primary"
+          className={classes.returnHomeButton}
+          onClick={returnToHome}
+        >
+          Regresar al inicio
+        </Button>
     </div>
   );
 };

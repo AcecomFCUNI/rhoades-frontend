@@ -48,7 +48,7 @@ function* findUserByCode({ payload: { params, history } }) {
 
 function* sendPasswordToEmailFromUser({
   payload: {
-    user
+    user: { data: user, gender }
   },
 }) {
   console.log(user)
@@ -59,6 +59,7 @@ function* sendPasswordToEmailFromUser({
       {
         args: {
           id: user.id,
+          gender
         },
       }
     );
