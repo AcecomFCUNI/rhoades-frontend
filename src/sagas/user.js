@@ -6,9 +6,9 @@ import {
   sendPasswordToEmailFromUserSuccess,
   sendPasswordToEmailFromUserError,
   showAlertSnackbar,
+  storeUserFoundOnCookies,
   FIND_USER_BY_CODE_REQUEST,
   SEND_PASSWORD_TO_EMAIL_FROM_USER_REQUEST,
-  storeUserFoundOnCookies,
 } from 'ducks';
 import {
   Get,
@@ -51,7 +51,6 @@ function* sendPasswordToEmailFromUser({
     user: { data: user, gender }
   },
 }) {
-  console.log(user)
   try {
     const { error } = yield call(
       Patch,
@@ -63,29 +62,24 @@ function* sendPasswordToEmailFromUser({
         },
       }
     );
-    console.log(error)
+
     if(error) {
       yield put(sendPasswordToEmailFromUserError());
       yield put(showAlertSnackbar(PASSWORD_SENT_TO_EMAIL_ERROR));
     }
     else {
       const { searchParams } = getCookie(USER_KEY)
-      console.log(searchParams)
       const registeredState = { 
         searchParams, 
         data: {
           ...user,
-          registered: true
+          registered: true,
+          gender
         } 
       }
-      console.log(registeredState)
       // remove and update the cookie
-      console.log('before remove cookie')
       removeCookie(USER_KEY)
-      console.log('after remove cookie')
-      console.log('before update cookie')
       setCookie(USER_KEY, registeredState)
-      console.log('after update cookie')
       yield put(storeUserFoundOnCookies(registeredState));
       yield put(sendPasswordToEmailFromUserSuccess());
       yield put(showAlertSnackbar(PASSWORD_SENT_TO_EMAIL_SUCCESSFULLY));

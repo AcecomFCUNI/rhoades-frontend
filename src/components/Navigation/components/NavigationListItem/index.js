@@ -5,6 +5,7 @@ import { makeStyles, ListItem, Button, Collapse } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import clsx from 'clsx';
+import { useSelector } from 'react-redux';
 
 const CustomRouterLink = forwardRef((props, ref) => (
   <div ref={ref} style={{ flexGrow: 1 }}>

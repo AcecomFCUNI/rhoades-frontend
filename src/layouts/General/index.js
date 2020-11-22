@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     margin: `${topbarHeight}px auto`,
     padding: theme.spacing(3),
-    minHeight: 400
+    minHeight: 450
   },
 }));
 

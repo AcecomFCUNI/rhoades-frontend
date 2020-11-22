@@ -5,10 +5,17 @@ import {
   sendPasswordToEmailFromUserSaga,
 } from './user';
 
+import {
+  findListsByUserIdSaga,
+  createListByUserIdAndTypeSaga
+} from './lists';
+
 function* rootSaga() {
   yield all([
     fork(findUserByCodeSaga),
     fork(sendPasswordToEmailFromUserSaga),
+    fork(findListsByUserIdSaga),
+    fork(createListByUserIdAndTypeSaga),
   ]);
 }
 

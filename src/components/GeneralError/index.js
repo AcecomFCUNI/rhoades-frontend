@@ -7,7 +7,7 @@ import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 const useStyles = makeStyles((theme) => ({
   mainWrapper: {
     height: '100%',
-    minHeight: 400,
+    minHeight: '450',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

@@ -17,3 +17,10 @@ export const deleteFinalCharactersFromMessage = (message) => {
 
   return message.slice(0, lastCharIdx + 1);
 };
+
+export const objectIsEmpty = (object) => Object.keys(object).length === 0
+export const existsKeyInObject = (key, object) => {
+  if(!object) return false
+
+  return Object.keys(object).includes(key)
+}

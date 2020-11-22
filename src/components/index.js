@@ -7,3 +7,4 @@ export { default as Navigation } from './Navigation';
 export { default as GeneralError } from './GeneralError';
 export { default as GeneralAuth } from './GeneralAuth';
 export { default as AlertSnackbar } from './AlertSnackbar';
+export { default as CreateList } from './CreateList';

@@ -69,7 +69,7 @@ const TopBar = ({ onOpenNavBarMobile, className, ...rest }) => {
           </IconButton>
         </Hidden>
         <Hidden smDown>
-          <Button variant="contained" color="primary" onClick={handleLogout}>
+          <Button variant="outlined" color="primary" onClick={handleLogout}>
             Salir
           </Button>
         </Hidden>

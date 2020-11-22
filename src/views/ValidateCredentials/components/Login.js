@@ -45,7 +45,7 @@ const Login = () => {
   const [passwordInput, setPasswordInput] = useState('');
   const {
     searchParams: { code, documentType },
-    data: { mail, names, lastName, secondLastName },
+    data: { mail, names, lastName, secondLastName, gender },
   } = useSelector((state) => state.user);
   
   const returnToHome = () => history.push('/');
@@ -60,7 +60,7 @@ const Login = () => {
 
   return (
     <GeneralAuth
-      mainTitle={`Sr(a). ${lastName}`}
+      mainTitle={`${gender === 'M' ? 'Sr.' : 'Sra.'} ${lastName}`}
       secondaryTitles={[
         'Usted se encuentra inscrito como personero para el presente proceso electoral.',
       ]}

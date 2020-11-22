@@ -22,6 +22,11 @@ export const LOGIN_SUCCESSFULLY = {
   message: 'Se inició sesión correctamente',
 };
 
+export const LIST_WAS_CREATED_SUCCESSFULLY = {
+  severity: success,
+  message: 'La lista fue creada correctamente',
+};
+
 // errors
 export const ENTER_VALID_UNI_CODE = {
   severity: error,
@@ -51,6 +56,11 @@ export const ENTER_WRONG_CREDENTIALS = {
 export const LOGOUT_WITH_ERROR = {
   severity: error,
   message: 'Ocurrió un error al intentar salir de su cuenta',
+};
+
+export const LIST_WAS_CREATED_WITH_ERROR = {
+  severity: success,
+  message: 'Ocurrió un error al intentar crear la lista',
 };
 
 // helpers

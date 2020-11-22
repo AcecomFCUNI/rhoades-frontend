@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
-    minHeight: 400,
+    minHeight: 450,
   },
   mainContent: {
     maxWidth: 1600,

@@ -93,8 +93,7 @@ const Register = () => {
         <CircularProgress color="inherit" />
       </Backdrop>
       <GeneralAuth
-        mainTitle={`
-        Sr(a). ${lastName}`}
+        mainTitle={`Sr(a). ${lastName}`}
         secondaryTitles={[
           'Usted se encuentra inscrito en el padrón electoral.',
           'Para poder generar su contraseña, haga click en "Generar contraseña".',

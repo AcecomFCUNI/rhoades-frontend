@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.white,
     height: `calc(100vh - ${headerHeight}px)`,
     paddingBottom: footerHeight,
+    minHeight: 450
   },
 }));
 
