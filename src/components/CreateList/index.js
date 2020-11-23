@@ -22,47 +22,47 @@ const useStyles = makeStyles(theme => ({
   },
   createListSection: {
     display: 'flex',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: 'column'
     }
   },
-  paperSelector: {
-    width: 400,
-    [theme.breakpoints.down('xs')]: {
+  paperEstateTypeSelector: {
+    width: 300,
+    [theme.breakpoints.down('sm')]: {
       width: '100%',
     },
   },
   createButton: {
-    marginLeft: 15,
-    [theme.breakpoints.down('xs')]: {
+    marginLeft: 10,
+    [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
       marginTop: 20
     }
   }
 }))
 
-const CreateTeacherList = ({ uid, estate, estateType, handlEstateTypeSelected, estates }) => {
+const CreateTeacherList = ({ uid, estate, estateType, handleEstateTypeSelected, estates, faculty }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
 
-  const handleCreateNewList = () => dispatch(createListByUserIdAndTypeRequest(uid, estate, estateType))
-
+  const handleCreateNewList = () => dispatch(createListByUserIdAndTypeRequest(uid, estate, estateType, faculty))
+  
   return (
     <React.Fragment>
       <Alert severity="warning">
         <AlertTitle>Nota</AlertTitle>
         Ud. no tiene una lista registrada de <strong>{translateWord(estate)}</strong> para las elecciones
       </Alert>
-      <Typography variant='subtitle1' className={classes.mainTitle}>Para crear una lista, seleccione qué lista desea crear:</Typography>
+      <Typography variant='subtitle1' className={classes.mainTitle}>Para crear una lista, seleccione qué lista desea crear y la facultad <b>(en caso sea necesario)</b>:</Typography>
       <div className={classes.createListSection}>
-      <Paper component="form" className={classes.paperSelector}>
+      <Paper component="form" className={classes.paperEstateTypeSelector} elevation={0}>
         <FormControl fullWidth variant="outlined">
           <InputLabel id="type-of-estate">Tipo de lista</InputLabel>
           <Select
             labelId="type-of-estate"
             id="type-of-estate-selector"
             value={estateType}
-            onChange={handlEstateTypeSelected}
+            onChange={handleEstateTypeSelected}
             label="Tipo de lista"
           >
             {estates.map(({ label, value }) => <MenuItem key={value} value={value}>

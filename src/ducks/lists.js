@@ -78,9 +78,9 @@ export const findListsByUserIdError = (error) => ({
   payload: { error }
 })
 
-export const createListByUserIdAndTypeRequest = (id, estate, type) => ({
+export const createListByUserIdAndTypeRequest = (id, estate, type, faculty) => ({
   type: CREATE_LIST_BY_USER_ID_AND_TYPE_REQUEST,
-  payload: { id, estate, type }
+  payload: { id, estate, type, faculty }
 })
 
 export const createListByUserIdAndTypeSuccess = (estate, list) => ({

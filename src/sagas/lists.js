@@ -27,11 +27,11 @@ function* findListsByUserId({
 
 function* createListByUserIdAndType({
   payload: {
-    id, estate, type
+    id, estate, type, faculty
   }
 }) {
   try {
-    const { message: { result } } = yield call(Post, '/list/createList', {
+    const { message: { result } } = yield call(Post, `/list/createList?faculty=${faculty}`, {
       args: {
         owner: id,
         type

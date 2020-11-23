@@ -31,3 +31,17 @@ export const studentEstates = [
     value: 'university-third-council'
   }
 ]
+
+export const faculties = [
+  'FIIS',
+  'FIP',
+  'FC',
+  'FIEE',
+  'FIGMM',
+  'FIEECS',
+  'FIC',
+  'FAUA',
+  'FIA',
+  'FIQT',
+  'FIM'
+]
