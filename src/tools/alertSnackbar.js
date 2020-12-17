@@ -38,6 +38,11 @@ export const ENTER_VALID_DNI_CODE = {
   message: 'Por favor, ingrese un documento válido. Ej: 87654321',
 };
 
+export const ENTER_ONE_CODE = {
+  severity: error,
+  message: 'Por favor, ingrese algún documento válido'
+};
+
 export const PASSWORD_SENT_TO_EMAIL_ERROR = {
   severity: error,
   message: 'Ocurrió un error al intentar enviar la contraseña',

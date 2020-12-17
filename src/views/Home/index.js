@@ -15,7 +15,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import { CustomSwitch, CustomInput, Spinner } from 'components';
 import { showAlertSnackbar, findUserByCodeRequest } from 'ducks';
-import { ENTER_VALID_DNI_CODE, ENTER_VALID_UNI_CODE } from 'tools';
+import { isAValidCodeByRule, formatCodeToRule, ENTER_VALID_DNI_CODE, ENTER_VALID_UNI_CODE } from 'tools';
 
 const useStyles = makeStyles((theme) => ({
   mainWrapper: {
@@ -127,41 +127,21 @@ const Home = () => {
 
   const handleValidateCredentials = () => {
     if (!switchDniToUniCode) {
-      const uniCodeRegex = /^[0-9]{8}[A-Z]$/;
-      const match = uniCodeRegex.test(uniCodeInput);
+      const match = isAValidCodeByRule(uniCodeInput, 'uni')
 
       if (match) handleRequestValidateToApi();
       else dispatch(showAlertSnackbar(ENTER_VALID_UNI_CODE));
     } else {
-      const dniRegex = /^[0-9]{8}$/;
-      const match = dniRegex.test(dniInput);
+      const match = isAValidCodeByRule(dniInput, 'dni')
 
       if (match) handleRequestValidateToApi();
       else dispatch(showAlertSnackbar(ENTER_VALID_DNI_CODE));
     }
   };
 
-  const handleValidateUniCode = (event) => {
-    const charactersLimit = 9;
-    const uniCode = event.target.value;
-    const uniCodeUpperCase = uniCode.toUpperCase();
-
-    if (uniCodeUpperCase.length > charactersLimit)
-      setUniCodeInput(uniCodeUpperCase.slice(0, charactersLimit));
-    else setUniCodeInput(uniCodeUpperCase);
-  };
-
-  const handleValidateDni = (event) => {
-    const charactersLimit = 8;
-    const dni = event.target.value;
-
-    if (dni.length > charactersLimit)
-      setDniInput(dni.slice(0, charactersLimit));
-    else setDniInput(dni);
-  };
-
+  const handleValidateUniCode = (event) => setUniCodeInput(formatCodeToRule(event.target.value, 'uni', true))
+  const handleValidateDni = (event) => setDniInput(formatCodeToRule(event.target.value, 'dni'))
   const handleSubmitInput = () =>  handleValidateCredentials()
-
 
   return loading ? (
     <Spinner />

@@ -53,7 +53,7 @@ const CreateTeacherList = ({ uid, estate, estateType, handleEstateTypeSelected, 
         <AlertTitle>Nota</AlertTitle>
         Ud. no tiene una lista registrada de <strong>{translateWord(estate)}</strong> para las elecciones
       </Alert>
-      <Typography variant='subtitle1' className={classes.mainTitle}>Para crear una lista, seleccione qué lista desea crear y la facultad <b>(en caso sea necesario)</b>:</Typography>
+      <Typography variant='subtitle1' className={classes.mainTitle}>Para crear una lista, seleccione qué lista desea crear a continuación:</Typography>
       <div className={classes.createListSection}>
       <Paper component="form" className={classes.paperEstateTypeSelector} elevation={0}>
         <FormControl fullWidth variant="outlined">

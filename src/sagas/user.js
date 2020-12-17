@@ -9,18 +9,20 @@ import {
   storeUserFoundOnCookies,
   FIND_USER_BY_CODE_REQUEST,
   SEND_PASSWORD_TO_EMAIL_FROM_USER_REQUEST,
+  ENROLL_USER_TO_LIST_REQUEST,
 } from 'ducks';
 import {
   Get,
   Patch,
   createNewAlertSnackbarMessage,
+  getCookie,
+  setCookie,
+  removeCookie,
+  USER_KEY,
   USER_SUCCESSFULLY_FOUND,
   PASSWORD_SENT_TO_EMAIL_SUCCESSFULLY,
   PASSWORD_SENT_TO_EMAIL_ERROR,
-  getCookie,
-  setCookie,
-  USER_KEY,
-  removeCookie,
+  translateWord,
 } from 'tools';
 
 function* findUserByCode({ payload: { params, history } }) {
@@ -93,6 +95,33 @@ function* sendPasswordToEmailFromUser({
   }
 }
 
+function* enrollUserToList({
+  payload: {
+    user: { documentType, code, estate }
+  }
+}) {
+  try {
+    const {
+      message: { result: { condition } },
+    } = yield call(
+      Get,
+      `/user/verify/${code}?documentType=${documentType}`
+    )
+
+    if(estate !== `${condition}s`) 
+      yield put(
+        showAlertSnackbar(createNewAlertSnackbarMessage('error', `El usuario ingresado no es de tipo: ${translateWord(estate)}`))
+      );
+    else {
+      
+    }
+  } catch (error) {
+    yield put(
+      showAlertSnackbar(createNewAlertSnackbarMessage('error', error.message))
+    );
+  }
+}
+
 export function* findUserByCodeSaga() {
   yield takeLatest(
     FIND_USER_BY_CODE_REQUEST,
@@ -104,6 +133,13 @@ export function* sendPasswordToEmailFromUserSaga() {
   yield takeLatest(
     SEND_PASSWORD_TO_EMAIL_FROM_USER_REQUEST,
     sendPasswordToEmailFromUser
+  );
+}
+
+export function* enrollUserToListSaga() {
+  yield takeLatest(
+    ENROLL_USER_TO_LIST_REQUEST,
+    enrollUserToList
   );
 }
 

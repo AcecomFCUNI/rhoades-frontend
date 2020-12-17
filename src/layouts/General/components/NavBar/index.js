@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     width: 100,
     height: 100,
-    backgroundColor: theme.palette.warning.light,
+    backgroundColor: '#FFCC3A',
   },
   name: {
     marginTop: theme.spacing(1),

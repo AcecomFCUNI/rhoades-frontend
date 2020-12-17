@@ -3,6 +3,7 @@ import { all, fork } from 'redux-saga/effects';
 import {
   findUserByCodeSaga,
   sendPasswordToEmailFromUserSaga,
+  enrollUserToListSaga,
 } from './user';
 
 import {
@@ -14,6 +15,7 @@ function* rootSaga() {
   yield all([
     fork(findUserByCodeSaga),
     fork(sendPasswordToEmailFromUserSaga),
+    fork(enrollUserToListSaga),
     fork(findListsByUserIdSaga),
     fork(createListByUserIdAndTypeSaga),
   ]);

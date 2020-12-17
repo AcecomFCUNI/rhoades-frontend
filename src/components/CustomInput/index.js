@@ -4,7 +4,7 @@ import { Paper, InputBase, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   inputPaper: {
-    padding: '2px 4px',
+    padding: '5px 6px',
     display: 'flex',
     alignItems: 'center',
     width: '100%',
