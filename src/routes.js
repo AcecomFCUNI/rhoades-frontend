@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Home, ValidateCredentials, Error401, Error404, SignInAdmin } from 'views';
 import { PublicLayout, AdminLayout, ProcuratorLayout, ErrorLayout } from 'layouts';
-import { TeacherList, StudentList } from 'modules/Procurator'
+import { TeacherList, StudentList, UploadDocuments } from 'modules/Procurator'
 import withAuthentication from 'hocs/withAuthentication';
 
 export default [
@@ -98,7 +98,7 @@ export default [
       {
         path: '/procurator/upload-files',
         exact: true,
-        component: withAuthentication(() => <div>Subir documentos</div>, 'procurator'),
+        component: withAuthentication(UploadDocuments, 'procurator'),
       },
       {
         component: () => <Redirect to="/error/404" />
