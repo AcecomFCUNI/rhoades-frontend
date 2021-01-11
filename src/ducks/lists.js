@@ -12,6 +12,13 @@ export const CREATE_LIST_BY_USER_ID_AND_TYPE_SUCCESS =
 export const CREATE_LIST_BY_USER_ID_AND_TYPE_ERROR =
   'rhoades/lists/CREATE_LIST_BY_USER_ID_AND_TYPE_ERROR';
 
+export const ENROLL_USER_TO_LIST_REQUEST =
+  'rhoades/user/ENROLL_USER_TO_LIST_REQUEST';
+export const ENROLL_USER_TO_LIST_SUCCESS =
+  'rhoades/user/ENROLL_USER_TO_LIST_SUCCESS';
+export const ENROLL_USER_TO_LIST_ERROR =
+  'rhoades/user/ENROLL_USER_TO_LIST_ERROR';
+
 const initialState = {
   findLoading: false,
   createLoading: false,
@@ -53,11 +60,16 @@ export default function reducer(state = initialState, action) {
         }
       }
     case CREATE_LIST_BY_USER_ID_AND_TYPE_ERROR:
-        return {
-          ...state,
-          createLoading: false,
-          error: action.payload.error,
-        }
+      return {
+        ...state,
+        createLoading: false,
+        error: action.payload.error,
+      }
+    case ENROLL_USER_TO_LIST_SUCCESS:
+      return {
+        ...state,
+        data: action.payload.lists
+      }
     default: 
       return state
   }
@@ -91,4 +103,18 @@ export const createListByUserIdAndTypeSuccess = (estate, list) => ({
 export const createListByUserIdAndTypeError = (error) => ({
   type: CREATE_LIST_BY_USER_ID_AND_TYPE_ERROR,
   payload: { error }
+})
+
+export const enrollUserToListRequest = (applicant, estate, lists) => ({
+  type: ENROLL_USER_TO_LIST_REQUEST,
+  payload: { applicant, estate, lists }
+})
+
+export const enrollUserToListSuccess = (lists) => ({
+  type: ENROLL_USER_TO_LIST_SUCCESS,
+  payload: { lists }
+})
+
+export const enrollUserToListError = () => ({
+  type: ENROLL_USER_TO_LIST_ERROR
 })

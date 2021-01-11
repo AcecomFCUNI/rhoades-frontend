@@ -1,23 +1,17 @@
 import { all, fork } from 'redux-saga/effects';
 
-import {
-  findUserByCodeSaga,
-  sendPasswordToEmailFromUserSaga,
-  enrollUserToListSaga,
-} from './user';
-
-import {
-  findListsByUserIdSaga,
-  createListByUserIdAndTypeSaga
-} from './lists';
+import * as userSagas from './user';
+import * as listSagas from './lists';
 
 function* rootSaga() {
   yield all([
-    fork(findUserByCodeSaga),
-    fork(sendPasswordToEmailFromUserSaga),
-    fork(enrollUserToListSaga),
-    fork(findListsByUserIdSaga),
-    fork(createListByUserIdAndTypeSaga),
+    fork(userSagas.findUserByCodeSaga),
+    fork(userSagas.sendPasswordToEmailFromUserSaga),
+    fork(userSagas.checkIsAValidApplicantSaga),
+    fork(userSagas.enrollUserToListSaga),
+
+    fork(listSagas.findListsByUserIdSaga),
+    fork(listSagas.createListByUserIdAndTypeSaga)
   ]);
 }
 

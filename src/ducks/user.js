@@ -14,15 +14,24 @@ export const SEND_PASSWORD_TO_EMAIL_FROM_USER_SUCCESS =
   'rhoades/user/SEND_PASSWORD_TO_EMAIL_FROM_USER_SUCCESS';
 export const SEND_PASSWORD_TO_EMAIL_FROM_USER_ERROR =
   'rhoades/user/SEND_PASSWORD_TO_EMAIL_FROM_USER_ERROR';
-
-export const ENROLL_USER_TO_LIST_REQUEST =
-  'rhoades/user/ENROLL_USER_TO_LIST_REQUEST';
-export const ENROLL_USER_TO_LIST_SUCCESS =
-  'rhoades/user/ENROLL_USER_TO_LIST_SUCCESS';
-export const ENROLL_USER_TO_LIST_ERROR =
-  'rhoades/user/ENROLL_USER_TO_LIST_ERROR';
+  
+export const CHECK_IS_A_VALID_APPLICANT_REQUEST = 
+  'rhoades/user/CHECK_IS_A_VALID_APPLICANT_REQUEST'
+export const CHECK_IS_A_VALID_APPLICANT_SUCCESS = 
+  'rhoades/user/CHECK_IS_A_VALID_APPLICANT_SUCCESS'
+export const CHECK_IS_A_VALID_APPLICANT_ERROR = 
+  'rhoades/user/CHECK_IS_A_VALID_APPLICANT_ERROR'
+ 
+export const CLOSE_APPLICANT_DETAILS_DIALOG = 
+  'rhoades/user/CLOSE_APPLICANT_DETAILS_DIALOG'
 
 const initialState = {
+  validatingApplicant: {
+    loading: false,
+    openDialog: false,
+    data: null,
+    error: ''
+  },
   searchParams: null,
   loading: false,
   error: '',
@@ -68,12 +77,50 @@ export default function reducer(state = initialState, action) {
       };
     case SEND_PASSWORD_TO_EMAIL_FROM_USER_SUCCESS:
     case SEND_PASSWORD_TO_EMAIL_FROM_USER_ERROR:
-    case ENROLL_USER_TO_LIST_SUCCESS:
-    case ENROLL_USER_TO_LIST_ERROR:
       return {
         ...state,
         loading: false,
       };
+      
+    case CHECK_IS_A_VALID_APPLICANT_REQUEST:
+      return {
+        ...state,
+        validatingApplicant: {
+          ...state.validatingApplicant,
+          loading: true
+        }
+      }
+
+    case CHECK_IS_A_VALID_APPLICANT_SUCCESS:
+      return {
+        ...state,
+        validatingApplicant: {
+          ...state.validatingApplicant,
+          loading: false,
+          openDialog: true,
+          data: action.payload.user
+        }
+      }
+
+    case CHECK_IS_A_VALID_APPLICANT_ERROR:
+      return {
+        ...state,
+        validatingApplicant: {
+          ...state.validatingApplicant,
+          loading: false,
+          error: action.payload.error
+        }
+      }
+
+    case CLOSE_APPLICANT_DETAILS_DIALOG:
+      return {
+        ...state,
+        validatingApplicant: {
+          ...state.validatingApplicant,
+          openDialog: false
+        }
+      }
+
     default:
       return state;
   }
@@ -112,15 +159,21 @@ export const sendPasswordToEmailFromUserError = () => ({
   type: SEND_PASSWORD_TO_EMAIL_FROM_USER_ERROR,
 });
 
-export const enrollUserToListRequest = (user) => ({
-  type: ENROLL_USER_TO_LIST_REQUEST,
+export const checkIsAValidApplicantRequest = (user) => ({
+  type: CHECK_IS_A_VALID_APPLICANT_REQUEST,
   payload: { user }
 })
 
-export const enrollUserToListSuccess = () => ({
-  type: ENROLL_USER_TO_LIST_SUCCESS
+export const checkIsAValidApplicantSuccess = (user) => ({
+  type: CHECK_IS_A_VALID_APPLICANT_SUCCESS,
+  payload: { user }
 })
 
-export const enrollUserToListError = () => ({
-  type: ENROLL_USER_TO_LIST_ERROR
+export const checkIsAValidApplicantError = (error) => ({
+  type: CHECK_IS_A_VALID_APPLICANT_ERROR,
+  payload: { error }
+})
+
+export const closeApplicantDetailsDialog = () => ({
+  type: CLOSE_APPLICANT_DETAILS_DIALOG
 })

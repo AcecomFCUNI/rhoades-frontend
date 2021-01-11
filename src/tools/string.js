@@ -1,3 +1,5 @@
+import { studentEstates, teacherEstates } from "constants/index"
+
 export const codeRules = {
   uni: {
     length: 9,
@@ -21,3 +23,13 @@ export const formatCodeToRule = (code, rule, uppercase = false) => {
 
 export const splitNamesAndGetOne = (names) => names.split(' ')[0];
 
+export const getLabelFromEstate = (estateType, condition) => {
+  let estateLabel = ''
+
+  if(condition === 'teachers')
+    estateLabel = teacherEstates.find(estate => estate.value === estateType).label
+  else if(condition === 'students')
+    estateLabel = studentEstates.find(estate => estate.value === estateType).label
+  
+  return estateLabel
+}

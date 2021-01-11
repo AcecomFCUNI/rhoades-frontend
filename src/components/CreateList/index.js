@@ -41,17 +41,18 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const CreateTeacherList = ({ uid, estate, estateType, handleEstateTypeSelected, estates, faculty }) => {
+const CreateTeacherList = (props) => {
+  const { uid, condition, estateType, handleEstateTypeSelected, estates, faculty } = props
   const classes = useStyles()
   const dispatch = useDispatch()
 
-  const handleCreateNewList = () => dispatch(createListByUserIdAndTypeRequest(uid, estate, estateType, faculty))
+  const handleCreateNewList = () => dispatch(createListByUserIdAndTypeRequest(uid, condition, estateType, faculty))
   
   return (
     <React.Fragment>
       <Alert severity="warning">
         <AlertTitle>Nota</AlertTitle>
-        Ud. no tiene una lista registrada de <strong>{translateWord(estate)}</strong> para las elecciones
+        Ud. no tiene una lista registrada de <strong>{translateWord(condition)}</strong> para las elecciones
       </Alert>
       <Typography variant='subtitle1' className={classes.mainTitle}>Para crear una lista, seleccione qué lista desea crear a continuación:</Typography>
       <div className={classes.createListSection}>

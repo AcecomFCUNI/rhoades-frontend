@@ -9,10 +9,16 @@ import {
   storeUserFoundOnCookies,
   FIND_USER_BY_CODE_REQUEST,
   SEND_PASSWORD_TO_EMAIL_FROM_USER_REQUEST,
+  CHECK_IS_A_VALID_APPLICANT_REQUEST,
+  checkIsAValidApplicantSuccess,
   ENROLL_USER_TO_LIST_REQUEST,
+  enrollUserToListSuccess,
+  checkIsAValidApplicantError,
+  enrollUserToListError,
 } from 'ducks';
 import {
   Get,
+  Post,
   Patch,
   createNewAlertSnackbarMessage,
   getCookie,
@@ -21,12 +27,12 @@ import {
   USER_KEY,
   USER_SUCCESSFULLY_FOUND,
   PASSWORD_SENT_TO_EMAIL_SUCCESSFULLY,
-  PASSWORD_SENT_TO_EMAIL_ERROR,
-  translateWord,
+  PASSWORD_SENT_TO_EMAIL_ERROR
 } from 'tools';
 
-function* findUserByCode({ payload: { params, history } }) {
+function* findUserByCode(action) {
   try {
+    const { params, history } = action.payload
     const {
       message: { result },
     } = yield call(
@@ -48,12 +54,9 @@ function* findUserByCode({ payload: { params, history } }) {
   }
 }
 
-function* sendPasswordToEmailFromUser({
-  payload: {
-    user: { data: user, gender }
-  },
-}) {
+function* sendPasswordToEmailFromUser(action) {
   try {
+    const { user: { data: user, gender } } = action.payload
     const { error } = yield call(
       Patch,
       '/user/notify',
@@ -95,31 +98,84 @@ function* sendPasswordToEmailFromUser({
   }
 }
 
-function* enrollUserToList({
-  payload: {
-    user: { documentType, code, estate }
-  }
-}) {
+function* checkIsAValidApplicant(action) {
   try {
+    const { user: { documentType, code } } = action.payload
     const {
-      message: { result: { condition } },
+      message: { result: applicant },
     } = yield call(
       Get,
       `/user/verify/${code}?documentType=${documentType}`
     )
 
-    if(estate !== `${condition}s`) 
-      yield put(
-        showAlertSnackbar(createNewAlertSnackbarMessage('error', `El usuario ingresado no es de tipo: ${translateWord(estate)}`))
-      );
+    /* 
+      Conditions
+      registered: false
+      committeeMember: false
+      postulating: false
+    */
+
+    if(applicant.registered) {
+      const message = 'El usuario ya se encuentra registrado como personero'
+      yield put(checkIsAValidApplicantError(message))
+      yield put(showAlertSnackbar(createNewAlertSnackbarMessage('error', message)))
+    }
+    else if(applicant.postulating) {
+      const message = 'El usuario ya se encuentra registrado como personero'
+      yield put(checkIsAValidApplicantError(message))
+      yield put(showAlertSnackbar(createNewAlertSnackbarMessage('error', message)))
+    }
+    else if(applicant.committeeMember) {
+      const message = 'El usuario es miembro del comité'
+      yield put(checkIsAValidApplicantError(message))
+      yield put(showAlertSnackbar(createNewAlertSnackbarMessage('error', message)))
+    }
     else {
-      
+      yield put(checkIsAValidApplicantSuccess({
+        ...applicant,
+        documentType,
+        code
+      }))
     }
   } catch (error) {
-    yield put(
-      showAlertSnackbar(createNewAlertSnackbarMessage('error', error.message))
-    );
+    console.log('aia')
+    const { result } = error.response.data.message;
+    yield put(checkIsAValidApplicantError(result))
+    yield put(showAlertSnackbar(createNewAlertSnackbarMessage('error', result)));
   }
+}
+
+function* enrollUserToList(action) {
+try {
+  const { applicant, estate, lists } = action.payload
+  const list = lists[estate]
+  const {
+    message: { result },
+  } = yield call(
+    Post,
+    `/user/enroll/${applicant.code}?documentType=${applicant.documentType}`,
+    {
+      args: {
+        owner: list.owner,
+        id: list.id
+      },
+    }
+  );
+
+  // add the new applicant to the list 
+  list.applicants = [
+    ...list.applicants,
+    result
+  ]
+  lists[estate] = list
+  yield put(enrollUserToListSuccess(lists))
+} catch (error) {
+  const { result } = error.response.data.message;
+  yield put(enrollUserToListError(result))
+  yield put(
+    showAlertSnackbar(createNewAlertSnackbarMessage('error', result))
+  );
+}
 }
 
 export function* findUserByCodeSaga() {
@@ -136,10 +192,16 @@ export function* sendPasswordToEmailFromUserSaga() {
   );
 }
 
+export function* checkIsAValidApplicantSaga() {
+  yield takeLatest(
+    CHECK_IS_A_VALID_APPLICANT_REQUEST,
+    checkIsAValidApplicant
+  );
+}
+
 export function* enrollUserToListSaga() {
   yield takeLatest(
     ENROLL_USER_TO_LIST_REQUEST,
     enrollUserToList
-  );
+  )
 }
-

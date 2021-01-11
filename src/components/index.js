@@ -9,3 +9,7 @@ export { default as GeneralAuth } from './GeneralAuth';
 export { default as AlertSnackbar } from './AlertSnackbar';
 export { default as CreateList } from './CreateList';
 export { default as EnrollUsersToList } from './EnrollUsersToList';
+export { default as ApplicantDetailsDialog } from './ApplicantDetailsDialog';
+export { default as CustomTable } from './CustomTable';
+export { default as TypeListTitle } from './TypeListTitle';
+export { default as Instructions } from './Instructions';

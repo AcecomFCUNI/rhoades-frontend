@@ -1,5 +1,5 @@
 import React from 'react';
-
+import clsx from 'clsx'
 import { Paper, InputBase, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,10 +28,10 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomInput = (props) => {
   const classes = useStyles();
-  const { aftericon = null, beforeicon = null, submitinput, ...restProps } = props;
+  const { aftericon = null, beforeicon = null, submitinput, className, ...restProps } = props;
 
   return (
-    <Paper component="form" className={classes.inputPaper} elevation={0}>
+    <Paper component="form" className={clsx(classes.inputPaper, className)} elevation={0}>
       {beforeicon}
       <InputBase 
         className={classes.input} {...restProps} 

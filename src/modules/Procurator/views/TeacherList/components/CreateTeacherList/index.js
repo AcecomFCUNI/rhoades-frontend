@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { CreateList } from 'components'
 import { teacherEstates } from 'constants/index'
 
-const CreateTeacherList = ({ uid, estate, faculty }) => {
+const CreateTeacherList = ({ uid, condition, faculty }) => {
   const [estateType, setEstateType] = useState('rector')
 
   const handlEstateTypeSelected = (event) => setEstateType(event.target.value);
@@ -12,7 +12,7 @@ const CreateTeacherList = ({ uid, estate, faculty }) => {
     <CreateList
       uid={uid}
       faculty={faculty}
-      estate={estate}
+      condition={condition}
       estateType={estateType}
       estates={teacherEstates}
       handleEstateTypeSelected={handlEstateTypeSelected}
