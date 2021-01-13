@@ -1,61 +1,130 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 
-import { findListsByUserIdSuccess,
-  createListByUserIdAndTypeError,
-  createListByUserIdAndTypeSuccess,
-  CREATE_LIST_BY_USER_ID_AND_TYPE_REQUEST,
-  FIND_LISTS_BY_USER_ID_REQUEST,
-  showAlertSnackbar,
-  findListsByUserIdError
- } from 'ducks'
+import * as ducks from 'ducks'
+import * as tools from 'tools';
 
-import { Get, Post, LIST_WAS_CREATED_SUCCESSFULLY, LIST_WAS_CREATED_WITH_ERROR } from 'tools';
-
-function* findListsByUserId({
-  payload: {
-    userId
-  }
-}) {
+function* findListsByUserId(action) {
   try {
-    const { message: { result } } = yield call(Get, `/list/getListsOfUser/${userId}`)
-    yield put(findListsByUserIdSuccess(result))
+    const { userId } = action.payload
+    const { message: { result } } = yield call(tools.Get, `/list/getListsOfUser/${userId}`)
+    yield put(ducks.findListsByUserIdSuccess(result))
   } catch (error) {
     const { message: { result } } = error.response.data;
-    yield put(findListsByUserIdError(result))
+    yield put(ducks.findListsByUserIdError(result))
   }
 }
 
-function* createListByUserIdAndType({
-  payload: {
-    id, estate, type, faculty
-  }
-}) {
+function* createListByUserIdAndType(action) {
   try {
-    const { message: { result } } = yield call(Post, `/list/createList?faculty=${faculty}`, {
+    const { id, estate, type, faculty } = action.payload
+    const { message: { result } } = yield call(tools.Post, `/list/createList?faculty=${faculty}`, {
       args: {
         owner: id,
         type
       }
     })
-    yield put(createListByUserIdAndTypeSuccess(estate, result))
-    yield put(showAlertSnackbar(LIST_WAS_CREATED_SUCCESSFULLY))
+    yield put(ducks.createListByUserIdAndTypeSuccess(estate, result))
+    yield put(ducks.showAlertSnackbar(tools.LIST_WAS_CREATED_SUCCESSFULLY))
   } catch (error) {
     const { message: { result } } = error.response.data;
-    yield put(createListByUserIdAndTypeError(result))
-    yield put(showAlertSnackbar(LIST_WAS_CREATED_WITH_ERROR))
+    yield put(ducks.createListByUserIdAndTypeError(result))
+    yield put(ducks.showAlertSnackbar(tools.LIST_WAS_CREATED_WITH_ERROR))
+  }
+}
+
+
+function* enrollUserToList(action) {
+  try {
+    const { applicant, estate, lists } = action.payload
+    const list = lists[estate]
+    const {
+      message: { result },
+    } = yield call(
+      tools.Post,
+      `/user/enroll/${applicant.code}?documentType=${applicant.documentType}`,
+      {
+        args: {
+          owner: list.owner,
+          id: list.id
+        },
+      }
+    );
+  
+    // add the new applicant to the list 
+    list.applicants = [
+      ...list.applicants,
+      result
+    ]
+    lists[estate] = list
+    yield put(ducks.enrollUserToListSuccess(lists))
+  } catch (error) {
+    const { result } = error.response.data.message;
+    yield put(ducks.enrollUserToListError(result))
+    yield put(
+      ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', result))
+    );
+  }
+}
+
+export function* removeUserFromList(action) {
+  try {
+    const { applicant, condition, lists } = action.payload
+    const list = lists[condition]
+    const response = yield call(
+      tools.Patch,
+      `/list/removeCandidate/${applicant.id}`,
+      {
+        args: {
+          owner: list.owner,
+          id: list.id
+        },
+      }
+    );
+    
+    if(!response.error) {
+      // return new lists removing the applicant
+      list.applicants = list.applicants.filter(currentApplicant => currentApplicant.id !== applicant.id)
+      lists[condition] = list
+      yield put(ducks.removeUserFromListSuccess(lists))
+      yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('success', response.message.result)))
+    }
+    else {
+      // return the same lists without changes
+      const message = 'Ocurrió un error al intentar eliminar la persona de su lista'
+      yield put(ducks.removeUserFromListError(message))
+      yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', message)))
+    }
+  } catch (error) {
+    const { result } = error.response.data.message;
+    yield put(ducks.removeUserFromListError(result))
+    yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', result)))
   }
 }
 
 export function* findListsByUserIdSaga() {
   yield takeLatest(
-    FIND_LISTS_BY_USER_ID_REQUEST,
+    ducks.FIND_LISTS_BY_USER_ID_REQUEST,
     findListsByUserId
   );
 }
 
 export function* createListByUserIdAndTypeSaga() {
   yield takeLatest(
-    CREATE_LIST_BY_USER_ID_AND_TYPE_REQUEST,
+    ducks.CREATE_LIST_BY_USER_ID_AND_TYPE_REQUEST,
     createListByUserIdAndType
   );
+}
+
+export function* enrollUserToListSaga() {
+  yield takeLatest(
+    ducks.ENROLL_USER_TO_LIST_REQUEST,
+    enrollUserToList
+  )
+}
+
+export function* removeUserFromListSaga() {
+  yield takeLatest(
+    ducks.REMOVE_USER_FROM_LIST_REQUEST,
+    removeUserFromList
+  )
 }

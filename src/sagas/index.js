@@ -8,10 +8,11 @@ function* rootSaga() {
     fork(userSagas.findUserByCodeSaga),
     fork(userSagas.sendPasswordToEmailFromUserSaga),
     fork(userSagas.checkIsAValidApplicantSaga),
-    fork(userSagas.enrollUserToListSaga),
 
     fork(listSagas.findListsByUserIdSaga),
-    fork(listSagas.createListByUserIdAndTypeSaga)
+    fork(listSagas.createListByUserIdAndTypeSaga),
+    fork(listSagas.enrollUserToListSaga),
+    fork(listSagas.removeUserFromListSaga)
   ]);
 }
 

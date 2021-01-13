@@ -1,13 +1,22 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { Spinner, EnrollUsersToList, ApplicantDetailsDialog, CustomTable, TypeListTitle, Instructions } from 'components'
+import {
+  Spinner,
+  EnrollUsersToList,
+  ApplicantDetailsDialog,
+  CustomTable,
+  TypeListTitle,
+  Instructions,
+  ApplicantRemoveDialog
+} from 'components'
 import { existsKeyInObject,  getLabelFromEstate } from 'tools'
 import { CreateStudentList } from './components'
 
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
-import { makeStyles } from '@material-ui/core'
+import { LinearProgress, makeStyles } from '@material-ui/core'
 import clsx from 'clsx'
+import * as ducks from 'ducks'
 
 const condition = 'students'
 
@@ -25,6 +34,7 @@ const useStyles = makeStyles(theme => ({
 
 const StudentList = () => {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const lists = useSelector(state => state.lists)
@@ -58,7 +68,7 @@ const StudentList = () => {
       label: 'Eliminar postulante de la lista',
       icon: <DeleteRoundedIcon />,
       onClick: (pack) => {
-        console.log('eliminar')
+        dispatch(ducks.openRemoveUserFromListDialog(pack))
       }
     }
   ];
@@ -80,6 +90,7 @@ const StudentList = () => {
           <EnrollUsersToList condition={condition} className={clsx(classes.dniAndCodeSection, classes.marginTop)} />
           <ApplicantDetailsDialog condition={condition} />
           <CustomTable
+            cardHeader={(lists.addLoading || lists.removeUser.loading) && <LinearProgress />}
             tableRowClassName={classes.tableRowsData}
             summaryTableInfoIsEnabled={false}
             className={clsx(classes.applicantsTable, classes.marginTop)}
@@ -100,6 +111,7 @@ const StudentList = () => {
               rowsPerPageOptions: [10, 15]
             }}
           />
+          <ApplicantRemoveDialog condition={condition} />
         </React.Fragment>
   )
 }

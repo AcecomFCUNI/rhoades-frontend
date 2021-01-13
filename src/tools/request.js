@@ -41,4 +41,15 @@ const Patch = async (route, json = {}, headers = {}) => {
   }
 };
 
-export { Get, Post, Patch };
+const Delete = async (route, json = {}, headers = {}) => {
+  try {
+    const { data } = await axiosInstance(headers).delete(route, {
+      data: json
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { Get, Post, Patch, Delete };

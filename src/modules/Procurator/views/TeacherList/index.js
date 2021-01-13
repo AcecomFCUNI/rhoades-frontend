@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { Spinner, EnrollUsersToList, ApplicantDetailsDialog, CustomTable, TypeListTitle, Instructions } from 'components'
+import { Spinner, EnrollUsersToList, ApplicantDetailsDialog, CustomTable, TypeListTitle, Instructions, ApplicantRemoveDialog } from 'components'
 import { existsKeyInObject, getLabelFromEstate } from 'tools'
 import { CreateTeacherList } from './components'
 
@@ -100,6 +100,7 @@ const TeacherList = () => {
               rowsPerPageOptions: [10, 15]
             }}
           />
+          <ApplicantRemoveDialog condition={condition} />
         </React.Fragment>
   )
 }

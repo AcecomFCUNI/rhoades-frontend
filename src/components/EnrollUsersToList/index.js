@@ -14,8 +14,33 @@ const useStyles = makeStyles(theme => ({
     opacity: 0.7,
     pointerEvents: 'none'
   },
+  formTitle: {
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: theme.spacing(2),
+    }
+  },
   searchUserInput: {
-    marginTop: theme.spacing(1)
+    margin: 10
+  },
+  padding: {
+    [theme.breakpoints.only('sm')]: {
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1)
+    },
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: theme.spacing(2)
+    },
+    [theme.breakpoints.down('sm')]: {
+      paddingBottom: theme.spacing(2)
+    }
+  },
+  paddingBottom: {
+    [theme.breakpoints.down('sm')]: {
+      paddingBottom: theme.spacing(2)
+    }
+  },
+  textAlign: {
+    textAlign: 'center'
   }
 }))
 
@@ -59,30 +84,28 @@ const EnrollUsersToList = (props) => {
   const handleOnChangeDniInput = (event) => setDniInput(tools.formatCodeToRule(event.target.value, 'dni')) 
 
   return (
-    <Grid container spacing={1} className={clsx(className)}>
-      <Grid item xs={12} sm={12} md={4} lg={3} container justify='center'>
-        <Typography variant='h4'>Ingrese el documento del docente que desea inscribir</Typography>     
+    <Grid container className={clsx(className)}>
+      <Grid item xs={12} sm={12} md={4} lg={3} container justify='center' className={classes.paddingBottom}>
+        <Typography variant='h4' className={classes.textAlign}>Ingrese el documento del {condition === 'students' ? 'estudiante' : 'docente' } que desea inscribir</Typography>     
       </Grid>
-      <Grid container item xs={12} sm={12} md={8} lg={9} spacing={2} alignItems='center'>
-        <Grid item xs={12} sm={6} md={5}>
+      <Grid item xs={12} sm={12} md={8} lg={9} container alignItems='center'>
+       <Grid item xs={12} sm={6} md={5} className={clsx(classes.padding)}>
           <CustomInput 
-            className={classes.searchUserInput}
             disabled={dniInput.length > 0} 
             placeholder='Código UNI'
             value={codeInput}
             onChange={handleOnChangeCodeInput}
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={5}>
+        <Grid item xs={12} sm={6} md={5} className={clsx(classes.padding)}>
           <CustomInput 
-            className={classes.searchUserInput}
             disabled={codeInput.length > 0} 
             placeholder='DNI'
             value={dniInput}
             onChange={handleOnChangeDniInput}
           />
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} md={2} className={clsx(classes.padding)}>
           <Button
             className={clsx({
               [classes.searchButtonLoading]: loading
