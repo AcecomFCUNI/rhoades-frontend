@@ -57,11 +57,17 @@ const useStyles = makeStyles((theme) => ({
   },
   noDataImg: {
     width: 80
+  },
+  disabledTable: {
+    opacity: 0.65,
+    pointerEvents: 'none',
+    userSelect: 'none'
   }
 }));
 
 const CustomTable = (props) => {
   const {
+    tableDisabled,
     className,
     data,
     hoverableRows,
@@ -110,7 +116,9 @@ const CustomTable = (props) => {
       : data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
-    <div {...rest} className={clsx(classes.root, className)}>
+    <div {...rest} className={clsx(classes.root, className, {
+      [classes.disabledTable]: tableDisabled
+    })}>
       {summaryTableInfoIsEnabled && (
         <Typography color="textSecondary" gutterBottom variant="body2">
           {data.length} resultados encontrados. Página {page + 1} de{' '}
@@ -218,7 +226,8 @@ CustomTable.propTypes = {
   columns: PropTypes.array.isRequired,
   infiniteScroll: PropTypes.bool,
   cardHeader: PropTypes.node,
-  noDataLabel: PropTypes.string
+  noDataLabel: PropTypes.string,
+  tableDisabled: PropTypes.bool
 };
 
 CustomTable.defaultProps = {
@@ -238,7 +247,8 @@ CustomTable.defaultProps = {
   titleIsEnabled: true,
   infiniteScroll: false,
   cardHeader: null,
-  noDataLabel: null
+  noDataLabel: null,
+  tableDisabled: false
 };
 
 export default CustomTable;

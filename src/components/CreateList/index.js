@@ -11,7 +11,7 @@ import {
   MenuItem, 
   makeStyles
 } from '@material-ui/core'
-import { Alert, AlertTitle } from '@material-ui/lab'
+import { Alert } from '@material-ui/lab'
 
 import { createListByUserIdAndTypeRequest } from 'ducks'
 import { translateWord } from 'tools'
@@ -51,8 +51,8 @@ const CreateTeacherList = (props) => {
   return (
     <React.Fragment>
       <Alert severity="warning">
-        <AlertTitle>Nota</AlertTitle>
-        Ud. no tiene una lista registrada de <strong>{translateWord(condition)}</strong> para las elecciones
+        <Typography variant='h6'>Nota</Typography>
+        <Typography variant='subtitle2'>Ud. no tiene una lista registrada de <strong>{translateWord(condition)}</strong> para las elecciones</Typography>
       </Alert>
       <Typography variant='subtitle1' className={classes.mainTitle}>Para crear una lista, seleccione qué lista desea crear a continuación:</Typography>
       <div className={classes.createListSection}>

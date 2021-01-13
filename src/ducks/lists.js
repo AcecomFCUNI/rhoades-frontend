@@ -31,10 +31,18 @@ export const OPEN_REMOVE_USER_FROM_LIST_DIALOG =
 export const CLOSE_REMOVE_USER_FROM_LIST_DIALOG =
   'rhoades/list/CLOSE_REMOVE_USER_FROM_LIST_DIALOG'
 
+export const FINISH_REGISTRATION_LIST_REQUEST =
+  'rhoades/list/FINISH_REGISTRATION_LIST_REQUEST'
+export const FINISH_REGISTRATION_LIST_SUCCESS =
+  'rhoades/list/FINISH_REGISTRATION_LIST_SUCCESS'
+export const FINISH_REGISTRATION_LIST_ERROR =
+  'rhoades/list/FINISH_REGISTRATION_LIST_ERROR'
+
 const initialState = {
   findLoading: false,
   createLoading: false,
   addLoading: false,
+  finishLoading: false,
   error: '',
   removeUser: {
     openDialog: false,
@@ -145,6 +153,23 @@ export default function reducer(state = initialState, action) {
           error: action.payload.error
         }
     }
+    case FINISH_REGISTRATION_LIST_REQUEST:
+      return {
+        ...state,
+        finishLoading: true
+      }
+    case FINISH_REGISTRATION_LIST_SUCCESS:
+      return {
+        ...state,
+        finishLoading: false,
+        data: action.payload.lists
+      }
+    case FINISH_REGISTRATION_LIST_ERROR:
+      return {
+        ...state,
+        finishLoading: false,
+        error: action.payload.error
+      }
     default: 
       return state
   }
@@ -216,5 +241,20 @@ export const removeUserFromListSuccess = (lists) => ({
 
 export const removeUserFromListError = (error) => ({
   type: REMOVE_USER_FROM_LIST_ERROR,
+  payload: { error }
+})
+
+export const finishRegistrationListRequest = (lists, condition) => ({
+  type: FINISH_REGISTRATION_LIST_REQUEST,
+  payload: { lists, condition }
+})
+
+export const finishRegistrationListSuccess = (lists) => ({
+  type: FINISH_REGISTRATION_LIST_SUCCESS,
+  payload: { lists }
+})
+
+export const finishRegistrationListError = (error) => ({
+  type: FINISH_REGISTRATION_LIST_ERROR,
   payload: { error }
 })

@@ -83,11 +83,12 @@ const TeacherList = () => {
       : !existsKeyInObject(condition, lists.data) 
       ? <CreateTeacherList uid={auth.uid} condition={condition} faculty={profile.faculty} /> 
       : <React.Fragment>
-          <TypeListTitle label={`Tipo de lista: ${getLabelFromEstate(lists.data[condition]?.type, condition)}`} />
+          <TypeListTitle label={`Tipo de lista: ${getLabelFromEstate(lists.data[condition]?.type, condition)}`} condition={condition} />
           <Instructions className={clsx(classes.marginTop)} />
           <EnrollUsersToList condition={condition} className={clsx(classes.dniAndCodeSection, classes.marginTop)} />  
           <ApplicantDetailsDialog condition={condition} />
           <CustomTable
+            tableDisabled={lists.data[condition].closed}
             cardHeader={(lists.addLoading || lists.removeUser.loading) && <LinearProgress />}
             tableRowClassName={classes.tableRowsData}
             summaryTableInfoIsEnabled={false}

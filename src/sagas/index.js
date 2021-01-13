@@ -12,7 +12,8 @@ function* rootSaga() {
     fork(listSagas.findListsByUserIdSaga),
     fork(listSagas.createListByUserIdAndTypeSaga),
     fork(listSagas.enrollUserToListSaga),
-    fork(listSagas.removeUserFromListSaga)
+    fork(listSagas.removeUserFromListSaga),
+    fork(listSagas.finishRegistrationListSaga)
   ]);
 }
 

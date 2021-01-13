@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   divider: {
     margin: '8px 0'
   },
-  deleteButton: {
+  finishRegistrationButton: {
     backgroundColor: theme.palette.error.main,
     '&:hover': {
       backgroundColor: theme.palette.error.light,
@@ -49,15 +49,15 @@ const getDialogTitle = (condition) => {
   }
 }
 
-const ApplicantRemoveDeialog = (props) => {
+const FinishRegistrationListDialog = (props) => {
   const { condition } = props
   const classes = useStyles()
   const dispatch = useDispatch()
-  const { openDialog, data: applicant } = useSelector(state => state.lists.removeUser)
+  const { openDialog } = useSelector(state => state.lists.finishList)
   const lists = useSelector(state => state.lists.data)
 
-  const handleCloseRemoveApplicantDialog = () => dispatch(actions.closeRemoveUserFromListDialog())
-  const handleRemoveApplicantFromList = () => {
+  const handleCloseFinishRegistrationListDialog = () => dispatch(actions.closeRemoveUserFromListDialog())
+  const handleFinishRegistrationList = () => {
     dispatch(actions.removeUserFromListRequest(applicant, condition, lists))
     dispatch(actions.closeRemoveUserFromListDialog())
   }
@@ -91,15 +91,15 @@ const ApplicantRemoveDeialog = (props) => {
         </div>
         <DialogActions>
           <Button
-            className={clsx(classes.deleteButton, classes.dialogAction)}
-            onClick={handleRemoveApplicantFromList}
+            className={clsx(classes.finishRegistrationButton, classes.dialogAction)}
+            onClick={handleFinishRegistrationList}
             variant="contained"
             color="primary">
-            Eliminar
+            Finalizar
           </Button>
           <Button
             className={classes.dialogAction}
-            onClick={handleCloseRemoveApplicantDialog}
+            onClick={handleCloseFinishRegistrationListDialog}
             variant="outlined"
             color="primary">
             Cancelar
@@ -110,4 +110,4 @@ const ApplicantRemoveDeialog = (props) => {
   )
 }
 
-export default ApplicantRemoveDeialog
+export default FinishRegistrationListDialog

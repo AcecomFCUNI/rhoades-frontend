@@ -101,6 +101,41 @@ export function* removeUserFromList(action) {
   }
 }
 
+export function* finishRegistrationList(action) {
+  try {
+    const { lists, condition } = action.payload
+    const list = lists[condition]
+    const response = yield call(
+      tools.Patch,
+      '/list/finishRegistration',
+      {
+        args: {
+          owner: list.owner,
+          id: list.id
+        },
+      }
+    );
+
+    if(!response.error) {
+      // return new lists setting closed
+      list.closed = true
+      lists[condition] = list
+      yield put(ducks.finishRegistrationListSuccess(lists))
+      yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('success', response.message.result)))
+    }
+    else {
+      // return the same lists without changes
+      const message = 'Ocurrió un error al intentar finalizar la lista'
+      yield put(ducks.finishRegistrationListError(message))
+      yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', message)))
+    }
+  } catch (error) {
+    const { result } = error.response.data.message;
+    yield put(ducks.finishRegistrationListError(result))
+    yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', result)))
+  }
+}
+
 export function* findListsByUserIdSaga() {
   yield takeLatest(
     ducks.FIND_LISTS_BY_USER_ID_REQUEST,
@@ -126,5 +161,12 @@ export function* removeUserFromListSaga() {
   yield takeLatest(
     ducks.REMOVE_USER_FROM_LIST_REQUEST,
     removeUserFromList
+  )
+}
+
+export function* finishRegistrationListSaga() {
+  yield takeLatest(
+    ducks.FINISH_REGISTRATION_LIST_REQUEST,
+    finishRegistrationList
   )
 }
