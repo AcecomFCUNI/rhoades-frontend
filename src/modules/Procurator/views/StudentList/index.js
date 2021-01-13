@@ -67,9 +67,7 @@ const StudentList = () => {
     {
       label: 'Eliminar postulante de la lista',
       icon: <DeleteRoundedIcon />,
-      onClick: (pack) => {
-        dispatch(ducks.openRemoveUserFromListDialog(pack))
-      }
+      onClick: (pack) => dispatch(ducks.openRemoveUserFromListDialog(pack))
     }
   ];
 

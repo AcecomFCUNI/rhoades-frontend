@@ -1,13 +1,22 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { Spinner, EnrollUsersToList, ApplicantDetailsDialog, CustomTable, TypeListTitle, Instructions, ApplicantRemoveDialog } from 'components'
+import {
+  Spinner,
+  EnrollUsersToList,
+  ApplicantDetailsDialog,
+  CustomTable,
+  TypeListTitle,
+  Instructions,
+  ApplicantRemoveDialog
+} from 'components'
 import { existsKeyInObject, getLabelFromEstate } from 'tools'
 import { CreateTeacherList } from './components'
 
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 import { LinearProgress, makeStyles } from '@material-ui/core'
 import clsx from 'clsx'
+import * as ducks from 'ducks'
 
 const condition = 'teachers'
 
@@ -25,6 +34,7 @@ const useStyles = makeStyles(theme => ({
 
 const TeacherList = () => {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const lists = useSelector(state => state.lists)
@@ -57,9 +67,7 @@ const TeacherList = () => {
     {
       label: 'Eliminar postulante de la lista',
       icon: <DeleteRoundedIcon />,
-      onClick: (pack) => {
-        console.log('eliminar')
-      }
+      onClick: (pack) => dispatch(ducks.openRemoveUserFromListDialog(pack))
     }
   ];
 
