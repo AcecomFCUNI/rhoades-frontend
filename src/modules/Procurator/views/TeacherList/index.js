@@ -6,7 +6,7 @@ import { existsKeyInObject, getLabelFromEstate } from 'tools'
 import { CreateTeacherList } from './components'
 
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
-import { makeStyles } from '@material-ui/core'
+import { LinearProgress, makeStyles } from '@material-ui/core'
 import clsx from 'clsx'
 
 const condition = 'teachers'
@@ -80,6 +80,7 @@ const TeacherList = () => {
           <EnrollUsersToList condition={condition} className={clsx(classes.dniAndCodeSection, classes.marginTop)} />  
           <ApplicantDetailsDialog condition={condition} />
           <CustomTable
+            cardHeader={(lists.addLoading || lists.removeUser.loading) && <LinearProgress />}
             tableRowClassName={classes.tableRowsData}
             summaryTableInfoIsEnabled={false}
             className={clsx(classes.applicantsTable, classes.marginTop)}
