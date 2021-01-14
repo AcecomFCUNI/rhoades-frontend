@@ -91,7 +91,8 @@ const EnrollUsersToList = (props) => {
       </Grid>
       <Grid item xs={12} sm={12} md={8} lg={9} container alignItems='center'>
        <Grid item xs={12} sm={6} md={5} className={clsx(classes.padding)}>
-          <CustomInput 
+          <CustomInput
+            submitinput={handleValidateCredentials}
             disabled={dniInput.length > 0 || lists[condition].closed} 
             placeholder='Código UNI'
             value={codeInput}
@@ -100,6 +101,7 @@ const EnrollUsersToList = (props) => {
         </Grid>
         <Grid item xs={12} sm={6} md={5} className={clsx(classes.padding)}>
           <CustomInput 
+            submitinput={handleValidateCredentials}
             disabled={codeInput.length > 0 || lists[condition].closed} 
             placeholder='DNI'
             value={dniInput}
