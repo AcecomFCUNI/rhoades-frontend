@@ -31,6 +31,11 @@ export const OPEN_REMOVE_USER_FROM_LIST_DIALOG =
 export const CLOSE_REMOVE_USER_FROM_LIST_DIALOG =
   'rhoades/list/CLOSE_REMOVE_USER_FROM_LIST_DIALOG'
 
+export const OPEN_FINISH_REGISTRATION_LIST_DIALOG =
+  'rhoades/list/OPEN_FINISH_REGISTRATION_LIST_DIALOG'
+export const CLOSE_FINISH_REGISTRATION_LIST_DIALOG =
+  'rhoades/list/CLOSE_FINISH_REGISTRATION_LIST_DIALOG'
+
 export const FINISH_REGISTRATION_LIST_REQUEST =
   'rhoades/list/FINISH_REGISTRATION_LIST_REQUEST'
 export const FINISH_REGISTRATION_LIST_SUCCESS =
@@ -42,7 +47,7 @@ const initialState = {
   findLoading: false,
   createLoading: false,
   addLoading: false,
-  finishLoading: false,
+  data: null,
   error: '',
   removeUser: {
     openDialog: false,
@@ -50,7 +55,12 @@ const initialState = {
     data: null,
     error: null
   },
-  data: null,
+  finishList: {
+    openDialog: false,
+    loading: false,
+    data: null,
+    error: null
+  }
 };
 
 export default function reducer(state = initialState, action) {
@@ -153,22 +163,51 @@ export default function reducer(state = initialState, action) {
           error: action.payload.error
         }
     }
+    case OPEN_FINISH_REGISTRATION_LIST_DIALOG:
+      return {
+        ...state,
+        finishList: {
+          ...state.finishList,
+          openDialog: true,
+          data: action.payload.list
+        }
+      }
+    case CLOSE_FINISH_REGISTRATION_LIST_DIALOG:
+      return {
+        ...state,
+        finishList: {
+          ...state.finishList,
+          openDialog: false,
+
+        }
+      }
     case FINISH_REGISTRATION_LIST_REQUEST:
       return {
         ...state,
-        finishLoading: true
+        finishList: {
+          ...state.finishList,
+          loading: true
+        }
       }
     case FINISH_REGISTRATION_LIST_SUCCESS:
       return {
         ...state,
-        finishLoading: false,
+        finishList: {
+          ...state.finishList,
+          loading: false,
+          data: null
+        },
         data: action.payload.lists
       }
     case FINISH_REGISTRATION_LIST_ERROR:
       return {
         ...state,
-        finishLoading: false,
-        error: action.payload.error
+        finishList: {
+          ...state.finishList,
+          loading: false,
+          data: null,
+          error: action.payload.error
+        },
       }
     default: 
       return state
@@ -242,6 +281,15 @@ export const removeUserFromListSuccess = (lists) => ({
 export const removeUserFromListError = (error) => ({
   type: REMOVE_USER_FROM_LIST_ERROR,
   payload: { error }
+})
+
+export const openFinishRegistrationListDialog = (list) => ({
+  type: OPEN_FINISH_REGISTRATION_LIST_DIALOG,
+  payload: { list }
+})
+
+export const closeFinishRegistrationListDialog = () => ({
+  type: CLOSE_FINISH_REGISTRATION_LIST_DIALOG
 })
 
 export const finishRegistrationListRequest = (lists, condition) => ({

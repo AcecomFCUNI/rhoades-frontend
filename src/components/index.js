@@ -14,3 +14,4 @@ export { default as CustomTable } from './CustomTable';
 export { default as TypeListTitle } from './TypeListTitle';
 export { default as Instructions } from './Instructions';
 export { default as ApplicantRemoveDialog } from './ApplicantRemoveDialog';
+export { default as FinishRegistrationListDialog } from './FinishRegistrationListDialog';

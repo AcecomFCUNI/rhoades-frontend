@@ -5,7 +5,6 @@ import {
   Dialog,
   DialogContent,
   Typography,
-  Divider,
   Button,
   makeStyles,
   DialogActions
@@ -41,54 +40,31 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const getDialogTitle = (condition) => {
-  switch(condition) {
-    case 'teachers': return 'Usted está a punto de eliminar la siguiente persona de su lista de docentes. ¿Desea continuar?'
-    case 'students': return 'Usted está a punto de eliminar la siguiente persona de su lista de estudiantes. ¿Desea continuar?'
-    default: return ''
-  }
-}
+const getDialogTitle = () => 'Usted está a punto de finalizar la inscripción de la lista actual. ¿Desea continuar?'
 
 const FinishRegistrationListDialog = (props) => {
   const { condition } = props
   const classes = useStyles()
   const dispatch = useDispatch()
-  const { openDialog } = useSelector(state => state.lists.finishList)
+  const { openDialog, data: list } = useSelector(state => state.lists.finishList)
   const lists = useSelector(state => state.lists.data)
 
-  const handleCloseFinishRegistrationListDialog = () => dispatch(actions.closeRemoveUserFromListDialog())
+  const handleCloseFinishRegistrationListDialog = () => dispatch(actions.closeFinishRegistrationListDialog())
   const handleFinishRegistrationList = () => {
-    dispatch(actions.removeUserFromListRequest(applicant, condition, lists))
-    dispatch(actions.closeRemoveUserFromListDialog())
+    dispatch(actions.finishRegistrationListRequest(lists, condition))
+    dispatch(actions.closeFinishRegistrationListDialog())
   }
 
   return (
-    !applicant ? null :
+    !list ? null :
     <Dialog
       maxWidth="sm"
       fullWidth
       open={openDialog}
-      onClose={handleCloseRemoveApplicantDialog}
-      aria-labelledby="remove-applicant-dialog">
+      onClose={handleCloseFinishRegistrationListDialog}
+      aria-labelledby="finish-list-dialog">
       <DialogContent className={classes.driverInfoContent}>
-        <Typography variant='h2' className={classes.dialogTitle}>{getDialogTitle(condition)}</Typography>
-        <Divider className={classes.divider} />
-        <div className={classes.attribute}>
-          <Typography variant='h6' className={classes.itemTitle}>Nombre completo:</Typography>
-          <Typography variant='subtitle2' className={classes.itemValue}>{applicant.names} {applicant.lastName} {applicant.secondLastName}</Typography>
-        </div>
-        <div className={classes.attribute}>
-          <Typography variant='h6' className={classes.itemTitle}>Código UNI:</Typography>
-          <Typography variant='subtitle2' className={classes.itemValue}>{applicant.UNICode}</Typography>
-        </div>
-        <div className={classes.attribute}>
-          <Typography variant='h6' className={classes.itemTitle}>DNI:</Typography>
-          <Typography variant='subtitle2' className={classes.itemValue}>{applicant.documentNumber}</Typography>
-        </div>
-        <div className={classes.attribute}>
-          <Typography variant='h6' className={classes.itemTitle}>Facultad:</Typography>
-          <Typography variant='subtitle2' className={classes.itemValue}>{applicant.faculty}</Typography>
-        </div>
+        <Typography variant='h2' className={classes.dialogTitle}>{getDialogTitle()}</Typography>
         <DialogActions>
           <Button
             className={clsx(classes.finishRegistrationButton, classes.dialogAction)}

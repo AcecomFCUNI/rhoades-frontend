@@ -8,7 +8,8 @@ import {
   CustomTable,
   TypeListTitle,
   Instructions,
-  ApplicantRemoveDialog
+  ApplicantRemoveDialog,
+  FinishRegistrationListDialog
 } from 'components'
 import { existsKeyInObject, getLabelFromEstate } from 'tools'
 import { CreateTeacherList } from './components'
@@ -111,6 +112,7 @@ const TeacherList = () => {
             }}
           />
           <ApplicantRemoveDialog condition={condition} />
+          <FinishRegistrationListDialog condition={condition} />
         </React.Fragment>
   )
 }

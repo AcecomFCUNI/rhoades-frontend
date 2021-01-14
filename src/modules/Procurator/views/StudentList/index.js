@@ -8,7 +8,8 @@ import {
   CustomTable,
   TypeListTitle,
   Instructions,
-  ApplicantRemoveDialog
+  ApplicantRemoveDialog,
+  FinishRegistrationListDialog
 } from 'components'
 import { existsKeyInObject,  getLabelFromEstate } from 'tools'
 import { CreateStudentList } from './components'
@@ -89,7 +90,7 @@ const StudentList = () => {
           <ApplicantDetailsDialog condition={condition} />
           <CustomTable
             tableDisabled={lists.data[condition].closed}
-            cardHeader={(lists.addLoading || lists.finishLoading || lists.removeUser.loading) && <LinearProgress />}
+            cardHeader={(lists.addLoading || lists.finishList.loading || lists.removeUser.loading) && <LinearProgress />}
             tableRowClassName={classes.tableRowsData}
             summaryTableInfoIsEnabled={false}
             className={clsx(classes.applicantsTable, classes.marginTop)}
@@ -111,6 +112,7 @@ const StudentList = () => {
             }}
           />
           <ApplicantRemoveDialog condition={condition} />
+          <FinishRegistrationListDialog condition={condition} />
         </React.Fragment>
   )
 }

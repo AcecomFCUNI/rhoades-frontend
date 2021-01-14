@@ -37,7 +37,7 @@ const TypeListTitle = (props) => {
   const lists = useSelector(state => state.lists.data)
   const dispatch = useDispatch()
 
-  const handleFinishListRegistration = () => dispatch(ducks.finishRegistrationListRequest(lists, condition))
+  const handleOpenFinishRegistrationDialog = () => dispatch(ducks.openFinishRegistrationListDialog(lists[condition]))
 
   return (
     <React.Fragment>
@@ -55,7 +55,7 @@ const TypeListTitle = (props) => {
           size='large'
           color='primary'
           className={classes.finishListButton}
-          onClick={handleFinishListRegistration}
+          onClick={handleOpenFinishRegistrationDialog}
         >
           Finalizar lista
         </Button>
