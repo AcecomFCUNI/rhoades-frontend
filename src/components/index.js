@@ -15,3 +15,4 @@ export { default as TypeListTitle } from './TypeListTitle';
 export { default as Instructions } from './Instructions';
 export { default as ApplicantRemoveDialog } from './ApplicantRemoveDialog';
 export { default as FinishRegistrationListDialog } from './FinishRegistrationListDialog';
+export { default as DeleteListDialog } from './DeleteListDialog';

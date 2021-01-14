@@ -89,23 +89,23 @@ const ApplicantRemoveDeialog = (props) => {
           <Typography variant='h6' className={classes.itemTitle}>Facultad:</Typography>
           <Typography variant='subtitle2' className={classes.itemValue}>{applicant.faculty}</Typography>
         </div>
-        <DialogActions>
-          <Button
-            className={clsx(classes.deleteButton, classes.dialogAction)}
-            onClick={handleRemoveApplicantFromList}
-            variant="contained"
-            color="primary">
-            Eliminar
-          </Button>
-          <Button
-            className={classes.dialogAction}
-            onClick={handleCloseRemoveApplicantDialog}
-            variant="outlined"
-            color="primary">
-            Cancelar
-          </Button>
-        </DialogActions>
       </DialogContent>
+      <DialogActions>
+        <Button
+          className={clsx(classes.deleteButton, classes.dialogAction)}
+          onClick={handleRemoveApplicantFromList}
+          variant="contained"
+          color="primary">
+          Eliminar
+        </Button>
+        <Button
+          className={classes.dialogAction}
+          onClick={handleCloseRemoveApplicantDialog}
+          variant="outlined"
+          color="primary">
+          Cancelar
+        </Button>
+      </DialogActions>
     </Dialog>  
   )
 }

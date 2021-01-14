@@ -13,7 +13,8 @@ function* rootSaga() {
     fork(listSagas.createListByUserIdAndTypeSaga),
     fork(listSagas.enrollUserToListSaga),
     fork(listSagas.removeUserFromListSaga),
-    fork(listSagas.finishRegistrationListSaga)
+    fork(listSagas.finishRegistrationListSaga),
+    fork(listSagas.deleteListSaga)
   ]);
 }
 

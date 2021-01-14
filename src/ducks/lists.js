@@ -43,6 +43,18 @@ export const FINISH_REGISTRATION_LIST_SUCCESS =
 export const FINISH_REGISTRATION_LIST_ERROR =
   'rhoades/list/FINISH_REGISTRATION_LIST_ERROR'
 
+export const OPEN_DELETE_LIST_DIALOG =
+  'rhoades/list/OPEN_DELETE_LIST_DIALOG'
+export const CLOSE_DELETE_LIST_DIALOG =
+  'rhoades/list/CLOSE_DELETE_LIST_DIALOG'
+
+export const DELETE_LIST_REQUEST =
+  'rhoades/list/DELETE_LIST_REQUEST'
+export const DELETE_LIST_SUCCESS =
+  'rhoades/list/DELETE_LIST_SUCCESS'
+export const DELETE_LIST_ERROR =
+  'rhoades/list/DELETE_LIST_ERROR'
+
 const initialState = {
   findLoading: false,
   createLoading: false,
@@ -58,7 +70,11 @@ const initialState = {
   finishList: {
     openDialog: false,
     loading: false,
-    data: null,
+    error: null
+  },
+  deleteList: {
+    openDialog: false,
+    loading: false,
     error: null
   }
 };
@@ -168,8 +184,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         finishList: {
           ...state.finishList,
-          openDialog: true,
-          data: action.payload.list
+          openDialog: true
         }
       }
     case CLOSE_FINISH_REGISTRATION_LIST_DIALOG:
@@ -177,8 +192,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         finishList: {
           ...state.finishList,
-          openDialog: false,
-
+          openDialog: false
         }
       }
     case FINISH_REGISTRATION_LIST_REQUEST:
@@ -194,8 +208,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         finishList: {
           ...state.finishList,
-          loading: false,
-          data: null
+          loading: false
         },
         data: action.payload.lists
       }
@@ -205,9 +218,50 @@ export default function reducer(state = initialState, action) {
         finishList: {
           ...state.finishList,
           loading: false,
-          data: null,
           error: action.payload.error
         },
+      }
+    case OPEN_DELETE_LIST_DIALOG:
+      return {
+        ...state,
+        deleteList: {
+          ...state.deleteList,
+          openDialog: true
+        }
+      }
+    case CLOSE_DELETE_LIST_DIALOG:
+      return {
+        ...state,
+        deleteList: {
+          ...state.deleteList,
+          openDialog: false
+        }
+      }
+    case DELETE_LIST_REQUEST:
+      return {
+        ...state,
+        deleteList: {
+          ...state.deleteList,
+          loading: true
+        }
+      }
+    case DELETE_LIST_SUCCESS:
+      return {
+        ...state,
+        deleteList: {
+          ...state.deleteList,
+          loading: false
+        },
+        data: action.payload.lists
+      }
+    case DELETE_LIST_ERROR:
+      return {
+        ...state,
+        deleteList: {
+          ...state.deleteList,
+          loading: false,
+          error: action.payload.error
+        }
       }
     default: 
       return state
@@ -283,9 +337,8 @@ export const removeUserFromListError = (error) => ({
   payload: { error }
 })
 
-export const openFinishRegistrationListDialog = (list) => ({
-  type: OPEN_FINISH_REGISTRATION_LIST_DIALOG,
-  payload: { list }
+export const openFinishRegistrationListDialog = () => ({
+  type: OPEN_FINISH_REGISTRATION_LIST_DIALOG
 })
 
 export const closeFinishRegistrationListDialog = () => ({
@@ -304,5 +357,28 @@ export const finishRegistrationListSuccess = (lists) => ({
 
 export const finishRegistrationListError = (error) => ({
   type: FINISH_REGISTRATION_LIST_ERROR,
+  payload: { error }
+})
+
+export const openDeleteListDialog = () => ({
+  type: OPEN_DELETE_LIST_DIALOG
+})
+
+export const closeDeleteListDialog = () => ({
+  type: CLOSE_DELETE_LIST_DIALOG
+})
+
+export const deleteListRequest = (lists, condition) => ({
+  type: DELETE_LIST_REQUEST,
+  payload: { lists, condition }
+})
+
+export const deleteListSuccess = (lists) => ({
+  type: DELETE_LIST_SUCCESS,
+  payload: { lists }
+})
+
+export const deleteListError = (error) => ({
+  type: DELETE_LIST_ERROR,
   payload: { error }
 })

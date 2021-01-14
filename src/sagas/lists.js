@@ -136,6 +136,40 @@ export function* finishRegistrationList(action) {
   }
 }
 
+export function* deleteList(action) {
+  try {
+    const { lists, condition } = action.payload
+    const list = lists[condition]
+    const response = yield call(
+      tools.Patch,
+      '/list/delete',
+      {
+        args: {
+          owner: list.owner,
+          id: list.id
+        },
+      }
+    );
+
+    if(!response.error) {
+      // return new lists setting closed
+      delete lists[condition]
+      yield put(ducks.deleteListSuccess(lists))
+      yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('success', response.message.result)))
+    }
+    else {
+      // return the same lists without changes
+      const message = 'Ocurrió un error al intentar eliminar la lista'
+      yield put(ducks.deleteListError(message))
+      yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', message)))
+    }
+  } catch (error) {
+    const { result } = error.response.data.message;
+    yield put(ducks.deleteListError(result))
+    yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', result)))
+  }
+}
+
 export function* findListsByUserIdSaga() {
   yield takeLatest(
     ducks.FIND_LISTS_BY_USER_ID_REQUEST,
@@ -168,5 +202,12 @@ export function* finishRegistrationListSaga() {
   yield takeLatest(
     ducks.FINISH_REGISTRATION_LIST_REQUEST,
     finishRegistrationList
+  )
+}
+
+export function* deleteListSaga() {
+  yield takeLatest(
+    ducks.DELETE_LIST_REQUEST,
+    deleteList
   )
 }

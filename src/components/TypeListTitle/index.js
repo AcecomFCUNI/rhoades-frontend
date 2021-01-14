@@ -20,14 +20,28 @@ const useStyles = makeStyles(theme => ({
     }
   },
   finishListButton: {
+    marginLeft: 10,
     width: 200,
     [theme.breakpoints.down('sm')]: {
       marginTop: 10,
+      marginLeft: 0,
       width: '100%'
     }
   },
   infoAlert: {
     marginBottom: 20
+  },
+  deleteListButton: {
+    backgroundColor: theme.palette.error.main,
+    '&:hover': {
+      backgroundColor: theme.palette.error.light,
+    },
+    '&:active': {
+      backgroundColor: theme.palette.error.dark,
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 20
+    }
   }
 }))
 
@@ -37,7 +51,8 @@ const TypeListTitle = (props) => {
   const lists = useSelector(state => state.lists.data)
   const dispatch = useDispatch()
 
-  const handleOpenFinishRegistrationDialog = () => dispatch(ducks.openFinishRegistrationListDialog(lists[condition]))
+  const handleOpenFinishRegistrationDialog = () => dispatch(ducks.openFinishRegistrationListDialog())
+  const handleOpenDeleteListDialog = () => dispatch(ducks.openDeleteListDialog())
 
   return (
     <React.Fragment>
@@ -49,6 +64,16 @@ const TypeListTitle = (props) => {
       }
       <div className={classes.titleWrapper}>
         <Typography variant='h1' className={classes.title}>{label}</Typography>
+        <Button
+          disabled={lists[condition].closed}
+          variant='contained'
+          size='large'
+          color='primary'
+          className={classes.deleteListButton}
+          onClick={handleOpenDeleteListDialog}
+        >
+          Eliminar lista
+        </Button>
         <Button
           disabled={lists[condition].closed}
           variant='contained'

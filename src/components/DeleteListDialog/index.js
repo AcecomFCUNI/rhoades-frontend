@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   divider: {
     margin: '8px 0'
   },
-  finishRegistrationButton: {
+  deleteListButton: {
     backgroundColor: theme.palette.error.main,
     '&:hover': {
       backgroundColor: theme.palette.error.light,
@@ -40,19 +40,19 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const getDialogTitle = () => 'Usted está a punto de finalizar la inscripción de la lista actual. ¿Desea continuar?'
+const getDialogTitle = () => 'Usted está a punto de eliminar la lista actual. ¿Desea continuar?'
 
 const FinishRegistrationListDialog = (props) => {
   const { condition } = props
   const classes = useStyles()
   const dispatch = useDispatch()
-  const { openDialog } = useSelector(state => state.lists.finishList)
+  const { openDialog } = useSelector(state => state.lists.deleteList)
   const lists = useSelector(state => state.lists.data)
 
-  const handleCloseFinishRegistrationListDialog = () => dispatch(actions.closeFinishRegistrationListDialog())
-  const handleFinishRegistrationList = () => {
-    dispatch(actions.finishRegistrationListRequest(lists, condition))
-    dispatch(actions.closeFinishRegistrationListDialog())
+  const handleCloseDeleteListDialog = () => dispatch(actions.closeDeleteListDialog())
+  const handleDeleteList = () => {
+    dispatch(actions.deleteListRequest(lists, condition))
+    dispatch(actions.closeDeleteListDialog())
   }
 
   return (
@@ -60,26 +60,27 @@ const FinishRegistrationListDialog = (props) => {
       maxWidth="sm"
       fullWidth
       open={openDialog}
-      onClose={handleCloseFinishRegistrationListDialog}
-      aria-labelledby="finish-list-dialog">
+      onClose={handleCloseDeleteListDialog}
+      aria-labelledby="delete-list-dialog">
       <DialogContent className={classes.driverInfoContent}>
         <Typography variant='h2' className={classes.dialogTitle}>{getDialogTitle()}</Typography>
+        
       </DialogContent>
       <DialogActions>
-        <Button
-          className={clsx(classes.finishRegistrationButton, classes.dialogAction)}
-          onClick={handleFinishRegistrationList}
-          variant="contained"
-          color="primary">
-          Finalizar
-        </Button>
-        <Button
-          className={classes.dialogAction}
-          onClick={handleCloseFinishRegistrationListDialog}
-          variant="outlined"
-          color="primary">
-          Cancelar
-        </Button>
+          <Button
+            className={clsx(classes.deleteListButton, classes.dialogAction)}
+            onClick={handleDeleteList}
+            variant="contained"
+            color="primary">
+            Eliminar
+          </Button>
+          <Button
+            className={classes.dialogAction}
+            onClick={handleCloseDeleteListDialog}
+            variant="outlined"
+            color="primary">
+            Cancelar
+          </Button>
       </DialogActions>
     </Dialog>  
   )

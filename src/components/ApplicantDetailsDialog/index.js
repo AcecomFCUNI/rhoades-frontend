@@ -75,23 +75,23 @@ const ApplicantDetailsDialog = (props) => {
           <Typography variant='h6' className={classes.itemTitle}>Facultad:</Typography>
           <Typography variant='subtitle2' className={classes.itemValue}>{applicant.faculty}</Typography>
         </div>
-        <DialogActions>
-          <Button
-            className={classes.dialogAction}
-            onClick={handleAddUserToList}
-            variant="contained"
-            color="primary">
-            Agregar
-          </Button>
-          <Button
-            className={classes.dialogAction}
-            onClick={handleCloseApplicantDetailsDialog}
-            variant="outlined"
-            color="primary">
-            Cancelar
-          </Button>
-        </DialogActions>
       </DialogContent>
+      <DialogActions>
+        <Button
+          className={classes.dialogAction}
+          onClick={handleAddUserToList}
+          variant="contained"
+          color="primary">
+          Agregar
+        </Button>
+        <Button
+          className={classes.dialogAction}
+          onClick={handleCloseApplicantDetailsDialog}
+          variant="outlined"
+          color="primary">
+          Cancelar
+        </Button>
+      </DialogActions>
     </Dialog>  
   )
 }

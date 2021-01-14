@@ -9,7 +9,8 @@ import {
   TypeListTitle,
   Instructions,
   ApplicantRemoveDialog,
-  FinishRegistrationListDialog
+  FinishRegistrationListDialog,
+  DeleteListDialog
 } from 'components'
 import { existsKeyInObject, getLabelFromEstate } from 'tools'
 import { CreateTeacherList } from './components'
@@ -79,7 +80,7 @@ const TeacherList = () => {
   };
 
   return (
-    lists.createLoading 
+    lists.createLoading || lists.deleteList.loading
       ? <Spinner /> 
       : !existsKeyInObject(condition, lists.data) 
       ? <CreateTeacherList uid={auth.uid} condition={condition} faculty={profile.faculty} /> 
@@ -113,6 +114,7 @@ const TeacherList = () => {
           />
           <ApplicantRemoveDialog condition={condition} />
           <FinishRegistrationListDialog condition={condition} />
+          <DeleteListDialog condition={condition} />
         </React.Fragment>
   )
 }
