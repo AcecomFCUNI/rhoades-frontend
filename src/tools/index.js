@@ -5,3 +5,4 @@ export * from './string';
 export * from './security';
 export * from './dictionary';
 export * from './alertSnackbar';
+export * from './date';

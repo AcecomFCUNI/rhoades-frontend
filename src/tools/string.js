@@ -33,3 +33,5 @@ export const getLabelFromEstate = (estateType, condition) => {
   
   return estateLabel
 }
+
+export const getRandomId = () => (new Date().getTime()).toString(36)
