@@ -1,7 +1,9 @@
 import { custom } from '../palette';
 
-export default {
+const customStyle = {
   paper: {
     backgroundColor: custom.primary.main,
   },
 };
+
+export default customStyle

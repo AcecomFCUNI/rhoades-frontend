@@ -17,7 +17,7 @@ export const custom = {
   white: '#F2F2F2',
 };
 
-export default {
+const palette = {
   black,
   white,
   custom,
@@ -57,3 +57,5 @@ export default {
   },
   divider: custom.primary.light,
 };
+
+export default palette

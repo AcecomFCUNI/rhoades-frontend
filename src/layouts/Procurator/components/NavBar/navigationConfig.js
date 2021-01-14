@@ -1,4 +1,4 @@
-export default [
+const config = [
   {
     title: 'Inscripciones',
     pages: [
@@ -22,3 +22,5 @@ export default [
     ]
   }
 ];
+
+export default config

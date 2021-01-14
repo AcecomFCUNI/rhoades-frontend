@@ -4,10 +4,12 @@ import MuiAppBar from './MuiAppBar';
 import MuiDrawer from './MuiDrawer';
 import MuiChip from './MuiChip';
 
-export default {
+const components = {
   MuiTypography,
   MuiButtonBase,
   MuiAppBar,
   MuiDrawer,
   MuiChip,
 };
+
+export default components

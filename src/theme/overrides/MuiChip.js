@@ -1,6 +1,6 @@
 import { colors } from '@material-ui/core';
 
-export default {
+const customStyle = {
   root: {
     fontFamily: 'Nunito',
     backgroundColor: colors.blueGrey[50],
@@ -12,3 +12,5 @@ export default {
     },
   },
 };
+
+export default customStyle

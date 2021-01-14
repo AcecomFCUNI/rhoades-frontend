@@ -1,7 +1,9 @@
 import { custom } from '../palette';
 
-export default {
+const palette = {
   colorPrimary: {
     backgroundColor: custom.white,
   },
 };
+
+export default palette

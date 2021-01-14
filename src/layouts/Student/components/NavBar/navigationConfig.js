@@ -3,7 +3,7 @@ import PageviewRoundedIcon from '@material-ui/icons/PageviewRounded';
 import SendRoundedIcon from '@material-ui/icons/SendRounded';
 // import ThumbDownRoundedIcon from '@material-ui/icons/ThumbDownRounded';
 
-export default [
+const config = [
   {
     title: 'Opciones',
     pages: [
@@ -44,3 +44,5 @@ export default [
     ],
   },
 ];
+
+export default config

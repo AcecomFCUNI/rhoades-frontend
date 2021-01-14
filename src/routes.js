@@ -5,7 +5,7 @@ import { PublicLayout, AdminLayout, ProcuratorLayout, ErrorLayout } from 'layout
 import { TeacherList, StudentList, UploadDocuments } from 'modules/Procurator'
 import withAuthentication from 'hocs/withAuthentication';
 
-export default [
+const routes = [
  
   {
     path: "/error",
@@ -133,3 +133,5 @@ export default [
     component: () => <Redirect to="/error/404" />
   },
 ]
+
+export default routes
