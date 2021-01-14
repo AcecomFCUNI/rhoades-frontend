@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { firebaseReducer } from 'react-redux-firebase';
-import { firestoreReducer } from 'redux-firestore';
 
 // my ducks
 import alertSnackbarReducer from './alertSnackbar';
@@ -11,8 +10,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   lists: listsReducer,
   alertSnackbar: alertSnackbarReducer,
-  firebase: firebaseReducer,
-  firestore: firestoreReducer,
+  firebase: firebaseReducer
 });
 
 export default rootReducer;

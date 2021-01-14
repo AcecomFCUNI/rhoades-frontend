@@ -6,7 +6,6 @@ import { Provider as StoreProvider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 
-import { createFirestoreInstance } from 'redux-firestore';
 import firebase from 'firebase/app';
 import firebaseConfig from 'firebase/config';
 import 'firebase/auth';
@@ -32,8 +31,7 @@ const store = configureStore();
 const rrfProps = {
   firebase,
   config: rrfConfig,
-  dispatch: store.dispatch,
-  createFirestoreInstance,
+  dispatch: store.dispatch
 };
 
 // adding fonts from GoogleFonts
