@@ -94,7 +94,7 @@ function* checkIsAValidApplicant(action) {
       yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', message)))
     }
     else if(applicant.postulating) {
-      const message = 'El usuario ya se encuentra registrado como personero'
+      const message = 'El usuario ya se encuentra postulando a una lista'
       yield put(ducks.checkIsAValidApplicantError(message))
       yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', message)))
     }
