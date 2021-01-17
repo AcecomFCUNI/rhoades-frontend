@@ -6,6 +6,8 @@ import { DropzoneDialogBase } from 'material-ui-dropzone';
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 import { CustomTable } from 'components';
 import * as tools from 'tools'
+import * as ducks from 'ducks'
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   previewChip: {
@@ -44,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const UploadDocuments = () => {
   const [openUploadDocumentsDialog, setOpenUploadDocumentsDialog] = useState(false);
+  const dispatch = useDispatch()
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -95,7 +98,7 @@ const UploadDocuments = () => {
     setPage(0);
   };
   const handleOnAddNewFiles = (newFiles) => {
-    const formattedFiles = newFiles.map((newFile, index) => ({
+    const formattedFiles = newFiles.map((newFile) => ({
       ...newFile,
       id: tools.getRandomId(),
       name: newFile.file.name,
@@ -152,7 +155,9 @@ const UploadDocuments = () => {
         fileObjects={uploadedFiles}
         cancelButtonText='Cancelar'
         submitButtonText='Subir'
-        maxFileSize={5000000}
+        maxFileSize={5242880}
+        showAlerts={false}
+        filesLimit={1}
         open={openUploadDocumentsDialog}
         onAdd={handleOnAddNewFiles}
         onDelete={handleOnDeleteOneFile}
