@@ -14,7 +14,8 @@ import * as actions from 'ducks'
 
 const useStyles = makeStyles(theme => ({
   dialogTitle: {
-    fontSize: 18
+    fontSize: 18,
+    fontWeight: 'bold'
   },
   attribute: {
     marginBottom: 12
@@ -63,8 +64,7 @@ const FinishRegistrationListDialog = (props) => {
       onClose={handleCloseDeleteListDialog}
       aria-labelledby="delete-list-dialog">
       <DialogContent className={classes.driverInfoContent}>
-        <Typography variant='h2' className={classes.dialogTitle}>{getDialogTitle()}</Typography>
-        
+        <Typography variant='body1' className={classes.dialogTitle}>{getDialogTitle()}</Typography>
       </DialogContent>
       <DialogActions>
           <Button

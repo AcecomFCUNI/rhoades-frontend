@@ -11,8 +11,8 @@ export const custom = {
   },
   secondary: {
     main: '#ECDAAA',
-    dark: '#d1c19a',
-    light: '#ffefc9',
+    dark: '#D1C19A',
+    light: '#FFEFC9',
   },
   white: '#F2F2F2',
 };

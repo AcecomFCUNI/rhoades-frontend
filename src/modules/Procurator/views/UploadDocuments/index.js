@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx'
-import { Button, Typography, makeStyles } from '@material-ui/core';
+import {
+  Button,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  LinearProgress,
+  makeStyles
+} from '@material-ui/core';
+import { Alert } from '@material-ui/lab'
 import { DropzoneDialogBase } from 'material-ui-dropzone';
 
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
 import { CustomTable } from 'components';
 import * as tools from 'tools'
-import * as ducks from 'ducks'
-import { useDispatch } from 'react-redux';
+import * as actions from 'ducks'
+import { useDispatch, useSelector } from 'react-redux';
+
+const maxFileSize = 5242880
+const filesLimit = 1
 
 const useStyles = makeStyles((theme) => ({
   previewChip: {
-    maxWidth: 240
+    maxWidth: 240,
+    marginTop: theme.spacing(3)
   },
   uploadButton: {
     [theme.breakpoints.down('xs')]: {
@@ -30,27 +44,31 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   cardHeaderTitle: {
+    fontSize: 30,
     [theme.breakpoints.down('xs')]: {
       fontSize: 25
     }
   },
   dialogTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(3),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between'
   },
-  some: {
-    backgroundColor: 'red'
+  messageAlert: {
+    marginBottom: theme.spacing(3)
   }
 }));
 
 const UploadDocuments = () => {
-  const [openUploadDocumentsDialog, setOpenUploadDocumentsDialog] = useState(false);
   const dispatch = useDispatch()
+  const files = useSelector(state => state.files)
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [savedFiles, setSavedFiles] = useState([]);
+  const [condition, setCondition] = useState('');
+  const lists = useSelector(state => state.lists.data)
   const classes = useStyles();
 
   const columns = [
@@ -61,8 +79,8 @@ const UploadDocuments = () => {
     },
     {
       title: 'Fecha de subida',
-      value: 'lastModified',
-      render: ({ lastModified }) => tools.getFormattedDate(lastModified)
+      value: 'createdAt',
+      render: ({ createdAt }) => tools.getFormattedDate(createdAt)
     }
   ];
 
@@ -72,21 +90,23 @@ const UploadDocuments = () => {
       icon: <DeleteRoundedIcon />,
       onClick: (file) => {
         console.log(file)
-        const uploadedFiles = savedFiles.filter(savedFile => savedFile.id !== file.id)
-        setSavedFiles(uploadedFiles)
+        // const uploadedFiles = savedFiles.filter(savedFile => savedFile.id !== file.id)
+        // setSavedFiles(uploadedFiles)
+        // dispatch(actions.saveOneFileRequest(uploadedFiles))
       }
     }
   ];
 
   const getHeader = () => 
     <div className={classes.cardHeader}>
-      <Typography variant='h2' className={classes.cardHeaderTitle}>Subir archivos</Typography>
+      <Typography variant='h1' className={classes.cardHeaderTitle}>Subir archivos</Typography>
       <Button
+        disabled={Object.keys(lists || {}).length === 0}
         size='large'
         className={classes.uploadButton}
         variant="contained"
         color="primary"
-        onClick={() => setOpenUploadDocumentsDialog(true)}
+        onClick={() => dispatch(actions.openUploadFilesDialog())}
       >
         Nuevo archivo
       </Button>
@@ -98,44 +118,54 @@ const UploadDocuments = () => {
     setPage(0);
   };
   const handleOnAddNewFiles = (newFiles) => {
-    const formattedFiles = newFiles.map((newFile) => ({
-      ...newFile,
-      id: tools.getRandomId(),
-      name: newFile.file.name,
-      lastModified: newFile.file.lastModifiedDate
-    }))
-
-    setUploadedFiles(formattedFiles)
+    // handle the logic in order to upload just one file
+    const newFile = newFiles[0]
+    newFile.name = newFile.file.name
+    newFile.lastModified = newFile.file.lastModified
+    
+    dispatch(actions.uploadOneFile(newFile))
   }
 
-  const handleOnDeleteOneFile = (fileToDelete) => {
-    const updatedFiles = uploadedFiles.filter(file => file.id !== fileToDelete.id)
-    setUploadedFiles(updatedFiles)
-  }
+  const handleOnDeleteOneFile = () => dispatch(actions.removeOneFile())
 
-  const handleOnCloseDialog = () => setOpenUploadDocumentsDialog(false)
+  const handleOnCloseDialog = () => dispatch(actions.closeUploadFilesDialog())
   const handleOnSaveDocuments = () => {
-    // console.log('onSave', fileObjects);
-    setSavedFiles([...savedFiles, ...uploadedFiles])
-    setUploadedFiles([])
-    setOpenUploadDocumentsDialog(false);
+    if(condition.length === 0) dispatch(actions.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', 'Seleccione alguna de las listas disponibles')))
+    else {
+      const list = lists[condition]
+      const fileToUpload = files.uploadedFiles[0]
+      dispatch(actions.saveOneFileRequest(fileToUpload, list))
+      dispatch(actions.closeUploadFilesDialog());
+      setCondition('')
+    }
   }
+  const handleConditionSelected = (event) => setCondition(event.target.value);
+
+  useEffect(() => {
+    if(lists) dispatch(actions.getAllFilesFromListRequest(lists))
+  }, [dispatch, lists])
 
   return (
     <React.Fragment>
+      {
+        Object.keys(lists || {}).length === 0 && <Alert severity="warning" className={classes.messageAlert}>
+          <Typography variant='h6'>Nota</Typography>
+          <Typography variant='subtitle2'>Usted no puede subir documentos hasta que haya creado al menos una lista</Typography>
+        </Alert>
+      }
       {getHeader()}
       <CustomTable
-        // tableDisabled={lists.data[condition].closed}
+        tableDisabled={Object.keys(lists || {}).length === 0}
         tableRowClassName={classes.tableRowsData}
         summaryTableInfoIsEnabled={false}
         className={clsx(classes.applicantsTable, classes.marginTop)}
         title='Archivos subidos'
         noDataLabel='Aún no ha subido ningún archivo'
         columns={columns}
-        data={savedFiles}
+        data={files.savedFiles}
         rowsPerPage={rowsPerPage}
         page={page}
-        dataId="id"
+        dataId="_id"
         actionsAreEnabled
         actions={tableActions}
         paginationProps={{
@@ -146,19 +176,18 @@ const UploadDocuments = () => {
           rowsPerPageOptions: [10, 25],
           component: 'div',
         }}
-        // cardHeader={(lists.addLoading || lists.removeUser.loading) && <LinearProgress />}
+        cardHeader={(files.addLoading || files.getLoading) && <LinearProgress />}
       />
       <DropzoneDialogBase
-        dialogTitle=''
         dropzoneText='Arrastre un archivo o haga click aquí'
         acceptedFiles={['.pdf']}
-        fileObjects={uploadedFiles}
+        fileObjects={files.uploadedFiles}
         cancelButtonText='Cancelar'
         submitButtonText='Subir'
-        maxFileSize={5242880}
+        maxFileSize={maxFileSize}
         showAlerts={false}
-        filesLimit={1}
-        open={openUploadDocumentsDialog}
+        filesLimit={filesLimit}
+        open={files.openDialog}
         onAdd={handleOnAddNewFiles}
         onDelete={handleOnDeleteOneFile}
         onClose={handleOnCloseDialog}
@@ -168,8 +197,29 @@ const UploadDocuments = () => {
         useChipsForPreview
         previewGridProps={{ container: { spacing: 1, direction: 'row' } }}
         previewChipProps={{ classes: { root: classes.previewChip } }}
-        previewText="Archivos seleccionados"
+        previewText=""
         showFileNamesInPreview={true}
+        dialogTitle={
+          <React.Fragment>
+            <Typography variant='body1' className={classes.dialogTitle}>Seleccione una de sus listas para subir un documento</Typography>
+            <FormControl fullWidth variant="outlined">
+              <InputLabel id="list-estate">Listas disponibles</InputLabel>
+              <Select
+                variant='outlined'
+                labelId="list-estate"
+                id="list-estate-selector"
+                value={condition}
+                onChange={handleConditionSelected}
+                label="Listas disponibles"
+              >
+                <MenuItem value=''><i>Seleccione una lista</i></MenuItem>
+                {lists && Object.keys(lists).map((condition) => <MenuItem key={condition} value={condition}>
+                  {tools.getLabelFromEstate(lists[condition].type, condition)}
+                </MenuItem>)}
+              </Select>
+            </FormControl>
+          </React.Fragment>
+        }
       />
     </React.Fragment>
   );

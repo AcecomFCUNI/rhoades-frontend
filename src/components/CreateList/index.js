@@ -52,7 +52,7 @@ const CreateTeacherList = (props) => {
     <React.Fragment>
       <Alert severity="warning">
         <Typography variant='h6'>Nota</Typography>
-        <Typography variant='subtitle2'>Ud. no tiene una lista registrada de <strong>{translateWord(condition)}</strong> para las elecciones</Typography>
+        <Typography variant='subtitle2'>Usted no tiene una lista registrada de <strong>{translateWord(condition)}</strong> para las elecciones</Typography>
       </Alert>
       <Typography variant='subtitle1' className={classes.mainTitle}>Para crear una lista, seleccione qué lista desea crear a continuación:</Typography>
       <div className={classes.createListSection}>

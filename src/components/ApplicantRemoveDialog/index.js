@@ -15,7 +15,8 @@ import * as actions from 'ducks'
 
 const useStyles = makeStyles(theme => ({
   dialogTitle: {
-    fontSize: 18
+    fontSize: 18,
+    fontWeight: 'bold'
   },
   attribute: {
     marginBottom: 12
@@ -71,7 +72,7 @@ const ApplicantRemoveDeialog = (props) => {
       onClose={handleCloseRemoveApplicantDialog}
       aria-labelledby="remove-applicant-dialog">
       <DialogContent className={classes.driverInfoContent}>
-        <Typography variant='h2' className={classes.dialogTitle}>{getDialogTitle(condition)}</Typography>
+        <Typography variant='body1' className={classes.dialogTitle}>{getDialogTitle(condition)}</Typography>
         <Divider className={classes.divider} />
         <div className={classes.attribute}>
           <Typography variant='h6' className={classes.itemTitle}>Nombre completo:</Typography>
