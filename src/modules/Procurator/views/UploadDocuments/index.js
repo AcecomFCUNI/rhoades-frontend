@@ -86,13 +86,8 @@ const UploadDocuments = () => {
     {
       title: 'Nombre',
       value: 'name',
-      render: ({ name, _id }) => 
-        <Typography variant='h6' color='primary'
-          // href={`${keys.API_URL}/file/download/${_id}/${auth.uid}`}
-          // target='_blank'
-          // rel='noopener noreferrer'
-          // className={classes.tableUrlName}
-        >
+      render: ({ name }) => 
+        <Typography variant='h6' color='primary'>
           {name}
         </Typography>
     },
@@ -112,24 +107,17 @@ const UploadDocuments = () => {
       icon: <GetAppRoundedIcon />,
       onClick: async (file) => {
         const { data } = await axios.get(`${keys.API_URL}/file/download/${file._id}/${auth.uid}`)
-        const linkSource = data;
         const downloadLink = document.createElement('a');
-        const fileName = file.name;
 
-        downloadLink.href = linkSource;
-        downloadLink.download = fileName;
+        downloadLink.href = data;
+        downloadLink.download = file.name;
         downloadLink.click();
       }
     },
     {
       label: 'Eliminar archivo',
       icon: <DeleteRoundedIcon />,
-      onClick: (file) => {
-        console.log(file)
-        // const uploadedFiles = savedFiles.filter(savedFile => savedFile.id !== file.id)
-        // setSavedFiles(uploadedFiles)
-        // dispatch(actions.saveOneFileRequest(uploadedFiles))
-      }
+      onClick: (file) => dispatch(actions.deleteOneFileRequest(file, auth.uid))
     }
   ];
 
@@ -170,6 +158,9 @@ const UploadDocuments = () => {
     else {
       const list = lists[condition]
       const fileToUpload = files.uploadedFiles[0]
+      
+      // add the id to file
+      fileToUpload.list = list.id
       dispatch(actions.saveOneFileRequest(fileToUpload, list))
       dispatch(actions.closeUploadFilesDialog());
       setCondition('')
@@ -212,7 +203,7 @@ const UploadDocuments = () => {
           rowsPerPageOptions: [10, 25],
           component: 'div',
         }}
-        cardHeader={(files.addLoading || files.getLoading) && <LinearProgress />}
+        cardHeader={(files.addLoading || files.getLoading || files.deleteLoading) && <LinearProgress />}
       />
       <DropzoneDialogBase
         dropzoneText='Arrastre un archivo o haga click aquí'

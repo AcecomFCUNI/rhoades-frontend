@@ -66,6 +66,29 @@ function* getAllFilesFromList(action) {
   }
 }
 
+export function* deleteOneFile(action) {
+  try {
+    const { file, ownerId } = action.payload
+    const {
+      message: { result },
+    } = yield call(
+      tools.Patch,
+      `file/delete/${file._id}/${file.list}/${ownerId}`
+    );
+
+    yield put(ducks.deleteOneFileSuccess(file._id));
+    yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('success', result)))
+  } catch (error) {
+    const {
+      message: { result }
+    } = error.response.data;
+    yield put(ducks.deleteOneFileError(result));
+    yield put(
+      ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', result))
+    );
+  }
+}
+
 export function* saveOneFileSaga() {
   yield takeLatest(
     ducks.SAVE_ONE_FILE_REQUEST,
@@ -77,5 +100,12 @@ export function* getAllFilesFromListSaga() {
   yield takeLatest(
     ducks.GET_ALL_FILES_FROM_LIST_REQUEST,
     getAllFilesFromList
+  )
+}
+
+export function* deleteOneFileSaga() {
+  yield takeLatest(
+    ducks.DELETE_ONE_FILE_REQUEST,
+    deleteOneFile
   )
 }

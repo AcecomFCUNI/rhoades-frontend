@@ -18,7 +18,8 @@ function* rootSaga() {
     fork(listsSagas.deleteListSaga),
 
     fork(filesSagas.saveOneFileSaga),
-    fork(filesSagas.getAllFilesFromListSaga)
+    fork(filesSagas.getAllFilesFromListSaga),
+    fork(filesSagas.deleteOneFileSaga)
   ]);
 }
 

@@ -22,9 +22,17 @@ export const SAVE_ONE_FILE_SUCCESS =
 export const SAVE_ONE_FILE_ERROR =
   'thoades/files/SAVE_ONE_FILE_ERROR'
 
+export const DELETE_ONE_FILE_REQUEST =
+  'rhoades/files/DELETE_ONE_FILE_REQUEST'
+export const DELETE_ONE_FILE_SUCCESS =
+  'rhoades/files/DELETE_ONE_FILE_SUCCESS'
+export const DELETE_ONE_FILE_ERROR =
+  'rhoades/files/DELETE_ONE_FILE_ERROR'
+
 const initialState = {
   addLoading: false,
   getLoading: false,
+  deleteLoading: false,
   openDialog: false,
   savedFiles: [],
   uploadedFiles: [],
@@ -96,6 +104,23 @@ export default function reducer(state = initialState, action) {
         error: action.payload.error,
         getLoading: false
       }
+    case DELETE_ONE_FILE_REQUEST:
+      return {
+        ...state,
+        deleteLoading: true
+      }
+    case DELETE_ONE_FILE_SUCCESS:
+      return {
+        ...state,
+        deleteLoading: false,
+        savedFiles: state.savedFiles.filter(file => file._id !== action.payload.fileId)
+      }
+    case DELETE_ONE_FILE_ERROR:
+      return {
+        ...state,
+        deleteLoading: false,
+        error: action.payload.error
+      }
     default:
       return state
   }
@@ -145,5 +170,20 @@ export const getAllFilesFromListSuccess = (files) => ({
 
 export const getAllFilesFromListError = (error) => ({
   type: GET_ALL_FILES_FROM_LIST_ERROR,
+  payload: { error }
+})
+
+export const deleteOneFileRequest = (file, ownerId) => ({
+  type: DELETE_ONE_FILE_REQUEST,
+  payload: { file, ownerId }
+})
+
+export const deleteOneFileSuccess = (fileId) => ({
+  type: DELETE_ONE_FILE_SUCCESS,
+  payload: { fileId }
+})
+
+export const deleteOneFileError = (error) => ({
+  type: DELETE_ONE_FILE_ERROR,
   payload: { error }
 })
