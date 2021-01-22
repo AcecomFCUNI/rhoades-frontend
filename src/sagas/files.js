@@ -20,7 +20,9 @@ function* saveOneFile(action) {
       }
     );
 
-    file.id = result.id
+    file._id = result.id
+    file.createdAt = result.createdAt
+    file.name = result.name
     yield put(ducks.saveOneFileSuccess(file));
     yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('success', 'El archivo se guardó correctamente')))
   } catch (error) {
@@ -49,8 +51,11 @@ function* getAllFilesFromList(action) {
     }
 
     yield put(ducks.getAllFilesFromListSuccess(files))
-    yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('success', 'Documentos obtenidos correctamente')))
-  } catch (error) {
+    if(files.length === 0) 
+      yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('success', 'No ha subido un documento todavía')))
+    else
+      yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('success', 'Documentos obtenidos correctamente')))
+    } catch (error) {
     const {
       message: { result }
     } = error.response.data;

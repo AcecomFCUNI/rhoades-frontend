@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios'
 import clsx from 'clsx'
 import {
   Button,
@@ -14,10 +16,11 @@ import { Alert } from '@material-ui/lab'
 import { DropzoneDialogBase } from 'material-ui-dropzone';
 
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
+import GetAppRoundedIcon from '@material-ui/icons/GetAppRounded';
 import { CustomTable } from 'components';
 import * as tools from 'tools'
 import * as actions from 'ducks'
-import { useDispatch, useSelector } from 'react-redux';
+import * as keys from 'keys'
 
 const maxFileSize = 5242880
 const filesLimit = 1
@@ -59,6 +62,13 @@ const useStyles = makeStyles((theme) => ({
   },
   messageAlert: {
     marginBottom: theme.spacing(3)
+  },
+  tableUrlName: {
+    color: theme.palette.primary.main,
+    fontWeight: theme.typography.fontWeightBold,
+    '&:hover': {
+      textDecoration: 'underline'
+    }
   }
 }));
 
@@ -69,22 +79,48 @@ const UploadDocuments = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [condition, setCondition] = useState('');
   const lists = useSelector(state => state.lists.data)
+  const auth = useSelector(state => state.firebase.auth)
   const classes = useStyles();
 
   const columns = [
     {
       title: 'Nombre',
       value: 'name',
-      render: ({ name }) => name
+      render: ({ name, _id }) => 
+        <Typography variant='h6' color='primary'
+          // href={`${keys.API_URL}/file/download/${_id}/${auth.uid}`}
+          // target='_blank'
+          // rel='noopener noreferrer'
+          // className={classes.tableUrlName}
+        >
+          {name}
+        </Typography>
     },
     {
       title: 'Fecha de subida',
       value: 'createdAt',
-      render: ({ createdAt }) => tools.getFormattedDate(createdAt)
+      render: ({ createdAt }) => 
+        <Typography variant='subtitle2'>
+          {tools.getFormattedDate(createdAt)}
+        </Typography>
     }
   ];
 
   const tableActions = [
+    {
+      label: 'Descargar archivo',
+      icon: <GetAppRoundedIcon />,
+      onClick: async (file) => {
+        const { data } = await axios.get(`${keys.API_URL}/file/download/${file._id}/${auth.uid}`)
+        const linkSource = data;
+        const downloadLink = document.createElement('a');
+        const fileName = file.name;
+
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
+      }
+    },
     {
       label: 'Eliminar archivo',
       icon: <DeleteRoundedIcon />,
