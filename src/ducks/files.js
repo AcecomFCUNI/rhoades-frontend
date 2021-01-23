@@ -20,7 +20,12 @@ export const SAVE_ONE_FILE_REQUEST =
 export const SAVE_ONE_FILE_SUCCESS =
   'rhoades/files/SAVE_ONE_FILE_SUCCESS'
 export const SAVE_ONE_FILE_ERROR =
-  'thoades/files/SAVE_ONE_FILE_ERROR'
+  'rhoades/files/SAVE_ONE_FILE_ERROR'
+
+export const OPEN_DELETE_ONE_FILE_DIALOG = 
+  'rhoades/files/OPEN_DELETE_ONE_FILE_DIALOG'
+  export const CLOSE_DELETE_ONE_FILE_DIALOG = 
+  'rhoades/files/CLOSE_DELETE_ONE_FILE_DIALOG'
 
 export const DELETE_ONE_FILE_REQUEST =
   'rhoades/files/DELETE_ONE_FILE_REQUEST'
@@ -33,7 +38,9 @@ const initialState = {
   addLoading: false,
   getLoading: false,
   deleteLoading: false,
-  openDialog: false,
+  openAddDialog: false,
+  openDeleteDialog: false,
+  fileToDelete: null,
   savedFiles: [],
   uploadedFiles: [],
   error: null
@@ -44,13 +51,13 @@ export default function reducer(state = initialState, action) {
     case OPEN_UPLOAD_FILES_DIALOG:
       return {
         ...state,
-        openDialog: true
+        openAddDialog: true
       }
 
     case CLOSE_UPLOAD_FILES_DIALOG:
       return {
         ...state,
-        openDialog: false
+        openAddDialog: false
       }
 
     case UPLOAD_ONE_FILE:
@@ -103,6 +110,17 @@ export default function reducer(state = initialState, action) {
         ...state,
         error: action.payload.error,
         getLoading: false
+      }
+    case OPEN_DELETE_ONE_FILE_DIALOG:
+      return {
+        ...state,
+        openDeleteDialog: true,
+        fileToDelete: action.payload.fileToDelete
+      }
+    case CLOSE_DELETE_ONE_FILE_DIALOG:
+      return {
+        ...state,
+        openDeleteDialog: false
       }
     case DELETE_ONE_FILE_REQUEST:
       return {
@@ -173,9 +191,18 @@ export const getAllFilesFromListError = (error) => ({
   payload: { error }
 })
 
-export const deleteOneFileRequest = (file, ownerId) => ({
+export const openDeleteOneFileDialog = (fileToDelete) => ({
+  type: OPEN_DELETE_ONE_FILE_DIALOG,
+  payload: { fileToDelete }
+})
+
+export const closeDeleteOneFileDialog = () => ({
+  type: CLOSE_DELETE_ONE_FILE_DIALOG
+})
+
+export const deleteOneFileRequest = (file) => ({
   type: DELETE_ONE_FILE_REQUEST,
-  payload: { file, ownerId }
+  payload: { file }
 })
 
 export const deleteOneFileSuccess = (fileId) => ({

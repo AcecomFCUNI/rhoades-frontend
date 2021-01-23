@@ -68,12 +68,12 @@ function* getAllFilesFromList(action) {
 
 export function* deleteOneFile(action) {
   try {
-    const { file, ownerId } = action.payload
+    const { file } = action.payload
     const {
       message: { result },
     } = yield call(
       tools.Patch,
-      `file/delete/${file._id}/${file.list}/${ownerId}`
+      `file/delete/${file._id}/${file.list}/${file.owner}`
     );
 
     yield put(ducks.deleteOneFileSuccess(file._id));

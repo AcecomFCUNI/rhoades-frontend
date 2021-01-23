@@ -10,6 +10,9 @@ import {
   FormControl,
   InputLabel,
   LinearProgress,
+  Dialog,
+  DialogContent,
+  DialogActions,
   makeStyles
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab'
@@ -69,6 +72,19 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       textDecoration: 'underline'
     }
+  },
+  deleteButton: {
+    backgroundColor: theme.palette.error.main,
+    '&:hover': {
+      backgroundColor: theme.palette.error.light,
+    },
+    '&:active': {
+      backgroundColor: theme.palette.error.dark,
+    }
+  },
+  deleteDialogTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
   }
 }));
 
@@ -117,7 +133,10 @@ const UploadDocuments = () => {
     {
       label: 'Eliminar archivo',
       icon: <DeleteRoundedIcon />,
-      onClick: (file) => dispatch(actions.deleteOneFileRequest(file, auth.uid))
+      onClick: (file) => {
+        file.owner = auth.uid
+        dispatch(actions.openDeleteOneFileDialog(file))
+      }
     }
   ];
 
@@ -167,6 +186,11 @@ const UploadDocuments = () => {
     }
   }
   const handleConditionSelected = (event) => setCondition(event.target.value);
+  const handleDeleteOneDocument = () => {
+    dispatch(actions.deleteOneFileRequest(files.fileToDelete))
+    dispatch(actions.closeDeleteOneFileDialog())
+  }
+  const handleCloseDeleteOneDocumentDialog = () => dispatch(actions.closeDeleteOneFileDialog())
 
   useEffect(() => {
     if(lists) dispatch(actions.getAllFilesFromListRequest(lists))
@@ -214,7 +238,7 @@ const UploadDocuments = () => {
         maxFileSize={maxFileSize}
         showAlerts={false}
         filesLimit={filesLimit}
-        open={files.openDialog}
+        open={files.openAddDialog}
         onAdd={handleOnAddNewFiles}
         onDelete={handleOnDeleteOneFile}
         onClose={handleOnCloseDialog}
@@ -248,6 +272,32 @@ const UploadDocuments = () => {
           </React.Fragment>
         }
       />
+      <Dialog
+        maxWidth="sm"
+        fullWidth
+        open={files.openDeleteDialog}
+        onClose={handleCloseDeleteOneDocumentDialog}
+        aria-labelledby="delete-document-dialog">
+        <DialogContent className={classes.driverInfoContent}>
+          <Typography variant='body1' className={classes.deleteDialogTitle}>Usted está a punto de eliminar este documento. ¿Desea continuar?</Typography>
+        </DialogContent>
+        <DialogActions>
+            <Button
+              className={clsx(classes.deleteButton, classes.dialogAction)}
+              onClick={handleDeleteOneDocument}
+              variant="contained"
+              color="primary">
+              Eliminar
+            </Button>
+            <Button
+              className={classes.dialogAction}
+              onClick={handleCloseDeleteOneDocumentDialog}
+              variant="outlined"
+              color="primary">
+              Cancelar
+            </Button>
+        </DialogActions>
+      </Dialog> 
     </React.Fragment>
   );
 }
