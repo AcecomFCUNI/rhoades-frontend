@@ -16,7 +16,7 @@ import { existsKeyInObject,  getLabelFromEstate } from 'tools'
 import { CreateStudentList } from './components'
 
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded';
-import { LinearProgress, makeStyles } from '@material-ui/core'
+import { LinearProgress, Typography, makeStyles } from '@material-ui/core'
 import clsx from 'clsx'
 import * as ducks from 'ducks'
 
@@ -46,22 +46,26 @@ const StudentList = () => {
     {
       title: 'Código UNI',
       value: 'UNICode',
-      render: ({ UNICode }) => UNICode
+      render: ({ UNICode }) => 
+        <Typography variant='subtitle2'>{UNICode}</Typography>
     },
     {
       title: 'DNI',
       value: 'documentNumber',
-      render: ({ documentNumber }) => documentNumber
+      render: ({ documentNumber, documentType }) => 
+        <Typography variant='subtitle2'>{documentNumber} <b>({documentType})</b></Typography>
     },
     {
       title: 'Nombre completo',
       value: 'names',
-      render: ({ names, lastName, secondLastName }) => `${names} ${lastName} ${secondLastName}`
+      render: ({ names, lastName, secondLastName }) => 
+        <Typography variant='subtitle2'>{names} {lastName} {secondLastName}</Typography>
     },
     {
       title: 'Facultad',
       value: 'faculty',
-      render: ({ faculty }) => faculty
+      render: ({ faculty }) =>
+        <Typography variant='subtitle2'>{faculty}</Typography>
     }
   ];
 

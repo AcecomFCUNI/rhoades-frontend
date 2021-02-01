@@ -62,8 +62,10 @@ const EnrollUsersToList = (props) => {
         // check if the dni is my current user dni
         if(profile.documentNumber === dniInput)
           dispatch(actions.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', 'DNI no válido, ingrese un DNI distinto al suyo')))
-        else 
+        else {
           dispatch(actions.checkIsAValidApplicantRequest({ documentType: 0, code: dniInput, condition }))
+          setDniInput('')
+        }
       }
       else dispatch(actions.showAlertSnackbar(tools.ENTER_VALID_DNI_CODE));
     }
@@ -74,8 +76,10 @@ const EnrollUsersToList = (props) => {
         // check if the code uni is my current user code uni
         if(profile.UNICode === codeInput)
           dispatch(actions.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', 'Código no válido, ingrese un código UNI distinto al suyo')))
-        else  
+        else {
           dispatch(actions.checkIsAValidApplicantRequest({ documentType: 1, code: codeInput, condition }))
+          setCodeInput('')
+        }
       }
       else dispatch(actions.showAlertSnackbar(tools.ENTER_VALID_UNI_CODE));
     }
@@ -103,7 +107,7 @@ const EnrollUsersToList = (props) => {
           <CustomInput 
             submitinput={handleValidateCredentials}
             disabled={codeInput.length > 0 || lists[condition].closed} 
-            placeholder='DNI'
+            placeholder='DNI, CE u otros'
             value={dniInput}
             onChange={handleOnChangeDniInput}
           />

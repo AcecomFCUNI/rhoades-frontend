@@ -140,11 +140,30 @@ const UploadDocuments = () => {
     }
   ];
 
+  const checkIfListsAreClosed = (lists) => {
+    if(checkIfUserHasCreatedLists(lists)) return false
+
+    let listsAreClosed = true
+
+    for(const list of Object.values(lists)) {
+      listsAreClosed = listsAreClosed && list.closed
+    }
+
+    return listsAreClosed
+  }
+
+  const checkIfUserHasCreatedLists = (lists) => Object.keys(lists || {}).length === 0
+
   const getHeader = () => 
     <div className={classes.cardHeader}>
       <Typography variant='h1' className={classes.cardHeaderTitle}>Subir archivos</Typography>
       <Button
-        disabled={Object.keys(lists || {}).length === 0}
+        disabled={
+          // if the procurator doesn't have any lists
+          checkIfUserHasCreatedLists(lists || {}) || 
+          // or if their lists are closed or not
+          checkIfListsAreClosed(lists || {})
+        }
         size='large'
         className={classes.uploadButton}
         variant="contained"
@@ -199,14 +218,20 @@ const UploadDocuments = () => {
   return (
     <React.Fragment>
       {
-        Object.keys(lists || {}).length === 0 && <Alert severity="warning" className={classes.messageAlert}>
+        checkIfUserHasCreatedLists(lists || {}) && <Alert severity="warning" className={classes.messageAlert}>
           <Typography variant='h6'>Nota</Typography>
           <Typography variant='subtitle2'>Usted no puede subir documentos hasta que haya creado al menos una lista</Typography>
         </Alert>
       }
+      {
+        checkIfListsAreClosed(lists || {}) && <Alert severity="info" className={classes.messageAlert}>
+          <Typography variant='h6'>Nota</Typography>
+      <Typography variant='subtitle2'>Usted ya no puede subir documentos debido a que ya cerró sus listas creadas</Typography>
+        </Alert>
+      }
       {getHeader()}
       <CustomTable
-        tableDisabled={Object.keys(lists || {}).length === 0}
+        tableDisabled={checkIfUserHasCreatedLists(lists || {})}
         tableRowClassName={classes.tableRowsData}
         summaryTableInfoIsEnabled={false}
         className={clsx(classes.applicantsTable, classes.marginTop)}
@@ -264,7 +289,7 @@ const UploadDocuments = () => {
                 label="Listas disponibles"
               >
                 <MenuItem value=''><i>Seleccione una lista</i></MenuItem>
-                {lists && Object.keys(lists).map((condition) => <MenuItem key={condition} value={condition}>
+                {lists && Object.keys(lists).map((condition) => <MenuItem disabled={lists[condition].closed} key={condition} value={condition}>
                   {tools.getLabelFromEstate(lists[condition].type, condition)}
                 </MenuItem>)}
               </Select>
