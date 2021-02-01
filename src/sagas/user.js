@@ -12,8 +12,10 @@ function* findUserByCode(action) {
       tools.Get,
       `/user/verify/${params.code}?documentType=${params.documentType}`
     );
-    if(result.committeeMember)
+    if(result.committeeMember) {
+      yield put(ducks.findUserByCodeSuccess(result));
       history.push('/admin-vote');
+    }
     else {
       yield tools.setCookie(tools.USER_KEY, { searchParams: params, data: result });
       yield put(ducks.findUserByCodeSuccess(result));

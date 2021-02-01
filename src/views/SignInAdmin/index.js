@@ -72,8 +72,8 @@ const SignInAdmin = () => {
     <Redirect to={`/${profile.condition}`} /> :
     <GeneralAuth  
       mainTitle='Administrador' 
-      secondaryTitles={['Administre las elecciones para el período actual']} 
-      subtitles={['Ingrese sus credenciales']} 
+      secondaryTitles={['Usted se encuentra como miembro del comité electoral']} 
+      subtitles={['Por favor ingrese las credenciales de la cuenta de comité electoral']} 
       altImage='administrador-imagen' 
       srcImage={adminLoginSvg}
     >
