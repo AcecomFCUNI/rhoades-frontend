@@ -12,10 +12,14 @@ function* findUserByCode(action) {
       tools.Get,
       `/user/verify/${params.code}?documentType=${params.documentType}`
     );
-    yield tools.setCookie(tools.USER_KEY, { searchParams: params, data: result });
-    yield put(ducks.findUserByCodeSuccess(result));
-    yield put(ducks.showAlertSnackbar(tools.USER_SUCCESSFULLY_FOUND));
-    history.push('/validate-credentials');
+    if(result.committeeMember)
+      history.push('/admin-vote');
+    else {
+      yield tools.setCookie(tools.USER_KEY, { searchParams: params, data: result });
+      yield put(ducks.findUserByCodeSuccess(result));
+      yield put(ducks.showAlertSnackbar(tools.USER_SUCCESSFULLY_FOUND));
+      history.push('/validate-credentials');
+    }
   } catch (error) {
     const {
       message: { result }
