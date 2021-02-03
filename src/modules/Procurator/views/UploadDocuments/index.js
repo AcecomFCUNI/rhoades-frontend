@@ -226,7 +226,7 @@ const UploadDocuments = () => {
       {
         checkIfListsAreClosed(lists || {}) && <Alert severity="info" className={classes.messageAlert}>
           <Typography variant='h6'>Nota</Typography>
-      <Typography variant='subtitle2'>Usted ya no puede subir documentos debido a que ya cerró sus listas creadas</Typography>
+          <Typography variant='subtitle2'>Usted ya no puede subir documentos debido a que ya cerró sus listas creadas</Typography>
         </Alert>
       }
       {getHeader()}

@@ -55,6 +55,14 @@ export const DELETE_LIST_SUCCESS =
 export const DELETE_LIST_ERROR =
   'rhoades/list/DELETE_LIST_ERROR'
 
+// ADMIN CONSTANTS
+export const GET_LISTS_FOR_ADMIN_REQUEST =
+  'rhoades/list/GET_LISTS_FOR_ADMIN_REQUEST'
+export const GET_LISTS_FOR_ADMIN_SUCCESS =
+  'rhoades/list/GET_LISTS_FOR_ADMIN_SUCCESS'
+export const GET_LISTS_FOR_ADMIN_ERROR =
+  'rhoades/list/GET_LISTS_FOR_ADMIN_ERROR'
+
 const initialState = {
   findLoading: false,
   createLoading: false,
@@ -75,6 +83,11 @@ const initialState = {
   deleteList: {
     openDialog: false,
     loading: false,
+    error: null
+  },
+  adminLists: {
+    loading: false,
+    data: [],
     error: null
   }
 };
@@ -263,6 +276,32 @@ export default function reducer(state = initialState, action) {
           error: action.payload.error
         }
       }
+    case GET_LISTS_FOR_ADMIN_REQUEST:
+      return {
+        ...state,
+        adminLists: {
+          ...state.adminLists,
+          loading: true
+        }
+      }
+    case GET_LISTS_FOR_ADMIN_SUCCESS:
+      return {
+        ...state,
+        adminLists: {
+          ...state.adminLists,
+          loading: false,
+          data: action.payload.lists
+        }
+      }
+    case GET_LISTS_FOR_ADMIN_ERROR:
+      return {
+        ...state,
+        adminLists: {
+          ...state.adminLists,
+          loading: false,
+          error: action.payload.error
+        }
+      }
     default: 
       return state
   }
@@ -380,5 +419,20 @@ export const deleteListSuccess = (lists) => ({
 
 export const deleteListError = (error) => ({
   type: DELETE_LIST_ERROR,
+  payload: { error }
+})
+
+export const getListsForAdminRequest = (queryParams) => ({
+  type: GET_LISTS_FOR_ADMIN_REQUEST,
+  payload: { queryParams }
+})
+
+export const getListsForAdminSuccess = (lists) => ({
+  type: GET_LISTS_FOR_ADMIN_SUCCESS,
+  payload: { lists }
+})
+
+export const getListsForAdminError = (error) => ({
+  type: GET_LISTS_FOR_ADMIN_ERROR,
   payload: { error }
 })

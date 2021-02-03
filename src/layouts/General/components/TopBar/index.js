@@ -49,7 +49,7 @@ const TopBar = ({ onOpenNavBarMobile, className, ...rest }) => {
     firebase
       .logout()
       .then(() => {
-        history.push(condition === 'admin' ? '/admin-vote' : '/');
+        history.push(condition === 'admin' ? '/committee-member' : '/');
       })
       .catch(() => dispatch(showAlertSnackbar(LOGOUT_WITH_ERROR)));
   }

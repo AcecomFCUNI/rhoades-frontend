@@ -1,50 +1,19 @@
-import WorkRoundedIcon from '@material-ui/icons/WorkRounded';
-import PageviewRoundedIcon from '@material-ui/icons/PageviewRounded';
-import SendRoundedIcon from '@material-ui/icons/SendRounded';
-// import ThumbDownRoundedIcon from '@material-ui/icons/ThumbDownRounded';
+import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
+import SchoolRoundedIcon from '@material-ui/icons/SchoolRounded';
 
 const config = [
   {
     title: 'Opciones',
     pages: [
       {
-        title: 'Listas',
-        href: '/admin/lists',
-        icon: WorkRoundedIcon,
-        children: [
-          {
-            title: 'Tercio de facultad',
-            href: '/admin/lists/faculty-third',
-            icon: PageviewRoundedIcon,
-          },
-          {
-            title: 'Tercio universitario',
-            href: '/admin/lists/university-third',
-            icon: SendRoundedIcon,
-            children: [
-              {
-                title: 'Asamblea universitaria',
-                href: '/admin/lists/university-third/assembly',
-                icon: PageviewRoundedIcon,
-              },
-              {
-                title: 'Consejo universitario',
-                href: '/admin/lists/university-third/council',
-                icon: PageviewRoundedIcon,
-              },
-            ],
-          },
-          {
-            title: 'Decanato',
-            href: '/admin/lists/decan',
-            icon: PageviewRoundedIcon,
-          },
-          {
-            title: 'Rectorado',
-            href: '/admin/lists/rectorate',
-            icon: PageviewRoundedIcon,
-          },
-        ],
+        title: 'Elecciones generales',
+        href: '/admin/elections/general',
+        icon: PeopleAltRoundedIcon,
+      },
+      {
+        title: 'Elecciones por facultad',
+        href: '/admin/elections/faculty',
+        icon: SchoolRoundedIcon,
       },
     ],
   },

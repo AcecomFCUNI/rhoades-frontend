@@ -24,3 +24,20 @@ export const existsKeyInObject = (key, object) => {
 
   return Object.keys(object).includes(key)
 }
+
+// just for object with keys without points inside
+export const accessToNestedProperty = (object, propertiesString) => {
+  const propertiesArray = propertiesString.split('.');
+
+  let result = object;
+  for (let property of propertiesArray) {
+    if (result[property]) {
+      result = result[property];
+    } else {
+      result = undefined;
+      break;
+    }
+  }
+
+  return result;
+};

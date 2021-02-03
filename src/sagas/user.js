@@ -14,7 +14,7 @@ function* findUserByCode(action) {
     );
     if(result.committeeMember) {
       yield put(ducks.findUserByCodeSuccess(result));
-      history.push('/admin-vote');
+      history.push('/committee-member');
     }
     else {
       yield tools.setCookie(tools.USER_KEY, { searchParams: params, data: result });

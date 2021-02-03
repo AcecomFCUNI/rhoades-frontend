@@ -32,6 +32,40 @@ export const studentEstates = [
   }
 ]
 
+export const facultyElections = [
+  {
+    label: 'Decano',
+    value: 'dean'
+  },
+  {
+    label: 'Tercio de facultad',
+    value: 'third-of-faculty'
+  },
+  {
+    label: 'Consejo de facultad',
+    value: 'faculty-council'
+  }
+]
+
+export const generalElections = [
+  {
+    label: 'Rector',
+    value: 'rector'
+  },
+  {
+    label: 'Asamblea universitaria',
+    value: 'university-assembly'
+  },
+  {
+    label: 'Asamblea universitaria',
+    value: 'university-third-assembly'
+  },
+  {
+    label: 'Consejo universitario',
+    value: 'university-third-council'
+  }
+]
+
 export const faculties = [
   'FIIS',
   'FIP',

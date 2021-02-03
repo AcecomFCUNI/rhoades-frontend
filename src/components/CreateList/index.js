@@ -4,15 +4,11 @@ import { useDispatch } from 'react-redux'
 import { 
   Button, 
   Typography, 
-  Paper, 
-  FormControl, 
-  InputLabel, 
-  Select, 
-  MenuItem, 
   makeStyles
 } from '@material-ui/core'
 import { Alert } from '@material-ui/lab'
 
+import { CustomSelect } from 'components'
 import { createListByUserIdAndTypeRequest } from 'ducks'
 import { translateWord } from 'tools'
 
@@ -56,22 +52,14 @@ const CreateTeacherList = (props) => {
       </Alert>
       <Typography variant='subtitle1' className={classes.mainTitle}>Para crear una lista, seleccione qué lista desea crear a continuación:</Typography>
       <div className={classes.createListSection}>
-      <Paper component="form" className={classes.paperEstateTypeSelector} elevation={0}>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel id="type-of-estate">Tipo de lista</InputLabel>
-          <Select
-            labelId="type-of-estate"
-            id="type-of-estate-selector"
-            value={estateType}
-            onChange={handleEstateTypeSelected}
-            label="Tipo de lista"
-          >
-            {estates.map(({ label, value }) => <MenuItem key={value} value={value}>
-              {label}
-            </MenuItem>)}
-          </Select>
-        </FormControl>
-      </Paper>
+      <CustomSelect
+        labelId='type-of-estate-label'
+        selectId='type-of-estate-selector'
+        options={estates}
+        label='Tipo de lista'
+        value={estateType}
+        onChange={handleEstateTypeSelected}
+      />
       <Button variant='contained' color='primary' size='large' onClick={handleCreateNewList} className={classes.createButton}>
         Crear lista
       </Button>

@@ -5,7 +5,7 @@ import { studentEstates } from 'constants/index'
 
 const CreateTeacherList = (props) => {
   const { uid, condition, faculty } = props
-  const [estateType, setEstateType] = useState('third-of-faculty')
+  const [estateType, setEstateType] = useState(studentEstates[0].value)
 
   const handlEstateTypeSelected = (event) => setEstateType(event.target.value);
 

@@ -170,6 +170,24 @@ export function* deleteList(action) {
   }
 }
 
+function* getListForAdmin(action) {
+  try {
+    const { queryParams } = action.payload
+    const queryParamsString = '?' + Object.keys(queryParams).map(paramKey => `${paramKey}=${queryParams[paramKey]}`).join('&')
+    const response = yield call(
+      tools.Get,
+      `/list/filter${queryParamsString}`
+    );
+    const result = response.message.result
+    yield put(ducks.getListsForAdminSuccess(result))
+    yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('success', 'Listas obtenidas correctamente')))
+  } catch (error) {
+    const { result } = error.response.data.message;
+    yield put(ducks.getListsForAdminError(result))
+    yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', result)))
+  }
+}
+
 export function* findListsByUserIdSaga() {
   yield takeLatest(
     ducks.FIND_LISTS_BY_USER_ID_REQUEST,
@@ -209,5 +227,12 @@ export function* deleteListSaga() {
   yield takeLatest(
     ducks.DELETE_LIST_REQUEST,
     deleteList
+  )
+}
+
+export function* getListsForAdminSaga() {
+  yield takeLatest(
+    ducks.GET_LISTS_FOR_ADMIN_REQUEST,
+    getListForAdmin
   )
 }

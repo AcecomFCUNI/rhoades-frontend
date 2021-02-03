@@ -4,7 +4,7 @@ import { CreateList } from 'components'
 import { teacherEstates } from 'constants/index'
 
 const CreateTeacherList = ({ uid, condition, faculty }) => {
-  const [estateType, setEstateType] = useState('rector')
+  const [estateType, setEstateType] = useState(teacherEstates[0].value)
 
   const handlEstateTypeSelected = (event) => setEstateType(event.target.value);
 

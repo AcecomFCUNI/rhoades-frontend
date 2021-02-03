@@ -20,6 +20,7 @@ import {
 } from '@material-ui/core';
 
 import noDataSvg from 'assets/images/undraw/no_data.svg';
+import * as tools from 'tools';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -62,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
     opacity: 0.65,
     pointerEvents: 'none',
     userSelect: 'none'
+  },
+  loadingWrapper: {
+    height: 5
   }
 }));
 
@@ -91,6 +95,7 @@ const CustomTable = (props) => {
     cardHeader,
     cardContentClassName,
     noDataLabel,
+    actionsCellProps,
     ...rest
   } = props;
   const classes = useStyles();
@@ -126,7 +131,9 @@ const CustomTable = (props) => {
         </Typography>
       )}
       <Card elevation={0}>
-        {cardHeader && cardHeader}
+        <div className={classes.loadingWrapper}>
+          {cardHeader && cardHeader}
+        </div>
         {titleIsEnabled ? (
           <React.Fragment>
             <CardHeader title={title} />
@@ -137,33 +144,41 @@ const CustomTable = (props) => {
           <div className={classes.inner}>
             <Table>
               {getTableHead(actionsAreEnabled, 'Acciones', {
-                align: 'right'
+                align: 'right',
+                ...actionsCellProps
               })}
               {getData().length !== 0 && (
                 <TableBody>
-                  {getData().map((element, index) => (
-                    <TableRow
-                      key={element[dataId]}
-                      hover={hoverableRows}
-                      {...tableRowsProps}>
-                      {columns.map(({ value, render, align = 'left' }) => (
-                        <TableCell key={value} align={align}>
-                          {render ? render(element, index) : element[value]}
-                        </TableCell>
-                      ))}
-                      {actionsAreEnabled && (
-                        <TableCell align={actionsAlignContent} className={clsx(tableRowClassName)}>
-                          {actions.map(({ label, icon, onClick }) => (
-                            <Tooltip key={label} title={label}>
-                              <IconButton onClick={() => onClick(element)}>
-                                {icon}
-                              </IconButton>
-                            </Tooltip>
-                          ))}
-                        </TableCell>
-                      )}
-                    </TableRow>
-                  ))}
+                  {getData().map((element, index) => {
+                    const elementKey = tools.accessToNestedProperty(
+                      element,
+                      dataId
+                    );
+
+                    return (
+                      <TableRow
+                        key={elementKey}
+                        hover={hoverableRows}
+                        {...tableRowsProps}>
+                        {columns.map(({ value, render, align = 'left' }) => (
+                          <TableCell key={value} align={align}>
+                            {render ? render(element, index) : element[value]}
+                          </TableCell>
+                        ))}
+                        {actionsAreEnabled && (
+                          <TableCell align={actionsAlignContent}>
+                            {actions.map(({ label, icon, onClick }) => (
+                              <Tooltip key={label} title={label}>
+                                <IconButton onClick={() => onClick(element)}>
+                                  {icon}
+                                </IconButton>
+                              </Tooltip>
+                            ))}
+                          </TableCell>
+                        )}
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               )}
             </Table>
@@ -227,7 +242,8 @@ CustomTable.propTypes = {
   infiniteScroll: PropTypes.bool,
   cardHeader: PropTypes.node,
   noDataLabel: PropTypes.string,
-  tableDisabled: PropTypes.bool
+  tableDisabled: PropTypes.bool,
+  actionsCellProps: PropTypes.object
 };
 
 CustomTable.defaultProps = {
@@ -248,7 +264,8 @@ CustomTable.defaultProps = {
   infiniteScroll: false,
   cardHeader: null,
   noDataLabel: null,
-  tableDisabled: false
+  tableDisabled: false,
+  actionsCellProps: {}
 };
 
 export default CustomTable;

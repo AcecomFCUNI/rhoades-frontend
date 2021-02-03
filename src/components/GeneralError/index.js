@@ -1,8 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, makeStyles, Typography } from '@material-ui/core';
 
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
+import * as tools from 'tools'
 
 const useStyles = makeStyles((theme) => ({
   mainWrapper: {
@@ -58,9 +60,23 @@ const useStyles = makeStyles((theme) => ({
 const GeneralError = ({ title, subtitle, altImage, srcImage }) => {
   const classes = useStyles();
   const history = useHistory();
+  const profile = useSelector(state => state.firebase.profile)
 
   const returnToHome = () => {
-    history.push('/');
+    const currentUser = tools.getCookie(tools.USER_KEY)
+    // not logged in
+    if(!profile.condition) {
+      // there is user saved or not on cookies
+      if(!currentUser) history.push('/')
+      else {
+        if(currentUser.data.condition === 'student' || currentUser.data.condition === 'teacher') history.push('/validate-credentials')
+        else history.push('/')
+      }
+    }
+
+    // already logged in
+    if(profile.condition === 'admin') history.push('/admin')
+    else if(profile.condition === 'student' || profile.condition === 'teacher') history.push('/procurator')
   };
 
   return (

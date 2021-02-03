@@ -16,6 +16,7 @@ function* rootSaga() {
     fork(listsSagas.removeUserFromListSaga),
     fork(listsSagas.finishRegistrationListSaga),
     fork(listsSagas.deleteListSaga),
+    fork(listsSagas.getListsForAdminSaga),
 
     fork(filesSagas.saveOneFileSaga),
     fork(filesSagas.getAllFilesFromListSaga),

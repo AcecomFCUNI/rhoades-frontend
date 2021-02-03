@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { Home, ValidateCredentials, Error401, Error404, SignInAdmin } from 'views';
 import { PublicLayout, AdminLayout, ProcuratorLayout, ErrorLayout } from 'layouts';
 import { TeacherList, StudentList, UploadDocuments } from 'modules/Procurator'
+import { GeneralElections, FacultyElections } from 'modules/Admin'
 import withAuthentication from 'hocs/withAuthentication';
 
 const routes = [
@@ -36,38 +37,18 @@ const routes = [
         path: '/admin',
         exact: true,
         component: () => (
-          <Redirect to="/admin/lists/third-of-faculty" />
+          <Redirect to="/admin/elections/general" />
         ),
       },
       {
-        path: '/admin/lists/third-of-faculty',
+        path: '/admin/elections/general',
         exact: true,
-        // component: EnrollListUniversityThirdCouncil,
-        component: withAuthentication(() => <div>Tercio de facultad</div>, 'admin'),
+        component: withAuthentication(GeneralElections, 'admin'),
       },
       {
-        path: '/admin/lists/university-third-council',
+        path: '/admin/elections/faculty',
         exact: true,
-        // component: UploadFileNid,
-        component: withAuthentication(() => <div>Consejo universitario</div>, 'admin'),
-      },
-      {
-        path: '/admin/lists/university-third-assembly',
-        exact: true,
-        // component: UploadFileNid,
-        component: withAuthentication(() => <div>Asamblea universitaria</div>, 'admin'),
-      },
-      {
-        path: '/admin/lists/dean',
-        exact: true,
-        // component: UploadFileNid,
-        component: withAuthentication(() => <div>Decanato</div>, 'admin'),
-      },
-      {
-        path: '/admin/lists/rector',
-        exact: true,
-        // component: UploadFileNid,
-        component: withAuthentication(() => <div>Rectorado</div>, 'admin'),
+        component: withAuthentication(FacultyElections, 'admin'),
       },
       {
         component: () => <Redirect to="/error/404" />
@@ -120,7 +101,7 @@ const routes = [
         component: ValidateCredentials,
       },
       {
-        path: '/admin-vote',
+        path: '/committee-member',
         exact: true,
         component: SignInAdmin
       },
