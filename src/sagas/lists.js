@@ -188,6 +188,23 @@ function* getListForAdmin(action) {
   }
 }
 
+function* reviewListForAdmin(action) {
+  try {
+    const { adminId, status, bodyRequest } = action.payload
+    const response = yield call(
+      tools.Patch,
+      `/list/review/${adminId}/${status}`,
+      bodyRequest
+    );
+    yield put(ducks.reviewListForAdminSuccess(response.message))
+    yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', response.message)))
+  } catch (error) {
+    const { result } = error.response.data.message;
+    yield put(ducks.reviewListForAdminError(result))
+    yield put(ducks.showAlertSnackbar(tools.createNewAlertSnackbarMessage('error', result)))
+  }
+}
+
 export function* findListsByUserIdSaga() {
   yield takeLatest(
     ducks.FIND_LISTS_BY_USER_ID_REQUEST,
@@ -234,5 +251,12 @@ export function* getListsForAdminSaga() {
   yield takeLatest(
     ducks.GET_LISTS_FOR_ADMIN_REQUEST,
     getListForAdmin
+  )
+}
+
+export function* reviewListForAdminSaga() {
+  yield takeLatest(
+    ducks.REVIEW_LIST_FOR_ADMIN_REQUEST,
+    reviewListForAdmin
   )
 }

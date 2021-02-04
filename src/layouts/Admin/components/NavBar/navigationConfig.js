@@ -3,7 +3,7 @@ import SchoolRoundedIcon from '@material-ui/icons/SchoolRounded';
 
 const config = [
   {
-    title: 'Opciones',
+    title: 'Elecciones',
     pages: [
       {
         title: 'Elecciones generales',

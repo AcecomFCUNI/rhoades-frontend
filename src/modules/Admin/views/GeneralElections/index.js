@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded';
 
-import { CustomSelect, CustomTable } from 'components'
+import { CustomSelect, CustomTable, CustomDrawer } from 'components'
 import * as ducks from 'ducks'
 import * as constants from 'constants/index'
 
@@ -55,28 +55,21 @@ const columns = [
     value: 'owner',
     render: (list) => 
       <Typography variant='subtitle2'>
-        Lista de {list.owner}
+        Lista de {list.owner.names} {list.owner.lastName} {list.owner.secondLastName}
       </Typography>
   },
 ]
 
-const tableActions = [
-  {
-    label: 'Ver detalle',
-    icon: <InfoRoundedIcon />,
-    onClick: (list) => {
-      console.log(list)
-    }
-  }
-];
-
 const GeneralElections = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const [openDrawerInfo, setOpenDrawerInfo] = useState(false)
+  const [selectedListInfo, setSelectedListInfo] = useState({})
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [electionType, setElectionType] = useState(constants.generalElections[0].value)
   const adminLists = useSelector(state => state.lists.adminLists)
+  const adminId = useSelector(state => state.firebase.auth.uid)
 
   const handleOnChangeElectionType = (event) => {
     setElectionType(event.target.value)
@@ -87,6 +80,20 @@ const GeneralElections = () => {
     setRowsPerPage(event.target.value);
     setPage(0);
   };
+
+  const handleOnCloseDrawer = () => setOpenDrawerInfo(false)
+  const handleOnOpenDrawer = () => setOpenDrawerInfo(true)
+
+  const tableActions = [
+    {
+      label: 'Ver detalle',
+      icon: <InfoRoundedIcon />,
+      onClick: (list) => {
+        setSelectedListInfo(list)
+        handleOnOpenDrawer()
+      }
+    }
+  ];
 
   useEffect(() => {
     const queryParams = {
@@ -130,6 +137,12 @@ const GeneralElections = () => {
           page,
           rowsPerPageOptions: [10, 15]
         }}
+      />
+      <CustomDrawer
+        openDrawer={openDrawerInfo}
+        onCloseDrawer={handleOnCloseDrawer}
+        adminId={adminId}
+        selectedList={selectedListInfo}
       />
     </>
   )

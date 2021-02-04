@@ -23,7 +23,7 @@ export const studentEstates = [
     value: 'third-of-faculty'
   },
   {
-    label: 'Asamblea universitaria',
+    label: 'Tercio Universitario - Asamblea',
     value: 'university-third-assembly'
   },
   {
@@ -57,7 +57,7 @@ export const generalElections = [
     value: 'university-assembly'
   },
   {
-    label: 'Asamblea universitaria',
+    label: 'Tercio Universitario - Asamblea',
     value: 'university-third-assembly'
   },
   {

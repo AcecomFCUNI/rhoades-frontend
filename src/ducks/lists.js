@@ -63,10 +63,18 @@ export const GET_LISTS_FOR_ADMIN_SUCCESS =
 export const GET_LISTS_FOR_ADMIN_ERROR =
   'rhoades/list/GET_LISTS_FOR_ADMIN_ERROR'
 
+export const REVIEW_LIST_FOR_ADMIN_REQUEST =
+  'rhoades/list/REVIEW_LIST_FOR_ADMIN_REQUEST'
+export const REVIEW_LIST_FOR_ADMIN_SUCCESS =
+  'rhoades/list/REVIEW_LIST_FOR_ADMIN_SUCCESS'
+export const REVIEW_LIST_FOR_ADMIN_ERROR =
+  'rhoades/list/REVIEW_LIST_FOR_ADMIN_ERROR'
+
 const initialState = {
   findLoading: false,
   createLoading: false,
   addLoading: false,
+  reviewLoading: false,
   data: null,
   error: '',
   removeUser: {
@@ -302,6 +310,22 @@ export default function reducer(state = initialState, action) {
           error: action.payload.error
         }
       }
+    case REVIEW_LIST_FOR_ADMIN_REQUEST:
+      return {
+        ...state,
+        reviewLoading: true
+      }
+    case REVIEW_LIST_FOR_ADMIN_SUCCESS:
+      return {
+        ...state,
+        reviewLoading: false
+      }
+    case REVIEW_LIST_FOR_ADMIN_ERROR:
+      return {
+        ...state,
+        reviewLoading: false,
+        error: action.payload.error
+      }
     default: 
       return state
   }
@@ -434,5 +458,19 @@ export const getListsForAdminSuccess = (lists) => ({
 
 export const getListsForAdminError = (error) => ({
   type: GET_LISTS_FOR_ADMIN_ERROR,
+  payload: { error }
+})
+
+export const reviewListForAdminRequest = (adminId, status, bodyRequest) => ({
+  type: REVIEW_LIST_FOR_ADMIN_REQUEST,
+  payload: { adminId, status, bodyRequest }
+})
+
+export const reviewListForAdminSuccess = () => ({
+  type: REVIEW_LIST_FOR_ADMIN_SUCCESS
+})
+
+export const reviewListForAdminError = (error) => ({
+  type: REVIEW_LIST_FOR_ADMIN_ERROR,
   payload: { error }
 })

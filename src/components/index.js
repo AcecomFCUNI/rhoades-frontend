@@ -17,3 +17,4 @@ export { default as ApplicantRemoveDialog } from './ApplicantRemoveDialog';
 export { default as FinishRegistrationListDialog } from './FinishRegistrationListDialog';
 export { default as DeleteListDialog } from './DeleteListDialog';
 export { default as CustomSelect } from './CustomSelect';
+export { default as CustomDrawer } from './CustomDrawer';
