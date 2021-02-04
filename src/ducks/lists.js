@@ -63,6 +63,11 @@ export const GET_LISTS_FOR_ADMIN_SUCCESS =
 export const GET_LISTS_FOR_ADMIN_ERROR =
   'rhoades/list/GET_LISTS_FOR_ADMIN_ERROR'
 
+export const OPEN_REVIEW_LIST_DIALOG = 
+  'rhoades/list/OPEN_REVIEW_LIST_DIALOG'
+export const CLOSE_REVIEW_LIST_DIALOG = 
+  'rhoades/list/CLOSE_REVIEW_LIST_DIALOG'
+
 export const REVIEW_LIST_FOR_ADMIN_REQUEST =
   'rhoades/list/REVIEW_LIST_FOR_ADMIN_REQUEST'
 export const REVIEW_LIST_FOR_ADMIN_SUCCESS =
@@ -96,6 +101,12 @@ const initialState = {
   adminLists: {
     loading: false,
     data: [],
+    error: null
+  },
+  reviewList: {
+    openDialog: false,
+    options: null,
+    loading: false,
     error: null
   }
 };
@@ -310,6 +321,23 @@ export default function reducer(state = initialState, action) {
           error: action.payload.error
         }
       }
+    case OPEN_REVIEW_LIST_DIALOG:
+      return {
+        ...state,
+        reviewList: {
+          ...state.reviewList,
+          openDialog: true,
+          options: action.payload.options
+        }
+      }
+    case CLOSE_REVIEW_LIST_DIALOG:
+      return {
+        ...state,
+        reviewList: {
+          ...state.reviewList,
+          openDialog: false
+        }
+      }
     case REVIEW_LIST_FOR_ADMIN_REQUEST:
       return {
         ...state,
@@ -459,6 +487,15 @@ export const getListsForAdminSuccess = (lists) => ({
 export const getListsForAdminError = (error) => ({
   type: GET_LISTS_FOR_ADMIN_ERROR,
   payload: { error }
+})
+
+export const openReviewListDialog = (options) => ({
+  type: OPEN_REVIEW_LIST_DIALOG,
+  payload: { options }
+})
+
+export const closeReviewListDialog = () => ({
+  type: CLOSE_REVIEW_LIST_DIALOG
 })
 
 export const reviewListForAdminRequest = (adminId, status, bodyRequest) => ({

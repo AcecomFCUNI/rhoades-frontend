@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded';
 
-import { CustomSelect, CustomTable, CustomDrawer } from 'components'
+import { CustomSelect, CustomTable, CustomDrawer, ReviewListConfirmationDialog } from 'components'
 import * as ducks from 'ducks'
 import * as constants from 'constants/index'
 
@@ -173,6 +173,7 @@ const FacultyElections = () => {
         adminId={adminId}
         selectedList={selectedListInfo}
       />
+      <ReviewListConfirmationDialog />
     </>
   )
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx'
+import PropTypes from 'prop-types';
 import { Paper, InputBase, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,13 +29,13 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomInput = (props) => {
   const classes = useStyles();
-  const { aftericon = null, beforeicon = null, submitinput, className, ...restProps } = props;
+  const { aftericon = null, beforeicon = null, submitinput, className, inputClassName, ...restProps } = props;
 
   return (
     <Paper component="form" className={clsx(classes.inputPaper, className)} elevation={0}>
       {beforeicon}
-      <InputBase 
-        className={classes.input} {...restProps} 
+      <InputBase
+        className={clsx(classes.input, inputClassName)} {...restProps} 
         spellCheck={false} 
         inputProps={{onKeyPress: (event) => {
           if(event.key === 'Enter') {
@@ -47,5 +48,15 @@ const CustomInput = (props) => {
     </Paper>
   );
 };
+
+CustomInput.propTypes = {
+  className: PropTypes.string,
+  inputClassName: PropTypes.string
+}
+
+CustomInput.defaultProps = {
+  className: '',
+  inputClassName: ''
+}
 
 export default CustomInput;

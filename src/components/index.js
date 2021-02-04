@@ -18,3 +18,4 @@ export { default as FinishRegistrationListDialog } from './FinishRegistrationLis
 export { default as DeleteListDialog } from './DeleteListDialog';
 export { default as CustomSelect } from './CustomSelect';
 export { default as CustomDrawer } from './CustomDrawer';
+export { default as ReviewListConfirmationDialog } from './ReviewListConfirmationDialog';
